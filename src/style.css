@@ -23,3 +23,16 @@
 .st_detail_custom::-webkit-scrollbar {
             display: none;
 }
+
+.assessment_status_pending {
+    width: 100%;
+    height: 150px;
+    background-color: grey;
+    text-align: center;
+    opacity: .3;
+    font-size: 50px;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
