@@ -1,4 +1,4 @@
-def st_detail_placeholder(md5):
+def st_detail_placeholder(details: dict[str, str]) -> str:
 
     return f"""
     ## Security Target details
@@ -10,7 +10,7 @@ def st_detail_placeholder(md5):
     </pre>
     ## Checksum
     <pre class='st_detail_custom'>
-        MD5  :  {md5} 
-        SHA256  :  
+        MD5  :  {details["md5"]} 
+        SHA256  :  {details["sha256"]}
     </pre>
     """

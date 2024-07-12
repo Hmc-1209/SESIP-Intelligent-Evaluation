@@ -16,7 +16,8 @@ def main():
             file_input = PDF(label="Upload PDF", height=800, elem_classes="st_upload")
             with gr.Column():
                 with gr.Row():
-                    file_md5 = gr.Markdown(st_detail_placeholder(""), elem_classes="st_detail_custom")
+                    file_details = {"md5": "", "sha256": ""}
+                    file_md5 = gr.Markdown(st_detail_placeholder(file_details), elem_classes="st_detail_custom")
                 with gr.Row():
                     eval_btn = gr.Button("Process Evaluation")
 

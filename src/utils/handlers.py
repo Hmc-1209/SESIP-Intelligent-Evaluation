@@ -18,7 +18,10 @@ def upload_file(file):
         for page in doc:
             text += page.get_text()
 
-    md5_value = hashlib.md5(open(file, 'rb').read()).hexdigest()
-    detail_message = st_detail_placeholder(md5_value)
+    file_content = open(file, 'rb').read()
+    md5_value = hashlib.md5(file_content).hexdigest()
+    sha256_value = hashlib.sha256(file_content).hexdigest()
+
+    detail_message = st_detail_placeholder({"md5": md5_value, "sha256": sha256_value})
 
     return detail_message
