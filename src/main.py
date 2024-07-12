@@ -16,13 +16,12 @@ def main():
             with gr.Column(elem_classes="app-left"):
                 file_input = PDF(label="Upload PDF", height=800, elem_classes="st_upload")
             with gr.Column(elem_classes="app-right"):
-                with gr.Row():
-                    file_details = {"md5": "", "sha256": ""}
-                    file_md5 = gr.Markdown(st_detail_placeholder(file_details), elem_classes="st_detail_custom")
-                with gr.Row():
-                    eval_btn = gr.Button("Process Evaluation")
 
-                eval_result = gr.Textbox(label="Security Target Evaluation result", elem_classes="")
+                file_details = {"md5": "", "sha256": ""}
+                file_md5 = gr.Markdown(st_detail_placeholder(file_details), elem_classes="st_detail_custom")
+
+                model = gr.Dropdown(label="Select Model", choices=["gpt 3.5", "gpt 4.0"])
+                eval_btn = gr.Button("Process Evaluation")
 
         file_input.upload(upload_file, file_input, file_md5)
 
