@@ -21,4 +21,4 @@ def upload_file(file):
     md5_value = hashlib.md5(open(file, 'rb').read()).hexdigest()
     detail_message = st_detail_placeholder(md5_value)
 
-    return text, detail_message
+    return detail_message
