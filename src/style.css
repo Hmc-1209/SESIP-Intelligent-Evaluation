@@ -1,0 +1,12 @@
+.st_upload {
+    height: 900px;
+    margin: 0;
+    padding: 0;
+}
+
+.st_detail_custom {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 15px;
+}
