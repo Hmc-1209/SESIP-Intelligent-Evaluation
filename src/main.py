@@ -1,5 +1,7 @@
 import gradio as gr
+from gradio_pdf import PDF
 import fitz
+import hashlib
 
 
 def upload_file(file):
@@ -7,7 +9,8 @@ def upload_file(file):
     with fitz.open(file) as doc:
         for page in doc:
             text += page.get_text()
-    return text
+    md5_value = hashlib.md5(open(file, 'rb').read()).hexdigest()
+    return text, md5_value
 
 
 with gr.Blocks() as demo:
@@ -16,10 +19,12 @@ with gr.Blocks() as demo:
 
     with gr.Column():
         with gr.Row():
-            file_input = gr.File(label="Upload PDF")
-            file_detail = gr.Markdown("## Security Target details", height=500)
+            file_input = PDF(label="Upload PDF")
+            with gr.Column():
+                file_detail = gr.Markdown("## Security Target details", height=500)
+                file_md5 = gr.Textbox(label="MD5 checksum")
         pdf_content = gr.Textbox(label="PDF content", lines=10)
 
-    file_input.upload(upload_file, file_input, pdf_content)
+    file_input.upload(upload_file, file_input, [pdf_content, file_md5])
 
 demo.launch()
