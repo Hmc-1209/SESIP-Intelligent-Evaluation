@@ -13,8 +13,9 @@ def main():
         gr.Markdown("Fast LLM evaluated result will be provided using this tool.")
 
         with gr.Row():
-            file_input = PDF(label="Upload PDF", height=800, elem_classes="st_upload")
-            with gr.Column():
+            with gr.Column(elem_classes="app-left"):
+                file_input = PDF(label="Upload PDF", height=800, elem_classes="st_upload")
+            with gr.Column(elem_classes="app-right"):
                 with gr.Row():
                     file_details = {"md5": "", "sha256": ""}
                     file_md5 = gr.Markdown(st_detail_placeholder(file_details), elem_classes="st_detail_custom")

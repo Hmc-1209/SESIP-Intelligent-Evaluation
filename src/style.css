@@ -1,3 +1,11 @@
+.app-left {
+    margin-right: 12px;
+}
+
+.app-right {
+    margin-left: 12px;
+}
+
 .st_upload {
     height: 900px;
     margin: 0;
@@ -9,4 +17,9 @@
     outline: none;
     background-color: transparent;
     font-size: 15px;
+    overflow: scroll;
+}
+
+.st_detail_custom::-webkit-scrollbar {
+            display: none;
 }
