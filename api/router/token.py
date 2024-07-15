@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-from Repository.TokenCRUD import generate_access_token, validate_access_token
+from repository.TokenCRUD import generate_access_token, validate_access_token
 from exception import no_such_user
 
 router = APIRouter(prefix="/token", tags=["Token"])

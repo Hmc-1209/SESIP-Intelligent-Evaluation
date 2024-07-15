@@ -2,9 +2,9 @@ from fastapi import Depends
 from datetime import timedelta, datetime
 from jose import jwt, JWTError
 
-from Repository.CommonCRUD import check_user
-from Authentication.hashing import verify_password
-from Authentication.OAuth2 import oauth2_token_scheme
+from repository.CommonCRUD import check_user
+from authentication.hashing import verify_password
+from authentication.OAuth2 import oauth2_token_scheme
 from config import access_token_secret_key, algorithm, access_token_expire_days
 from exception import no_such_user, token_expired
 

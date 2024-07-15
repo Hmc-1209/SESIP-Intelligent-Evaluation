@@ -1,4 +1,4 @@
-from Authentication import JWTtoken
+from authentication import JWTtoken
 from models import User
 from database import db
 

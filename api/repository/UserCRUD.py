@@ -1,7 +1,7 @@
 from models import User
 from database import db, execute_stmt_in_tran
 from schemas import BaseUser, CompleteUser
-from Authentication.hashing import hash_password
+from authentication.hashing import hash_password
 
 
 async def get_user_by_name(username: str) -> BaseUser:

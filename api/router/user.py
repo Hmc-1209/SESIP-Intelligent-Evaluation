@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends
 
 from schemas import BaseUser,  CompleteUser
 from exception import duplicate_data, bad_request
-from Repository.UserCRUD import get_user_by_name, create_user, update_user
-from Authentication.JWTtoken import get_current_user
-from Authentication.hashing import hash_password
+from repository.UserCRUD import get_user_by_name, create_user, update_user
+from authentication.JWTtoken import get_current_user
+from authentication.hashing import hash_password
 
 router = APIRouter(prefix="/user", tags=["User"])
 
