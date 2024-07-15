@@ -16,11 +16,11 @@ def st_detail_placeholder(details: dict[str, str]) -> str:
     """
 
 
-def assessment_status_placeholder(status: int) -> str:
+def evaluation_status_placeholder(status: int) -> str:
     match status:
         case 0:
-            return "<div class='assessment_status_pending'><i>Pending...</i></div>"
+            return "<i><b><div class='evaluation_status'>Pending</div></b></i>"
         case 1:
-            return ""
+            return "<i><b><div class='evaluation_status evaluation_status_pass'>Pass</div></b></i>"
         case 2:
-            return ""
+            return "<i><b><div class='evaluation_status evaluation_status_fail'>Fail</div></b></i>"

@@ -23,7 +23,7 @@ def main():
 
                 model = gr.Dropdown(label="Select Model", choices=["gpt 3.5", "gpt 4.0"])
                 eval_btn = gr.Button("Process Evaluation")
-                assessment_status = gr.HTML(assessment_status_placeholder(0))
+                assessment_status = gr.HTML(evaluation_status_placeholder(0))
 
         file_input.upload(upload_file, file_input, file_md5)
 
