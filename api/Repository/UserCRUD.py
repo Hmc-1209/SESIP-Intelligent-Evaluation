@@ -13,3 +13,9 @@ async def create_user(user: BaseUser) -> bool:
     stmt = User.insert().values(username=user.username,
                                 password=hash_password(user.password))
     return await execute_stmt_in_tran([stmt])
+
+
+async def update_user(user: CompleteUser) -> bool:
+    stmt = User.update().where(User.c.user_id == user.user_id).values(username=user.username,
+                                                                      password=user.password)
+    return await execute_stmt_in_tran([stmt])

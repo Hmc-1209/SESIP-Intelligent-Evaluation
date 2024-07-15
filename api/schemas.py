@@ -4,8 +4,8 @@ from datetime import date
 
 # ----- Schemas for User table -----
 class BaseUser(BaseModel):
-    username: str
-    password: str
+    username: str | None = None
+    password: str | None = None
 
 
 class CompleteUser(BaseUser):
