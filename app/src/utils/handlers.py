@@ -5,12 +5,12 @@ from utils.placeholders import st_detail_placeholder
 
 def upload_file(file):
     """
-    Send the uploaded st information to get the content and detail displayed
+    Upload Security Target file
 
-    This function take a file upload and returns the st detail and contents
+    This function take a file upload and returns the st detail
 
-    :param file: str
-    :return: text: st content, detail_message: st detail information
+    :param file: string, the content of the uploaded st file
+    :return: detail_message: string, st detail information in Markdown format
     """
 
     text = ""

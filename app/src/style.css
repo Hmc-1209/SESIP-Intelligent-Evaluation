@@ -7,10 +7,11 @@
 }
 
 .st_upload {
-    height: 900px;
+    height: 830px;
     margin: 0;
     padding: 0;
 }
+
 
 .st_detail_custom {
     border: none;
@@ -19,10 +20,10 @@
     font-size: 15px;
     overflow: scroll;
 }
-
 .st_detail_custom::-webkit-scrollbar {
             display: none;
 }
+
 
 .evaluation_status {
     width: 100%;
@@ -37,17 +38,71 @@
     justify-content: center;
     align-items: center;
 }
-
 .evaluation_status_pass {
     color: #1eaf1e;
     background-color: rgba(13, 124, 13, 0.5);
     border: #1eaf1e 1px solid;
     opacity: 1;
 }
-
 .evaluation_status_fail {
     color: red;
     background-color: rgba(181, 36, 36, 0.5);
     border: red 1px solid;
     opacity: 1;
 }
+
+
+.st_summary {
+    font-size: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+.st_summary_pass_num {
+    color: #0caf0c;
+    display: inline;
+}
+.st_summary_fail_num {
+    color: red;
+    display: inline;
+}
+
+
+.app-eval-result {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    max-height: 500px;
+    display: flex;
+    overflow: hidden;
+}
+.app-eval-result-left {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 500px;
+    overflow-y: auto;
+    /*overflow-x: hidden;*/
+    max-height: 100%;
+}
+.app-eval-result-detail-btn {
+    width:100%;
+}
+.app-eval-result-left::-webkit-scrollbar {
+    width: 4px;
+}
+.app-eval-result-left::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+.app-eval-result-right {
+    flex: 3;
+    padding: 10px;
+    overflow-y: auto;
+    height: 480px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
