@@ -12,7 +12,7 @@ from exception import no_such_user, token_expired
 def generate_access_token(data: dict):
     """Generate access_token"""
 
-    data["exp"] = datetime.utcnow() + timedelta(days=access_token_expire_days)
+    data["exp"] = datetime.utcnow() + timedelta(days=int(access_token_expire_days))
     token = jwt.encode(data, access_token_secret_key, algorithm=algorithm)
 
     return token
