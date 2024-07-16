@@ -15,15 +15,16 @@ class CompleteUser(BaseUser):
         from_attributes = True
 
 
+# ----- Schemas for SecurityTarget table -----
 class BaseST(BaseModel):
     st_name: str
-    is_valid: bool
 
 
 class CompleteST(BaseST):
     create_date: date
     update_date: date
     sesip_level: int
+    is_valid: bool
     owner_id: int
 
     class Config:
