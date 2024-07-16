@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, status
 
 from authentication.JWTtoken import get_current_user
 from exception import duplicate_data, bad_request, no_such_user, no_such_st, st_not_belongs
-from repository.STCRUD import get_st_by_id, get_st_by_name, get_st_by_user_id, update_st_by_id, delete_st_by_id
+from repository.STCRUD import *
 from repository.UserCRUD import get_user_by_id
-from schemas import ListST, DetailST, UpdateST
+from schemas import ListST, DetailST, CreateST, UpdateST
 
 router = APIRouter(prefix="/st", tags=["Security Target"])
 
@@ -36,6 +36,15 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
         raise st_not_belongs
 
     return st.eval_file
+
+
+@router.post("/", status_code=status.HTTP_201_CREATED)
+async def create_security_target(new_st: CreateST, current_user=Depends(get_current_user)) -> None:
+    if await get_st_by_name(new_st.st_name):
+        raise duplicate_data
+
+    if not await create_st(new_st, current_user.user_id):
+        raise bad_request
 
 
 @router.patch("/{st_id}")

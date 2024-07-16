@@ -36,5 +36,13 @@ class DetailST(ListST):
     is_valid: bool
 
 
+class CreateST(BaseST):
+    st_details: dict
+    st_file: str
+    eval_details: str
+    eval_file: str
+    is_valid: bool
+
+
 class UpdateST(BaseST):
     owner_id: int | None = None
