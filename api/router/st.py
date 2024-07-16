@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, status
 from authentication.JWTtoken import get_current_user
 from exception import duplicate_data, bad_request, no_such_st, st_not_belongs
 from repository.STCRUD import get_st_by_id, get_st_by_name, get_st_by_user_id, update_st_by_id, delete_st_by_id
-from schemas import ListST, UpdateST
+from schemas import ListST, DetailST, UpdateST
 
 router = APIRouter(prefix="/st", tags=["Security Target"])
 
@@ -11,6 +11,18 @@ router = APIRouter(prefix="/st", tags=["Security Target"])
 @router.get("/")
 async def security_targets(current_user=Depends(get_current_user)) -> list[ListST]:
     return await get_st_by_user_id(current_user.user_id)
+
+
+@router.get("/{st_id}")
+async def get_detail_security_target(st_id: int, current_user=Depends(get_current_user)) -> DetailST:
+    st = await get_st_by_id(st_id)
+    if not st:
+        raise no_such_st
+
+    if not current_user.user_id == st.owner_id:
+        raise st_not_belongs
+
+    return st
 
 
 @router.patch("/{st_id}")

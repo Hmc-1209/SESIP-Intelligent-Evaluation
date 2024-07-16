@@ -31,6 +31,8 @@ class ListST(BaseST):
 
 class DetailST(ListST):
     st_details: dict
+    st_file: str
+    eval_details: str
     is_valid: bool
 
 

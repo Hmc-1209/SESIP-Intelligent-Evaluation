@@ -3,7 +3,7 @@ from database import db, execute_stmt_in_tran
 from schemas import BaseST, DetailST, UpdateST
 
 
-async def get_st_by_id(st_id: int) -> BaseST:
+async def get_st_by_id(st_id: int) -> DetailST:
     stmt = SecurityTarget.select().where(SecurityTarget.c.st_id == st_id)
     return await db.fetch_one(stmt)
 
