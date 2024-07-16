@@ -26,6 +26,10 @@ async def create_new_user(user: DetailUser) -> None:
 @router.patch("/")
 async def update_current_user(user: DetailUser, current_user=Depends(get_current_user)) -> None:
     update_data = user.model_dump(exclude_unset=True, exclude_none=True)
+
+    if update_data.get("username") and await get_user_by_name(update_data["username"]):
+        raise duplicate_data
+
     if update_data.get("password"):
         update_data["password"] = hash_password(update_data["password"])
     update = CompleteUser.model_validate(current_user).model_copy(update=update_data)
