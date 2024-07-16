@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 
 from schemas import BaseUser, CompleteUser
 from exception import duplicate_data, bad_request
@@ -9,7 +9,7 @@ from authentication.hashing import hash_password
 router = APIRouter(prefix="/user", tags=["User"])
 
 
-@router.post("/")
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_new_user(user: BaseUser) -> None:
     if await get_user_by_name(user.username):
         raise duplicate_data
@@ -29,7 +29,7 @@ async def update_current_user(user: BaseUser, current_user=Depends(get_current_u
         raise bad_request
 
 
-@router.delete("/")
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_current_user(current_user=Depends(get_current_user)) -> None:
     if not await delete_user(current_user.user_id):
         raise bad_request
