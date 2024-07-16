@@ -25,6 +25,18 @@ async def get_detail_security_target(st_id: int, current_user=Depends(get_curren
     return st
 
 
+@router.get("/download/{st_id}")
+async def download_eval_file(st_id: int, current_user=Depends(get_current_user)) -> str:
+    st = await get_st_by_id(st_id)
+    if not st:
+        raise no_such_st
+
+    if not current_user.user_id == st.owner_id:
+        raise st_not_belongs
+
+    return st.eval_file
+
+
 @router.patch("/{st_id}")
 async def update_security_target(st_id: int, new_st: UpdateST, current_user=Depends(get_current_user)) -> None:
     st = await get_st_by_id(st_id)
