@@ -23,12 +23,10 @@ class BaseST(BaseModel):
     st_name: str
 
 
-class CompleteST(BaseST):
-    create_date: date
-    update_date: date
-    sesip_level: int
+class DetailST(BaseST):
+    st_id: int
+    st_details: dict
     is_valid: bool
-    owner_id: int
 
     class Config:
         from_attributes = True

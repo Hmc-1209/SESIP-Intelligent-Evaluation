@@ -15,12 +15,13 @@ CREATE TABLE User
 -- Create SecurityTarget table
 CREATE TABLE SecurityTarget
 (
-    st_id       INT AUTO_INCREMENT PRIMARY KEY,
-    st_name     VARCHAR(50) NOT NULL UNIQUE,
-    create_date DATE        NOT NULL,
-    update_date DATE        NOT NULL,
-    sesip_level INT         NOT NULL,
-    is_valid    BOOL        NOT NULL,
-    owner_id    INT         NOT NULL,
+    st_id        INT AUTO_INCREMENT PRIMARY KEY,
+    st_name      VARCHAR(50) NOT NULL UNIQUE,
+    st_details   JSON        NOT NULL,
+    st_file      TINYTEXT    NOT NULL,
+    eval_details TINYTEXT    NOT NULL,
+    eval_file    TINYTEXT    NOT NULL,
+    is_valid     BOOL        NOT NULL,
+    owner_id     INT         NOT NULL,
     FOREIGN KEY (owner_id) REFERENCES User (user_id)
 );

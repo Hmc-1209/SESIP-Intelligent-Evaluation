@@ -15,9 +15,10 @@ SecurityTarget = sqlalchemy.Table(
     metadata,
     Column("st_id", sqlalchemy.INTEGER, primary_key=True, index=True),
     Column("st_name", sqlalchemy.VARCHAR(50), nullable=False, unique=True),
-    Column("create_date", sqlalchemy.DATE, nullable=False),
-    Column("update_date", sqlalchemy.DATE, nullable=False),
-    Column("sesip_level", sqlalchemy.INTEGER, nullable=False),
+    Column("st_details", sqlalchemy.JSON, nullable=False),
+    Column("st_file", sqlalchemy.TEXT, nullable=False),
+    Column("eval_details", sqlalchemy.TEXT, nullable=False),
+    Column("eval_file", sqlalchemy.TEXT, nullable=False),
     Column("is_valid", sqlalchemy.BOOLEAN, nullable=False),
     Column("owner_id", sqlalchemy.INTEGER, ForeignKey("User.user_id"), nullable=False)
 )
