@@ -20,7 +20,10 @@ class CompleteUser(BaseUser):
 
 # ----- Schemas for SecurityTarget table -----
 class BaseST(BaseModel):
-    st_name: str
+    st_name: str | None = None
+
+    class Config:
+        from_attributes = True
 
 
 class DetailST(BaseST):
@@ -28,5 +31,6 @@ class DetailST(BaseST):
     st_details: dict
     is_valid: bool
 
-    class Config:
-        from_attributes = True
+
+class UpdateST(BaseST):
+    owner_id: int | None = None

@@ -12,3 +12,9 @@ bad_request = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
 
 duplicate_data = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                detail="Data Duplicated.")
+
+no_such_st = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                           detail="Security Target not found.")
+
+st_not_belongs = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                               detail="Security Target not belongs to user.")
