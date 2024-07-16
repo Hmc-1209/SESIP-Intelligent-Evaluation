@@ -1,7 +1,12 @@
 from models import User, SecurityTarget
 from database import db, execute_stmt_in_tran
-from schemas import BaseUser, CompleteUser
+from schemas import BaseUser, DetailUser, CompleteUser
 from authentication.hashing import hash_password
+
+
+async def get_users() -> list[BaseUser]:
+    stmt = User.select()
+    return await db.fetch_all(stmt)
 
 
 async def get_user_by_name(username: str) -> BaseUser:
@@ -9,7 +14,7 @@ async def get_user_by_name(username: str) -> BaseUser:
     return await db.fetch_one(stmt)
 
 
-async def create_user(user: BaseUser) -> bool:
+async def create_user(user: DetailUser) -> bool:
     stmt = User.insert().values(username=user.username,
                                 password=hash_password(user.password))
     return await execute_stmt_in_tran([stmt])

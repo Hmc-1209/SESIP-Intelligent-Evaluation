@@ -5,6 +5,9 @@ from datetime import date
 # ----- Schemas for User table -----
 class BaseUser(BaseModel):
     username: str | None = None
+
+
+class DetailUser(BaseUser):
     password: str | None = None
 
 
