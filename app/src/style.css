@@ -1,10 +1,24 @@
+footer {
+    visibility: hidden;
+}
+
+
+body::-webkit-scrollbar {
+    width: 4px;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+
 .app-left {
     margin-right: 12px;
 }
-
 .app-right {
     margin-left: 12px;
 }
+
 
 .st_upload {
     height: 830px;
@@ -83,7 +97,6 @@
     flex-wrap: nowrap;
     height: 500px;
     overflow-y: auto;
-    /*overflow-x: hidden;*/
     max-height: 100%;
 }
 .app-eval-result-detail-btn {
@@ -104,5 +117,17 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-left: 10px;
+    flex-wrap: nowrap;
+}
+.app-eval-result-right::-webkit-scrollbar {
+    width: 4px;
+}
+.app-eval-result-right::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
 }
 
+.detail_result {
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 20px;
+}

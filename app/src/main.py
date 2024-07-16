@@ -11,6 +11,7 @@ def main():
     """
 
     results = []
+    result_btns = []
     results = [
         {"id": 1, "summary": "Result 1", "detail": "Detail information for Result 1"},
         {"id": 2, "summary": "Result 2", "detail": "Detail information for Result 2"},
@@ -44,12 +45,18 @@ def main():
                     for result in results:
                         btn = gr.Button(result["summary"], elem_id=str(result["id"]), interactive=True,
                                         elem_classes="app-eval-result-detail-btn")
+                        result_btns.append(btn)
                 with gr.Column(scale=3, elem_classes="app-eval-result-right"):
-                    detail_result = gr.Markdown("Click a result to see the detail", elem_id="detail_result")
+                    detail_result = gr.Markdown("Click a result to see the detail",
+                                                elem_id="detail_result", elem_classes="detail_result")
+
+        for btn in result_btns:
+            btn_result_detail = gr.Markdown(value=results[result_btns.index(btn)]["detail"], visible=False)
+            btn.click(select_detail_result, btn_result_detail, detail_result)
 
         with gr.Row():
             save_btn = gr.Button("Save")
-            clear_btn = gr.Button("Clear")
+            clear_btn = gr.ClearButton()
 
     app.launch()
 

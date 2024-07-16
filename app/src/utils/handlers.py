@@ -1,5 +1,6 @@
 import fitz
 import hashlib
+import gradio as gr
 from utils.placeholders import st_detail_placeholder
 
 
@@ -25,3 +26,21 @@ def upload_file(file):
     detail_message = st_detail_placeholder({"md5": md5_value, "sha256": sha256_value})
 
     return detail_message
+
+
+def select_detail_result(detail):
+    """
+    Select the detail result to show
+
+    The function of setting the Markdown code for showing result section.
+    :param detail: gr.Textbox, the detail message containing in Textbox value
+    :return: string, the Markdown code for showing the result
+    """
+
+    detail = detail.replace('\n', '<br>')
+
+    return f"""
+    <div class='detail_result'>
+    {detail}
+    </div>
+    """
