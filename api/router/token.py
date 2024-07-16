@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from repository.TokenCRUD import generate_access_token, validate_access_token
-from exception import no_such_user
+from exception import validation_failed
 
 router = APIRouter(prefix="/token", tags=["Token"])
 
@@ -19,7 +19,7 @@ async def create_access_token(form_data: OAuth2PasswordRequestForm = Depends()) 
     token = await generate_access_token(data)
 
     if not token:
-        raise no_such_user
+        raise validation_failed
 
     return {"access_token": token}
 

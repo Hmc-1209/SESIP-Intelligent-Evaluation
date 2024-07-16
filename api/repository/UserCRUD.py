@@ -1,12 +1,17 @@
-from models import User, SecurityTarget
-from database import db, execute_stmt_in_tran
-from schemas import BaseUser, DetailUser, CompleteUser
 from authentication.hashing import hash_password
+from database import db, execute_stmt_in_tran
+from models import User, SecurityTarget
+from schemas import BaseUser, DetailUser, CompleteUser
 
 
 async def get_users() -> list[BaseUser]:
     stmt = User.select()
     return await db.fetch_all(stmt)
+
+
+async def get_user_by_id(user_id: int) -> BaseUser:
+    stmt = User.select().where(User.c.user_id == user_id)
+    return await db.fetch_one(stmt)
 
 
 async def get_user_by_name(username: str) -> BaseUser:

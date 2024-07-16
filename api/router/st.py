@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, status
 
 from authentication.JWTtoken import get_current_user
-from exception import duplicate_data, bad_request, no_such_st, st_not_belongs
+from exception import duplicate_data, bad_request, no_such_user, no_such_st, st_not_belongs
 from repository.STCRUD import get_st_by_id, get_st_by_name, get_st_by_user_id, update_st_by_id, delete_st_by_id
+from repository.UserCRUD import get_user_by_id
 from schemas import ListST, DetailST, UpdateST
 
 router = APIRouter(prefix="/st", tags=["Security Target"])
@@ -50,6 +51,9 @@ async def update_security_target(st_id: int, new_st: UpdateST, current_user=Depe
 
     if update_data.get("st_name") and await get_st_by_name(update_data["st_name"]):
         raise duplicate_data
+
+    if update_data.get("owner_id") and not await get_user_by_id(update_data["owner_id"]):
+        raise no_such_user
 
     update = UpdateST.model_validate(st).model_copy(update=update_data)
 
