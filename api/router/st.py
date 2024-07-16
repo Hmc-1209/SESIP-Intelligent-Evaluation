@@ -1,15 +1,15 @@
 from fastapi import APIRouter, Depends, status
 
-from schemas import DetailST, UpdateST
+from authentication.JWTtoken import get_current_user
 from exception import duplicate_data, bad_request, no_such_st, st_not_belongs
 from repository.STCRUD import get_st_by_id, get_st_by_name, get_st_by_user_id, update_st_by_id, delete_st_by_id
-from authentication.JWTtoken import get_current_user
+from schemas import ListST, UpdateST
 
 router = APIRouter(prefix="/st", tags=["Security Target"])
 
 
 @router.get("/")
-async def security_targets(current_user=Depends(get_current_user)) -> list[DetailST]:
+async def security_targets(current_user=Depends(get_current_user)) -> list[ListST]:
     return await get_st_by_user_id(current_user.user_id)
 
 

@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from datetime import date
 
 
 # ----- Schemas for User table -----
@@ -26,8 +25,11 @@ class BaseST(BaseModel):
         from_attributes = True
 
 
-class DetailST(BaseST):
+class ListST(BaseST):
     st_id: int
+
+
+class DetailST(ListST):
     st_details: dict
     is_valid: bool
 
