@@ -127,7 +127,27 @@ body::-webkit-scrollbar-thumb {
     border-radius: 10px;
 }
 
+
 .detail_result {
     background-color: rgba(0, 0, 0, 0);
     font-size: 20px;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login_page_title {
+    text-align: center;
+    font-size: 30px;
+    padding: 40px;
+}
+.login_page_main_app {
+    width: 600px;
+    height: 500px;
+    padding: 50px;
 }
