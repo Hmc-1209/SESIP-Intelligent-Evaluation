@@ -16,7 +16,7 @@ CREATE TABLE User
 CREATE TABLE SecurityTarget
 (
     st_id        INT AUTO_INCREMENT PRIMARY KEY,
-    st_name      VARCHAR(50) NOT NULL UNIQUE,
+    st_name      VARCHAR(50) NOT NULL,
     st_details   JSON        NOT NULL,
     st_file      TINYTEXT    NOT NULL,
     eval_details TINYTEXT    NOT NULL,

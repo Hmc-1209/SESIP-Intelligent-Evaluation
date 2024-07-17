@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 
 from authentication.JWTtoken import get_current_user
-from exception import duplicate_data, bad_request, no_such_user, no_such_st, st_not_belongs
+from exception import bad_request, no_such_user, no_such_st, st_not_belongs
 from repository.STCRUD import *
 from repository.UserCRUD import get_user_by_id
 from schemas import ListST, DetailST, CreateST, UpdateST
@@ -40,9 +40,6 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_security_target(new_st: CreateST, current_user=Depends(get_current_user)) -> None:
-    if await get_st_by_name(new_st.st_name):
-        raise duplicate_data
-
     if not await create_st(new_st, current_user.user_id):
         raise bad_request
 
@@ -57,9 +54,6 @@ async def update_security_target(st_id: int, new_st: UpdateST, current_user=Depe
         raise st_not_belongs
 
     update_data = new_st.model_dump(exclude_unset=True, exclude_none=True)
-
-    if update_data.get("st_name") and await get_st_by_name(update_data["st_name"]):
-        raise duplicate_data
 
     if update_data.get("owner_id") and not await get_user_by_id(update_data["owner_id"]):
         raise no_such_user

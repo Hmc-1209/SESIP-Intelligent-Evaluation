@@ -14,7 +14,7 @@ SecurityTarget = sqlalchemy.Table(
     "SecurityTarget",
     metadata,
     Column("st_id", sqlalchemy.INTEGER, primary_key=True, index=True),
-    Column("st_name", sqlalchemy.VARCHAR(50), nullable=False, unique=True),
+    Column("st_name", sqlalchemy.VARCHAR(50), nullable=False),
     Column("st_details", sqlalchemy.JSON, nullable=False),
     Column("st_file", sqlalchemy.TEXT, nullable=False),
     Column("eval_details", sqlalchemy.TEXT, nullable=False),
