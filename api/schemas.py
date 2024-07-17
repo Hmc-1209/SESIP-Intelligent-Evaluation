@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 # ----- Schemas for User table -----
@@ -13,16 +13,18 @@ class DetailUser(BaseUser):
 class CompleteUser(BaseUser):
     user_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
 # ----- Schemas for SecurityTarget table -----
 class BaseST(BaseModel):
     st_name: str | None = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
 class ListST(BaseST):
