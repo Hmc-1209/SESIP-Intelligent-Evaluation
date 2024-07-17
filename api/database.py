@@ -22,7 +22,6 @@ DATABASE_URL = f"mysql+asyncmy://{config.db_user}:{config.db_pass}@{config.db_ho
 db = databases.Database(DATABASE_URL)
 
 metadata = MetaData()
-engine = create_async_engine(DATABASE_URL)
 
 
 async def execute_stmt_in_tran(stmt_list: list[ClauseElement]) -> bool:
