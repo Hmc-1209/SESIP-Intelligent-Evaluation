@@ -133,21 +133,26 @@ body::-webkit-scrollbar-thumb {
     font-size: 20px;
 }
 
-
-html, body {
-    height: 100%;
-    margin: 0;
+.login_page {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 100%;
+    text-align: center;
+}
+.login_page_title {
+    font-size: 30px;
+    padding: 25px;
+    text-align: center;
+}
+.login_page_main_app {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.login_page_title {
-    text-align: center;
-    font-size: 30px;
-    padding: 40px;
-}
-.login_page_main_app {
-    width: 600px;
-    height: 500px;
-    padding: 50px;
+.login_form, .signup_form {
+    width: 500px;
 }

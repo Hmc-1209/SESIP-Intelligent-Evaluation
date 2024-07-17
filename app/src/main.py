@@ -8,10 +8,10 @@ def main():
     """
 
     # Main app
-    # app = evaluation_page.app
+    app = evaluation_page.app
 
     # Login page
-    app = login_page.app
+    # app = login_page.app
 
     app.launch()
 
