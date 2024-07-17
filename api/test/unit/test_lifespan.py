@@ -1,9 +1,9 @@
-import pytest
-from httpx import AsyncClient, ASGITransport
+from unittest.mock import AsyncMock, patch
+
 from fastapi.testclient import TestClient
+
 from database import db
 from main import app
-from unittest.mock import AsyncMock, patch
 
 
 class TestLifespan:
