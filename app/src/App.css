@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.main_app_loading_background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  opacity: .6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

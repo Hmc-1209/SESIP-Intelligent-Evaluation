@@ -9,29 +9,29 @@ import get_access_token from "../requests/login_requests";
 const LogIn = () => {
   // LogIn component will be rendered when clicking Admin section on home page
 
-  let { alert, setAlert, setMode } = useContext(AppContext);
+  let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
   const error = (error_message) => toast.error(error_message);
   const warn = (warn_message) => toast.warn(warn_message);
   const success = (success_message) => toast.success(success_message);
  
   const loggingIn = async () => {
     // Log In and set the localStorage datas
+    setLoading(0);
     const username = document.getElementById("username_input").value;
     const password = document.getElementById("password_input").value;
     if (username === "" || password === "") {
+      setLoading(false);
       error("Incomplete login credentials.");
       return;
     }
 
     const response = await get_access_token(username, password);
-
+    setLoading(false);
     if (response === 1) {
       setMode(2);
     } else if (response === "Username or password incorrect.") {
       error("Incorrect username or password.");
     }
-    console.log(response)
-    
   };
 
   // Check if the user is logging out

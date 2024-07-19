@@ -53,7 +53,7 @@ export const validate_access_token = async (
         }
       );
       if (response.status === 200) {
-        return null;
+        return response;
       }
       return response.detail;
     } catch (error) {

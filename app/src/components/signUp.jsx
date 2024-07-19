@@ -9,21 +9,24 @@ import { regist_new_user } from "../requests/login_requests";
 const SignUp = () => {
   // LogIn component will be rendered when clicking Admin section on home page
 
-  let { alert, setAlert, setMode } = useContext(AppContext);
+  let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
   
   const error = (error_message) => toast.error(error_message);
 
   const signingUp = async () => {
     // Sign Up 
+    setLoading(0);
     const username = document.getElementById("username_input").value;
     const password = document.getElementById("password_input").value;
     const password_confirm = document.getElementById("password_confirm_input").value;
     if (username === "" || password === "" || password_confirm === "") {
       error("Incomplete sign up credentials.")
+      setLoading(false);
       return;
     }
     if (password !== password_confirm) {
       error("Confirm password not match.")
+      setLoading(false);
       return;
     }
     
@@ -32,12 +35,15 @@ const SignUp = () => {
     if (response === 201) {
       setAlert(2);
       setMode(0);
+      setLoading(false);
       return;
     } else if (response === "Data Duplicated.") {
       error("This username has been registed.")
+      setLoading(false);
       return;
     }
     error("Unknown problem happened. Please try again later.")
+    setLoading(false);
     return;
   };
 
