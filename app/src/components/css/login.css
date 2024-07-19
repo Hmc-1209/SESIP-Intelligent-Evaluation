@@ -1,0 +1,90 @@
+.LogInPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+  }
+
+.LogInView {
+    position: relative;
+    width: 30%;
+    height: auto;
+    border: rgb(109, 109, 109) 1px solid;
+    border-radius: 10px;
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.LogInFormInputSection {
+    width: 80%;
+    border: rgb(109, 109, 109) 1px solid;
+    border-radius: 5px;
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    margin: 10px;
+}
+.LogInFormTitle {
+    color:rgb(173, 173, 173);
+    width: 100%;
+    font-size: 50px;
+    padding: 20px;
+    font: bold;
+}
+.LogInFormLabel {
+    width: 90%;
+    font-size: 20px;
+    text-align: left;
+    color:rgb(109, 109, 109);
+}
+.LogInFormInput {
+    width:90%;
+    font-size: 25px;
+    background-color: #282c34;
+    color: rgb(109, 109, 109);
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+.LogInFormInput:focus {
+  outline: none;
+}
+.LogInFormButton {
+    margin: 10px;
+    padding: 5px;
+    width: 60%;
+    font-size: 25px;
+    border: none;
+    border-radius: 10px;
+    color:rgb(78, 78, 78);
+    background-color: rgb(177, 177, 177);
+    transition: ease-in-out .3s;
+}
+.LogInFormButton:hover {
+    background-color: rgb(206, 206, 206);
+    transition: ease-in-out .3s;
+}
+
+.signup_hint {
+    width: 60%;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    transition: ease-in-out .1s;
+}
+.signup_hint:hover {
+    color:#8d8d8d;
+    transition: ease-in-out .1s;
+}
+
+.alert {
+    font-size: 15px;
+}

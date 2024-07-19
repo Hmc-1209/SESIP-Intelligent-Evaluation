@@ -1,8 +1,4 @@
-gradio==4.37.2
 numpy==2.0
-openai==1.35.13
-PyMuPDF==1.24.7
-gradio_pdf==0.0.11
 greenlet==3.0.3
 sqlalchemy==2.0.31
 databases==0.9.0
