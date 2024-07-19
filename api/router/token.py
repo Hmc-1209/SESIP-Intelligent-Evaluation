@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from repository.TokenCRUD import generate_access_token, validate_access_token
 from exception import validation_failed
+from schemas import CompleteUser
 
 router = APIRouter(prefix="/token", tags=["Token"])
 
@@ -25,7 +26,7 @@ async def create_access_token(form_data: OAuth2PasswordRequestForm = Depends()) 
 
 
 @router.post("/validate_access_token")
-async def validate_the_access_token(token: str) -> None:
+async def validate_the_access_token(token: str) -> CompleteUser:
     """The endpoint of validate the access_token's availability"""
 
     return await validate_access_token(token)

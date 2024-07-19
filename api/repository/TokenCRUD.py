@@ -1,5 +1,6 @@
 from authentication import JWTtoken
 from models import User
+from schemas import CompleteUser
 from database import db
 
 
@@ -15,5 +16,5 @@ async def generate_access_token(data: dict) -> str | bool:
     return False
 
 
-async def validate_access_token(token: str):
-    await JWTtoken.get_current_user(token)
+async def validate_access_token(token: str) -> CompleteUser:
+    return await JWTtoken.get_current_user(token)
