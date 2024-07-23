@@ -299,3 +299,24 @@
 .result_brief_label:hover {
     background-color: rgb(122, 122, 122);
 }
+
+
+.footer_btn_group {
+    width: 100%;
+    text-align: center;
+}
+.save_evaluation_result_btn {
+    width: 47%;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    color: rgb(206, 206, 206);
+    background-color: #494c50;
+    transition: all .2s;
+}
+.save_evaluation_result_btn:hover {
+    background-color: #707379;
+    transition: all .2s;
+}

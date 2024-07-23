@@ -4,6 +4,7 @@ import './App.css';
 import LogIn from "./components/login";
 import SignUp from "./components/signUp";
 import MainApp from "./components/main_app";
+import Setting from "./components/setting";
 import { validate_access_token } from "./requests/login_requests";
 import { ColorRing } from 'react-loader-spinner'
 
@@ -55,6 +56,7 @@ function App() {
           {mode === 0 && <LogIn />}
           {mode === 1 && <SignUp />}
           {mode === 2 && <MainApp />}
+          {mode === 3 && <Setting />}
           {loading === 0 && 
           <div className="main_app_loading_background">
             <ColorRing

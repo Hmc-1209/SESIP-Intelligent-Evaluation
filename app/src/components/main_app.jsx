@@ -57,6 +57,9 @@ const MainApp = () => {
         setAlert(1);
         setMode(0);
     }
+    const setting = () => {
+        setMode(3);
+    }
 
     // Upload ST handling function
     const handleFileChange = (event) => {
@@ -107,7 +110,7 @@ const MainApp = () => {
                             </div>
                             {/* User settings button */}
                             <div className="dropdown-content">
-                                <button><pre>Setting</pre></button>
+                                <button onClick={setting}><pre>Setting</pre></button>
                             </div>
                             {/* User log out button */}
                             <div className="dropdown-content">
@@ -186,6 +189,15 @@ const MainApp = () => {
                 <div className="result_detail_content">
                     {selectedResult ? selectedResult.detail : "Select result for more information."}
                 </div>
+            </div>
+            
+            <div className="footer_btn_group">
+                <button className="save_evaluation_result_btn">
+                    <i class="fa-solid fa-floppy-disk"></i> Save
+                </button>
+                <button className="save_evaluation_result_btn">
+                <i class="fa-solid fa-download"></i> Download
+                </button>
             </div>
         </div>
     )
