@@ -26,10 +26,10 @@ const LogIn = () => {
     }
 
     const response = await get_access_token(username, password);
-    setLoading(false);
     if (response === 1) {
       setMode(2);
     } else if (response === "Username or password incorrect.") {
+      setLoading(false);
       error("Incorrect username or password.");
     }
   };

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ip } from "./request_host_up";
+import { ip } from "./request_host_ip";
 
 
 /* Request behaviors with access token */

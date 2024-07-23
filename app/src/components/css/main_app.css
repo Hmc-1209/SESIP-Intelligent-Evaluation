@@ -28,12 +28,13 @@
 .main_app_navbar_button_group {
     text-align: right;
     flex-grow: 1;
+    position: relative;
+    display: inline-block;
 }
 .main_app_navbar_button {
-    font-size: 20px;
+    font-size: 40px;
     font: bold;
     padding: 15px;
-    margin-top: 25px;
     color: rgb(211, 211, 211);
     background-color: rgba(0, 0, 0, 0);
     border:none;
@@ -44,6 +45,87 @@
     transition: ease-in-out .2s;
 }
 
+.dropdown-wrapper {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    background-color: #323741;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown-content button {
+    color: rgb(212, 212, 212, .8);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border: 1px rgb(212, 212, 212, .8);
+    border-radius: 3px;
+    background: none;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-content button:hover {
+    background-color: #3b414d;
+}
+
+.user_st_lists {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -207px;
+    padding: 0;
+    margin: 0;
+    background-color: #323741;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+.user_st_lists::-webkit-scrollbar {
+    width: 8px;
+}
+.user_st_lists::-webkit-scrollbar-track {
+    background: transparent;
+}
+.user_st_lists::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.user_st_lists
+.user_st_list_item {
+    width: 200px;
+    font-size: 15px;
+    color: rgba(212, 212, 212, 0.8);
+    background: none;
+    border: none;
+    overflow: hidden;
+}
+.user_st_list_item:hover {
+    background-color: #3b414d;
+    margin:0;
+}
+
+.dropdown-content:hover .user_st_lists,
+.user_st_lists:hover {
+    display: block;
+}
+
+.main_app_navbar_button:hover .dropdown-content {
+    display: block;
+}
+
 .main_app_st_section {
     display: flex;
     align-items: flex-start;
@@ -52,7 +134,7 @@
 
 .st_upload_btn {
     min-width: calc(50% - 5px);
-    height: 140vh;
+    height: 900px;
     font-size: 20px;
     color: rgb(202, 202, 202);
     background-color: rgba(0, 0, 0, 0);
@@ -68,7 +150,7 @@
 
 .st_content_display {
     min-width: calc(50% - 25px);
-    height: 140vh;
+    height: 900px;
     padding: 10px;
     border: white 1px solid;
     border-radius: 5px;

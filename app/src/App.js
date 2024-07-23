@@ -30,7 +30,6 @@ function App() {
       } else {
         window.localStorage.setItem("username", response.data.username);
         window.localStorage.setItem("user_id", response.data.user_id);
-        console.log("Validate token");
         setLoading(false);
         setMode(2); // Go to main app page
       }
@@ -65,7 +64,7 @@ function App() {
               ariaLabel="color-ring-loading"
               wrapperStyle={{}}
               wrapperClass="color-ring-wrapper"
-              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+              colors={['#5A7D7C', '#DADFF7', '#232C33', '#A0C1D1', '#B5B2C2']}
             />
           </div>}
         </header>

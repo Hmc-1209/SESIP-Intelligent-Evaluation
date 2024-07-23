@@ -1,30 +1,55 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 import ReactDropdown from "react-dropdown";
-import "react-dropdown/style.css"
+import "react-dropdown/style.css";
 import CryptoJS from "crypto-js";
-import models from './models.json'
+import models from './models.json';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import get_user_st from "../requests/user_requests";
 // For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
 import "./css/main_app.css";
 
 const MainApp = () => {
-    let { alert, setAlert, setMode } = useContext(AppContext);
+
+    // Static variables
+    const model_options = models.available_models;
+    const eval_result_status = ['Pending', 'Pass', 'Fail'];
+    
+    // Context variables
+    let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
+
+    // useState variables
+    const [userST, setUserST] = useState(null);
     const [STFile, setSTFile] = useState(null);
     const [STUrl, setSTUrl] = useState('');
-    const model_options = models.available_models;
     const [STInfo, setSTInfo] = useState({ md5: '', sha256: '' });
-    const eval_result_status = ['Pending', 'Pass', 'Fail'];
     const [currentEvalResult, setCurrentEvalResult] = useState(eval_result_status[0]);
     const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0, 0, 0]);
-    // Evaluation results should contain 1.name 2.status(pass or fail) 3.detail explain of the result
-    const [evalResults, setEvalResults] = useState([
-        {"name": "result1", "status": "pass", "detail": "detail 1"},
-        {"name": "result2", "status": "fail", "detail": "detail 2"},
-        {"name": "result3", "status": "fail", "detail": "detail 3"},
-    ]);
     const [selectedResult, setSelectedResult] = useState(null);
+    const [evalResults, setEvalResults] = useState([]); // Evaluation results should contain 1.name 2.status(pass or fail) 3.detail explain of the result
 
+    useEffect(() => {
+        const get_st = async () => {
+            const token = window.localStorage.getItem("access_token");
+            try {
+                const user_st = await get_user_st();
+                if(user_st) {
+                    setUserST(user_st.data);
+                    setLoading(false);
+                }
+            }
+            catch(error) {
+                console.log("error");
+            }
+            console.log(userST);
+        }
+
+        get_st();
+    }, [])
+
+
+    // Logout initialization function
     const logOut = () => {
         window.localStorage.setItem("access_token", null);
         window.localStorage.setItem("username", null);
@@ -33,6 +58,7 @@ const MainApp = () => {
         setMode(0);
     }
 
+    // Upload ST handling function
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -65,7 +91,30 @@ const MainApp = () => {
                     <div className="main_app_navbar_subtitle">LLM evaluated result will be provided using this tool.</div>
                 </div>
                 <div className="main_app_navbar_button_group">
-                    <button className="main_app_navbar_button" onClick={logOut}>Log out</button>
+                    <button className="main_app_navbar_button">
+                        <i className="fa-solid fa-user"></i>
+                        <div className="dropdown-wrapper">
+                            {/* User Security Target select section */}
+                            <div className="dropdown-content">
+                                <button><pre>◀  History ST</pre></button>
+                                <div className="user_st_lists">
+                                    {userST && userST.map((st, index) => (
+                                        <div className="user_st_list_item" key={index}>
+                                            <button><pre>{st.st_name}</pre></button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            {/* User settings button */}
+                            <div className="dropdown-content">
+                                <button><pre>Setting</pre></button>
+                            </div>
+                            {/* User log out button */}
+                            <div className="dropdown-content">
+                                <button onClick={logOut}><pre>Log out</pre></button>
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </div>
 
@@ -127,7 +176,7 @@ const MainApp = () => {
                     </div>
                 </div>
             </div>
-            <div className="main_app_result_section">    
+            <div className="main_app_result_section">
                 
                 <div className="result_container">
                     {evalResults.map(result => (
