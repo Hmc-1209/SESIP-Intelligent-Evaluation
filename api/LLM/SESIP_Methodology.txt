@@ -1,0 +1,90 @@
+1. Introduction
+SESIP is based on the Common Criteria methodology ISO/IEC 15408-3, specialized for the evaluation of Connected Platforms in the context of IoT. 
+
+
+2. OVERVIEW
+IoT is a broad term, but always contains a product (thing) and some form of connectivity (internet). 
+SESIP focuses on the “thing” side of IoT, and on the security of Connected Products based on Connected Platforms.
+A Connected Platform typically includes the following components: 
+    • Hardware (processing unit, memory, possibly a secure element, at least one network interface, possibly some sensors)
+    • An operating system, providing a foundation to run Connected Applications on the hardwar
+    • A network connectivity layer, allowing the connection of the product to backend or other products
+    • Software application services offered to Connected Applications, providing an application framework to product vendors
+The main assets of a Connected Platform:
+    • User data (local): Privacy concerns are essential.Protections of integrity, authenticity, and confidentiality must be provided.
+    • User data (authentication data): Confidentiality is required for secrets. Secondary data (such as counters) must be appropriately protected (integrity, confidentiality).
+    • Data in transit (internet): Confidentiality and integrity are often essential, as are authenticity and authentication of the other party.
+    • Data in transit (local): Integrity is often essential. Confidentiality is not a systematic requirement. Authenticity and authentication of the other party are less common.
+    • Code, including platform code and application code: Integrity and authenticity are strong requirements. Confidentiality is optional.
+    • Product identity: Integrity and unicity are required.
+    • Configuration and system data: Integrity and authenticity are required.
+    • Life cycle related data: Integrity is required.
+The assets may be further categorized into different criticality levels that will be protected at the appropriate level in the platform (part) – in the case of a multi-assurance platform, see section 2.4.2.
+2.3 Connected Product Life cycle
+Some patterns can be found in most products that are significant for security:
+    • Vendor provisioning is the phase during which the product is provisioned with credentials that are shared with the vendor’s backend, and that allow the product to communicate securely with the backend and to perform management operations.
+    • User provisioning is the phase during which the product is provisioned with a user’s credentials and specific data that allow the product to represent that user. This phase typically concludes with the normal usage phase of the product.
+    • Normal usage is supposed to be the product’s normal state, until one of the following events occurs: (1) The user applies a factory reset, which removes all user-related data and credentials, and prepares the product to be transferred to another entity (e.g. for resale, for return, or even for temporary storage). (2) The product is then ready again for user provisioning, but a user should not have the ability to return the product to an earlier life cycle phase. The user decommissions the product, before discarding it. This Terminated state is irreversible.
+Some products may include an additional state related to Field return, during which specific debugging 
+features may be available. All user data and credentials shall have been removed before reaching that state.
+2.4 Reusability in SESIP
+SESIP security requirements are defined in a way that enables the establishment of equivalence with the requirements of other schemes. After successful compatibility analysis, this allows the reuse of evaluation results between schemes.
+To maintain security through the whole assembly process can be quite complex, unless all the vendors of those components (hardware and software) use a common methodology.
+In order to address this, SESIP considers the following reuse contexts:
+    • Reuse of evaluated platform parts in several platforms (parts)
+    • Reuse of evaluated platform parts from a hosting platform (part) to another on
+2.4.2 Additive Composition within SESIP
+The objective of additive composition is to facilitate the evaluation of a Connected Platform by reusing previous evaluation results of platform (parts).
+SESIP allows different composition scenarios:
+    • Combination of previously evaluated platform parts
+    • Combination of platform part(s) to be evaluated with previously evaluated platform part(s)
+    • Combination of a platform to be evaluated with previously evaluated platform parts
+The final IoT device can rely on the successive evaluated platform parts and reuse each evaluation result. All the supply chain actors benefit from the additive composition: from the evaluation of a hardware block, through the evaluation of intermediate modules, to an evaluated device.
+Composition Evaluation Rules
+Evaluation of a composition of platform parts must assess that the guidance (including objectives for the environment, user guidance, integration guidance, etc.) of each platform part is respected.
+Evaluation of a composition of platform parts must assess the impact of the composition on the correct security functioning of the platform parts. 
+By default, the composition can claim at most the lowest assurance level of the platform parts it is composed of. 
+For instance, a Connected Platform composed of a SESIP2 platform part and a SESIP5 platform part cannot be certified at an overall level higher than SESIP2 without providing additional evidence about the SESIP2 part or about its usage by the SESIP5 platform part.
+Nevertheless, in such a case, the Security Target may identify a subset of the SFRs that require higher assurance.
+In that case, the Security Target can claim the assurance level of the high-assurance part, provided that the SFRs covered by the higher part are clearly identified to the reader. Using the example from the previous paragraph, the Connected Platform could claim being at SESIP2 with a SESIP5 part covering only the SFRs of the SESIP5 part.
+The assurance level for such an evaluation shall be referred to as "SESIP2 with SESIP5 part(s)".
+Moreover, the SESIP level of an individual platform part could also be increased once composed with another platform part providing security features with a higher assurance level; this must be demonstrated by evidences at the composition level.
+2.5 Accessibility and Transparency
+SESIP must also ensure that these vendors have the ability to properly leverage in their products the security features provided by evaluated platforms (parts). This is achieved mostly through the Security Target, which must become a document exploitable by developers who are proficient in security but are not evaluation specialists.
+SESIP Security Targets must respect several key characteristics:
+    • The security objectives are the concretization of the risk analysis informing the reader about the security features to be covered by the product. They must be described by the Security Target writer such that developers can leverage these features, and to facilitate the reuse of SESIP evidences.
+    • The SESIP Security Functional Requirements (SFRs), which are the expression of the security objectives into implementation requirements, are tailored for Connected Platforms. In SESIP, each SFR covers a full security purpose by itself. This allows the Security Target users to develop an intuitive understanding of the security requirements. Note that flexibility for requirement construction is lower than when purposes are met by several SFRs; however, in a specific context where needs are predictable, such as a Connected Platform, such flexibility has been found not beneficial. SESIP pre-defines a set of such SFRs, which are detailed in Chapter 3.
+    • The specification summary written by the platform evaluator must be at a sufficient level of detail to demonstrate that the SFRs are met by the specific implementation.
+    • The summary description of the flaw remediation process, written by the platform (part) developer, must explain in particular how the discovery of a vulnerability and the subsequent analysis may lead to the development and distribution of a platform update or to other corrective measures.
+    • Reference to user guidance must be included, along with a description of how a prospective user can access this documentation.
+The SESIP Security Target and the documentation that it refers to are intended to be publicly accessible documentation, at least to prospective adopters of the platform (part); this can be refined in individual schemes, depending on the security sensitivity of the evaluated platforms (parts).
+2.6 Security Self-assessment in SESIP
+Security self-assessment by the developer is based on the demonstration that all security requirements are properly covered in the form of a rationale included in the SESIP Security Target.
+Such a rationale must be provided for:
+    • Every Security Functional Requirement claimed, describing how this requirement is covered by the implementation
+    • In the case of a composition, every Security Objective for the Environment defined by a platform part, to demonstrate how this objective is met and/or define it again as a Security Objective for the platform Environment
+    • The flaw remediation claim, providing a description of a compliant process
+    • Each document required by the claimed Security Assurance Level, explaining how that documentation can be accessed
+    • Publicly known vulnerabilities against the platform (part), providing a vulnerability review
+Every rationale is based on a self-assessment by the developer that must be validated by a third-party platform evaluator. The extent of work performed by the platform evaluator depends on the selected assurance level.
+2.7 Catalog of Security Features and Assurance Packages
+SESIP includes a catalog of Security Functional Requirements (SFRs) as an essential part of the methodology, which allows for a consistent definition of platforms (parts) and supports a fair comparison between them. 
+This catalog defines a set of security features that are essential to platforms (parts), and for which there is a shared understanding in the community. 
+These security features are therefore more likely to be accessible to product vendors; they also simplify reusability and contribute to SESIP’s formalism (see previous sections).
+However, it must also be ensured that the methodology provides the stability required to build and maintain a coherent certification ecosystem. 
+Therefore, in the case where a feature does not match any of the SFRs defined in the SESIP catalog, a vendor may be allowed by the scheme to add product-specific SFRs, as long as they are explicitly identified as such, and are clearly separated from the SFRs already in the catalog.
+Regarding Security Assurance Requirements (SARs), vendors are not allowed to claim any additional requirements in a SESIP evaluation. However, a specific certification scheme may include limited refinement of the SARs in the SESIP levels.
+2.8 SESIP Profiles and Mappings
+SESIP Profiles and SESIP Mappings are documents intended to support the usability of the SESIP methodology in the field.
+2.8.1 SESIP Profiles
+The SESIP methodology allows the definition of security profiles generic to a type of platform (part); e.g. MCU/MPU, cryptographic library, communication library, etc. These are called SESIP Profiles and are equivalent to CC Protection Profiles: A SESIP Profile document is a generic SESIP Security Target defining the SESIP requirements in terms of security features (see Chapter 3) and evaluation activities (see Chapter 4) to be addressed during the evaluation of a platform (part) of the type targeted by the profile.
+SESIP Profiles are intended to be written by entities or groups needing security evaluations for a specific market and/or playing a role in such evaluations. This allows them to ensure that any platform (parts) evaluated against a SESIP Profile implements an expected minimum set of features, reaching a targeted security level; also, as the same set of features is assessed based on the same evaluation activities, this allows comparability between evaluations of different evaluated platform (parts).
+Thanks to the accessibility of SESIP requirements (see section 2.5), stakeholders without specific expertise in evaluation are able to write and understand a SESIP Profile.
+2.8 SESIP Mappings
+As described in section 2.4.1, SESIP is intended to work with existing standards, providing them with a framework for the evaluation of their requirements. Indeed, SESIP defines security requirements (see Chapters 3 and 4) that can be claimed by developers to be addressed in SESIP evaluations. Those requirements have been expressed at a level allowing the coverage of main features of IoT Platforms. As a result, requirements of existing standards can easily be mapped to SESIP requirements.
+Along with such mapping, the results of the SESIP evaluation can be reused as a demonstration of compliance to an IoT standard, confirming that the IoT standard’s security features have been correctly and efficiently implemented.
+SESIP Mappings are intended to be written by entities or groups who would like to use SESIP evaluation results as the basis for the demonstration of compliance to a standard.
+The benefit of the SESIP evaluation in this context is the reuse of an initial SESIP evaluation to demonstrate compliance with several standards, each standard being associated with a dedicated mapping.
+
+
+3. SECURITY FUNCTIONAL REQUIREMENTS
