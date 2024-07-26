@@ -26,3 +26,29 @@ const get_user_st = async (access_token) => {
       return false;
 }
 export default get_user_st;
+
+export const update_username = async (access_token, new_username) => {
+    
+  const token = window.localStorage.getItem("access_token");
+  const body = {username: new_username}
+
+  try {
+      const response = await axios.patch(`${ip}/user/update_username`, body, {
+        headers: {
+          accept: "application/json",
+          Authorization: "Bearer " + token
+        },
+        validateStatus: function (status) {
+          return (status >= 200 && status < 300) || status === 404;
+        },
+      });
+      console.log('1', response.data)
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return error.response.data.detail;
+    }
+}

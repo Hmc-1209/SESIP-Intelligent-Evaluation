@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 
 import { AppContext } from "../App";
 import { ToastContainer, toast } from 'react-toastify';
+import { update_username } from "../requests/user_requests";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,8 +16,36 @@ const Setting = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [updateMode, setUpdateMode] = useState(0);
 
-    const submit_update = () => {
+    const error = (error_message) => toast.error(error_message);
+    const success = (success_message) => toast.success(success_message);
+
+    const submit_update = async () => {
         setLoading(0);
+        const access_token = window.localStorage.getItem("access_token");
+        if(updateMode === 0) {
+            const new_username = document.getElementById("change_username").value;
+            if (new_username === "") {
+                error("Username cannot be empty.");
+                setLoading(false);
+                return;
+            }
+
+            const response = await update_username(access_token, new_username);
+            if (response) {
+                if (response === "Data Duplicated.") {
+                    error("The username has been registed.");
+                    setLoading(false);
+                    return;
+                }
+                success("The username has been updated.")
+                setLoading(false);
+                return;
+            } else {
+                error("Unknown error happend. Please Try again later.")
+                setLoading(false);
+                return;
+            }
+        }
     }
 
     const return_main_page = () => {
@@ -89,7 +118,8 @@ const Setting = () => {
             
             
             <i className="fa-solid fa-rotate-left return_btn" onClick={return_main_page}></i>
-            <button className="setting_submit_btn">Submit</button>
+            <button className="setting_submit_btn" onClick={submit_update}>Submit</button>
+            <ToastContainer theme="colored" className="alert" limit={1} autoClose={2000}/>
         </div>
     )
 };
