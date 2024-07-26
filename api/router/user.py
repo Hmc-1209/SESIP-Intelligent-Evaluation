@@ -34,6 +34,9 @@ async def update_user_username(user: BaseUser, current_user=Depends(get_current_
 
 @router.patch("/update_password")
 async def update_user_password(user: UpdateUser, current_user=Depends(get_current_user)) -> None:
+    if not verify_password(user.old_password, current_user.password):
+        raise password_incorrect
+
     if not await update_password(current_user.user_id, user):
         raise bad_request
 
