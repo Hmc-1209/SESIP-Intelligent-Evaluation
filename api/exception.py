@@ -15,6 +15,8 @@ duplicate_data = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
 
 no_such_user = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                              detail="User not found.")
+password_incorrect = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                   detail="Password incorrect.")
 
 no_such_st = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                            detail="Security Target not found.")

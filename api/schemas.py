@@ -3,11 +3,16 @@ from pydantic import BaseModel, ConfigDict
 
 # ----- Schemas for User table -----
 class BaseUser(BaseModel):
-    username: str | None = None
+    username: str
 
 
 class DetailUser(BaseUser):
-    password: str | None = None
+    password: str
+
+
+class UpdateUser(BaseModel):
+    old_password: str
+    new_password: str
 
 
 class CompleteUser(BaseUser):
