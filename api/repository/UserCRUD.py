@@ -1,7 +1,8 @@
 from authentication.hashing import hash_password
 from database import db, execute_stmt_in_tran
 from models import User, SecurityTarget
-from schemas import BaseUser, DetailUser, CompleteUser
+from schemas import BaseUser, DetailUser, UpdateUser
+from authentication.hashing import hash_password
 
 
 async def get_users() -> list[BaseUser]:
@@ -25,9 +26,13 @@ async def create_user(user: DetailUser) -> bool:
     return await execute_stmt_in_tran([stmt])
 
 
-async def update_user(user: CompleteUser) -> bool:
-    stmt = User.update().where(User.c.user_id == user.user_id).values(username=user.username,
-                                                                      password=user.password)
+async def update_username(user_id: int, user: BaseUser) -> bool:
+    stmt = User.update().where(User.c.user_id == user_id).values(username=user.username)
+    return await execute_stmt_in_tran([stmt])
+
+
+async def update_password(user_id: int, user: UpdateUser) -> bool:
+    stmt = User.update().where(User.c.user_id == user_id).values(password=hash_password(user.new_password))
     return await execute_stmt_in_tran([stmt])
 
 
