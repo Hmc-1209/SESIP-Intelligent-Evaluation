@@ -385,3 +385,174 @@ Considerations:
     • The list of entropy sources defines how the randomness is generated from physical and computational resources.
     • The specification references the standard in which the operation is defined (including a section or similar information if relevant).
 The specification of the number generation algorithm can be useful for use in specific product evaluation schemes. Regardless of the algorithm used, every attack within the attack potential applies: Weak entropy and predictability shall always be checked against.
+
+3.6 ComplianceFunctionality
+These are commonly required properties from various product domains and schemes.
+
+3.6.1 Secure Trusted Storage
+Requirement:
+The platform ensures that all user data stored, except for <list of data stored in plaintext>, is protected to ensure its integrity, authenticity, and binding to the platform instance.
+Value:
+Evaluators and developers of composites can be assured of the integrity and authenticity of stored data.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of data stored in plaintext lists the categories that are excluded from the secure encrypted storage, which should be used for all other data.
+The mechanism used shall protect both the integrity and authenticity of stored data.
+Note that if the storage must be protected against read out by physical attackers, “Physical Attacker Resistance” should be used.
+
+3.6.2 Secure Confidential Storage
+Requirement:
+The platform ensures that all data stored by the application, except for <list of data stored>, is protected to ensure its confidentiality, integrity, authenticity, and binding to the platform instance.
+Value:
+Evaluators and developers of composites can be assured of the confidentiality, integrity, and authenticity of stored data.
+Considerations:
+Can be used for situations where the storage is protected by non-encryption means.
+
+3.6.3 Secure Encrypted Storage
+Requirement:
+The platform ensures that all user data stored, except for <list of data stored in plaintext>, is encrypted as specified in <specification> with a platform instance unique key of key length <key length>.
+Value:
+Evaluators and developers of composites can be assured that (implicitly) stored data is encrypted, without further activities.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of data stored in plaintext lists the categories that are excluded from the secure encrypted storage, which should be used for all other data.
+    • The specification references the standard in which the encryption mechanism is defined (including a section or similar information if relevant).
+    • The key length is the size of the key used for the encryption.
+The encryption mechanism used shall protect both the confidentiality and integrity of stored data.
+The key used to encrypt the data shall be generated such that compromise of the key of one product instance does not allow compromise of another product instance; moreover, the confidentiality of this key must be protected.
+This may be implemented using the “Cryptographic Operation” functionality, but that SFR should only be claimed if the functionality of that SFR is directly available to the user (e.g. the application).
+
+3.6.4 Secure Data Serialization
+Requirement:
+The platform ensures that all data stored outside the direct control of the platform, except for <list of data stored outside the direct control of the platform>, is protected such that the <selection: confidentiality, integrity, authenticity, binding to the platform instance, versioning> is ensured.
+Value:
+Evaluators and developers of composites can be assured that data can be stored outside of the platform without being modified or disclosed.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of data stored outside of the direct control of the platform.
+    • The protections ensured by the mechanism.
+    If cryptographic algorithms are used, also provide:
+    • The specification references the standard in which the cryptographic algorithms used for data encryption are defined (including a section or similar information if relevant).
+    • The key length is the size of the keys used by the cryptographic algorithms used for data encryption. 
+The key used in the encryption mechanism shall be generated such that compromise of the key of one product instance does not allow easier compromise of another product instance.
+This may be implemented using the “Cryptographic Operation” functionality, but that SFR should only be claimed if the functionality of that SFR is directly available to the user (e.g. the application).
+Note that if the storage must be protected against read out by physical attackers, “Physical Attacker Resistance” should be used.
+
+3.6.5 Residual Information Purging
+Requirement:
+The platform ensures that <list of data>, with the exception of <list of data that is not erased automatically>, is erased using the method specified in <specification> before the memory is used by the platform or application again and before an attacker can access it.
+Value:
+Evaluators and developers of composites can be assured that (implicitly) stored and copied data is erased automatically, without further activities.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of data defines the categories of data that are to be cleared automatically, which is expected to be very wide (see below).
+    • The list of exceptions of data that is not erased automatically defines the categories that are not expected to be cleared automatically.
+    • The specification references the standard in which the encryption mechanism is defined (including a section or similar information if relevant).
+Typically, the list of data would be “all data of the application no longer used by the application”, allowing for lazy erasure happening only at reuse of the memory, not immediately at release of the memory to match common software implementations.
+Attacks such as cold boot need to be considered.
+
+3.6.6 Audit Log Generation and Storage
+Requirement:
+The platform generates and maintains an audit log of <list of significant security events> and allows access and analysis of these logs following a specific <access control policy>.
+Value:
+Evaluators, developers, and users of composites can detect attack attempts to the platform.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of significant security events defines the events in the log, which are expected to provide a wide coverage of the platform’s possible events.
+    • The access control policy defines the conditions under which the logs may be inspected, typically by specific privileged users after authentication.
+“Software Attacker Resistance: Isolation of Platform” might also be claimed to support this claim.
+
+3.6.7 Reliable Index
+Requirement:
+The platform implements a strictly increasing function.
+Value:
+This feature can be used to implement means to track versions or even time.
+Considerations:
+An only-increasing counter of events or timer ticks fulfills this requirement, as does a protected time measurement.
+
+3.6.8 Secure Debugging
+Requirement:
+The platform only provides <list of endpoints> authenticated as specified in <specification> with debug functionality.
+The platform ensures that all user data stored, with the exception of <list of exceptions>, is made unavailable. 
+Value:
+Developers of composites can debug their products without compromising the security of their users’ data.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of endpoints lists the endpoints (potentially with their physical connection and the authentication data needed) allowed to set the platform in debug mode.
+    • The specification references the standard in which the authentication mechanism is defined (including a section or similar information if relevant).
+    • The list of exceptions lists the data that is excluded from the protection during debugging. This should not include user data that has a reasonable expectation of containing the user’s personally identifiable information.
+This may be implemented using “Secure Communication Support” functionality.
+
+3.6.9 Secure Recovery
+Requirement:
+The platform detects anomalies <list of anomalies> and recovers to return to a known state <list of controlled states>.
+Value:
+For resilience, the platform might provide a mechanism to return to a defined controlled state, such as an update or recovery state.
+Considerations:
+This can be a dangerous mechanism; for instance, rollback can introduce some security drawback. This needs to be considered during the assessment. Care should be taken not to restore to an inappropriate state, e.g. monotonically incrementing counters and attack counters should not be decremented.
+
+
+3.6.10 Secure Backup and Restore
+Requirement:
+The platform ensures that user data <list of data>, with the exception of <list of exceptions>, can be backed up and restored such that the <confidentiality,> integrity and authenticity is protected.
+Value:
+This can be used to support IoT device standards requirements as for instance IEC 62443 CR 7.3 Control system backup.
+Considerations:
+If confidentiality is not claimed, the impact on other SFRs needs to be considered: Any data that can be backed up without confidentiality should be considered to be known to the attacker when analyzing the SFRs.
+Care should be taken not to restore to an inappropriate state; e.g. monotonically incrementing counters and attack counters should not be decremented.
+
+3.6.11 Generic Security Platform Feature
+Requirement:
+The platform provides the <security operation(s)> according to <specification(s)>. 
+Value:
+The platform implements a specific security feature, other than IoT generic features listed in this catalogue, and its execution shall specifically be assessed against the objective of the security feature and assured not to negatively impact the other security functionality of the platform and its data.
+As an example this could be used to cover the IEC 62443 CR 3.4 requirements about “Software and information integrity”.
+Considerations:
+This SFR shall be used only when functionality implemented by the platform is not covered by an SFR in the catalogue already.
+
+3.7 AccessControl
+These are commonly required properties from various product domains and schemes.
+
+3.7.1 Privileged Access Control
+Requirement:
+The platform allows access to <list of allowed resources/operations> only based on <list of privileges>. 
+Value:
+    This SFR can be used to require access control mechanisms that are not based on regular user authentication, as for instance access control based on:
+    • Physical access to a push button
+    • The physical/virtual address of request
+    • The request context; e.g. Root/User mode, NSPE/SPE mode, user/process ID, etc.
+    • The network origin; e.g. from internal or external port
+Considerations:
+The implementation fulfilling this feature can be common or partly common to the one fulfilling isolation requirement; e.g. ARM TrustZone implementation can be used to isolate the platform (e.g. SPE) from the application (e.g. NSPE) and perform access control based on the NSPE/SPE origin.
+
+3.7.2 Authenticated Access Control
+Requirement:
+The platform allows only <list of role(s)> identified, authenticated, and authorized to allow performing of <list of allowed resources/operations>.
+Value:
+This SFR can be used to require authentication for restricted operations, allowing computer or human roles to allow access to restricted functionality, for example to show compliance to EN 303 645 Provision 5.1-2, 5.2-4, 5.5-4, and 5.5-5, or IEC 62443 CR 1.1 Human user identification and authentication, CR 1.3 Account management, CR 2.1 Authorization enforcement, and CR 2.12 Non-repudiation.
+Considerations:
+Management of the access entities assigned to roles, the roles, the roles’ authorizations and allowed operations, should also be considered an operation and included in the encoded specification. It may be useful to iterate this SFR for readability.
+
+3.8 Availability
+Security Evaluation Standard for IoT Platforms (SESIP) Methodology
+These are commonly required properties from various product domains and schemes.
+3.8.1 Constrained Demands on the Environment Capability
+Requirement:
+The platform limits its demands to its environment according to: <list of rules>. 
+Value:
+The platform might be in situations where the environment depends on the platform to not make undue demands on the environment to prevent denial of service attacks or overwhelm of this infrastructure, i.e. the platform being the source of an (accidental) denial of service attack on the environment.
+For example in an electricity network, an attacker may try to maliciously manipulate the power demand across many devices, causing failure of system components or generating stations. This SFR can be used to ensure that the platform limits its transition speed (such as disconnecting loads once an hour at most).
+Considerations:
+This SFR describes the platform’s restraints to avoid being the cause of a denial of service attack on the environment. If resistance of the platform against denial of service attacks is required, use the SFR in section 3.8.2.
+
+
+3.8.2 Availability Support
+Requirement:
+The platform ensures the availability and proper operation of <list of Security Functional Requirements> for the following situations <list of situations>.
+Value:
+This can be used to show resistance when the platform is under denial of service attacks, such as the IEC 62443 CR 7.1 Denial of service protection and CR 7.2 Resource management requirements.
+Considerations:
+All attacks within the attack potential and any additional attacker resistances are in scope.
+This SFR describes the platform’s resistance to denial of service attacks. If the platform’s restraints to avoid being the cause of a denial of service attack on the environment is required, use the SFR in section 3.8.1.
+
+4 SECURITY ASSURANCE REQUIREMENTS
