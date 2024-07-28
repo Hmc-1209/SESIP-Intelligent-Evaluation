@@ -4,7 +4,7 @@ SESIP is based on the Common Criteria methodology ISO/IEC 15408-3, specialized f
 
 2. OVERVIEW
 IoT is a broad term, but always contains a product (thing) and some form of connectivity (internet). 
-SESIP focuses on the “thing” side of IoT, and on the security of Connected Products based on Connected Platforms.
+SESIP focuses on the "thing" side of IoT, and on the security of Connected Products based on Connected Platforms.
 A Connected Platform typically includes the following components: 
     • Hardware (processing unit, memory, possibly a secure element, at least one network interface, possibly some sensors)
     • An operating system, providing a foundation to run Connected Applications on the hardwar
@@ -88,3 +88,300 @@ The benefit of the SESIP evaluation in this context is the reuse of an initial S
 
 
 3. SECURITY FUNCTIONAL REQUIREMENTS
+The SFRs are described with the wording of the requirement, the "value", and the "considerations".
+    • The wording of the requirement describes what must be implemented; in some requirements, the text includes fields within angle brackets (<>) to be filled with the specificities of platforms (parts).
+    • The "value" section describes the value added by a platform providing this functionality, to the users, evaluators, and developers of composite IoT products and platforms.
+    • The "considerations" section describes what aspects should be considered in the evaluation and certification of this SFR.
+All Security Targets must include the "Verification of Platform Identity" SFR, and all must either include the "Secure Update of Platform" SFR or argue under ALC_FLR.2 why updates are not applicable.
+
+3.1 Identification and Attestation of Platforms and Applications
+Identification and attestation of applications, platforms, and platform parts allow customers, developers, and evaluators to verify that they have the evaluated product. More complex attestation allows for a wider scope of what is attested, and higher assurance on that which is attested. The SFRs in this subsection are to be used to express identification and attestation requirements.
+
+3.1.1 Verification of Platform Identity
+Requirement:
+The platform provides a unique identification of the platform, including all its parts and their versions.
+Value:
+Users can verify that they have a secure product only if they can obtain the identifications of the product parts (application and Connected Platform). The platform is a crucial building block of that identification process.
+Evaluators and developers of composites need to be able to verify the identity, too (but might require attestation for higher assurance; see section 3.1.3).
+Considerations:
+The ST describes the platform, thereby defining all its parts.
+Developers of platform (parts) are required to keep the identification (globally) unique: All products from that developer that identify in the way the evaluated product is identified shall be the evaluated product. This functional requirement is mandatory for all platforms, to ensure that customers can verify that they have the correct platform. In case of composition, the platform identification must also cover the integrated parts.
+
+3.1.2 Verification of Platform Instance Identity
+Requirement:
+The platform provides a unique identification of that specific instantiation of the platform, including all its parts.
+Value:
+Developers of composites may need a unique identifier for a specific instantiation of a platform.
+Considerations:
+Developers of platform (parts) are required to keep the individual instantiation identification (globally) unique in combination with the "Verification of Platform Identity".
+A typical example of platform identity is the platform serial number.
+
+3.1.3 Attestation of Platform Genuineness
+Requirement:
+The platform provides an attestation of the "Verification of Platform Identity" and "Verification of Platform Instance Identity", in a way that ensures that the platform cannot be cloned or changed without detection.
+Value:
+Users, developers, and evaluators can verify that they have the genuine (secure) product, not an insecure/incomplete clone. This gives more assurance to those parties and makes the genuine secure product more distinctive and valuable. Together with the "Verification of Platform Instance Identity" SFR, authentication of this platform can be shown.
+Users of the platform certificates issued against this standard, such as dedicated schemes for products, can use this attestation as their way of identifying the genuine product.
+Considerations:
+The genuine identification is used to ensure that a given platform is a genuine instantiation of the platform and not a product posturing as one (i.e. a clone), hence the mechanism and its keys are valuable to an attacker seeking to clone the platform or otherwise misuse the developer’s brand and reputation. As the developer is potentially held accountable for clones identifying as the genuine platform, or at least suffers reputation damage for them, such an attacker goal shall be considered as part of the evaluation.
+
+3.1.4 Secure Initialization of Platform
+Requirement:
+The platform ensures its integrity and authenticity during platform initialization. If the platform integrity or authenticity cannot be ensured, the platform will go to <list of controlled states>.
+Value:
+Users, developers, and evaluators can trust that the platform verified its integrity and authenticity at start-up, hence an operational product is running on a secure platform.
+Considerations:
+A platform detecting a breach of integrity or authenticity may offer "Factory Reset of Platform" and/or "Secure Update of Platform" functionality to recover a given product, or "Decommission of Platform" functionality to neutralize the product.
+
+3.1.5 Attestation of Platform State
+Requirement:
+The platform provides an attestation of the state of the platform, such that it can be determined that the platform is in a known state.
+Value:
+Users, evaluators, and developers of composites can verify that the platform is in a known state that was part of the evaluation.
+Consideration:
+Implies that "Attestation of Platform Genuineness" and "Secure Initialization of Platform" are also implemented.
+
+3.1.6 Attestation of Application Genuineness
+Requirement:
+The platform provides an attestation of the application, in a way that ensures that the application has not been cloned or changed without detection.
+Value:
+Users can determine that they have the genuine (secure) product, not an insecure/incomplete clone. This gives more assurance to the user and makes the genuine (secure) product more distinctive and valuable.
+Considerations:
+Implies that "Attestation of Platform Genuineness" and "Secure Initialization of Platform" are also implemented.
+
+3.1.7 Attestation of Application State
+Requirement:
+The platform provides an attestation of the state of the application.
+Value:
+Users, evaluators, and developers of composites can verify that the application is in a specific state. This specific state could then be compared to a secure state that was part of the evaluation.
+Considerations:
+The attested state of the application is limited to information that is available to the platform, such as the application’s static code and configuration, and other platform-managed information, e.g. an application life cycle state.
+Implies that "Attestation of Application Genuineness" and "Attestation of Platform State" are also implemented.
+
+3.2 Product Life Cycle: Factory Reset / Install / Update / Decommission
+The platform shall always maintain the Security Functional Requirements claimed, including the boot and shutdown stages.
+The SFRs in this subsection are to be used to express other common life cycle steps such as secure installation, update, and decommission of the platform and application.
+The confidentiality of the platform or application may be important, for example to protect intellectual property rights or because this confidentiality has been assumed during a vulnerability analysis. As these life cycle steps may happen in the field, platform and application confidentiality needs to be maintained.
+
+3.2.1 Factory Reset of Platform
+Requirement:
+The platform can be reset to the state in which it exists when the product embedding the platform is delivered to the user, before any personal user data, user credentials, or user configuration is present on the platform.
+Value:
+The user invokes this functionality to return the product built on the platform to its initial factory state and restart the life cycle again from this point; this can be used for reselling purpose. The user’s data is guaranteed to be destroyed, independently of the application running on the platform.
+Considerations:
+The platform shall still be functional after the factory reset, allowing the user to re-initialize the product embedding the platform.
+This reset shall destroy all data (including the data of the application) received after user delivery, such that none of this data can be compromised even when the product is also physically accessible to an attacker.
+This functionality still allows storage of platform instance unique data, such as data needed for "Attestation of Platform Genuineness" and "Attestation of Platform State", allowing the platform and product to continue to be operational.
+This functionality is not intended to counter attacks where an attacker has temporary physical access and then returns it to the user; those are countered by "Physical Attacker Resistance".
+If the application is (partially) defective, it shall still be possible to factory reset the product and then throw the product away with the (user) data no longer recoverable in the product. Platforms with functionality from "Secure Encrypted Storage", "Residual Information Purging", or "Cryptographic KeyStore" typically will be able to fulfil this requirement more easily.
+The destruction method shall be appropriate for the persistent memory technology and attack potential. See also "Residual Information Purging".
+
+3.2.2 Secure Install of Application
+Requirement:
+The application can be installed in the field such that the <confidentiality,> integrity and authenticity of the application is maintained.
+Value:
+An application may be installed in the field, including at the final end user and at unsecured product production sites. Composite developers and evaluators can be assured that the application is not modified (or optionally: disclosed) during this installation.
+Consideration:
+The installation mechanism shall ensure that an application is compatible with the underlying platform in its current version before installing the application.
+A platform offering this SFR should consider also offering "Secure Update of Application" as a complement to the "Secure Update of Platform", allowing the product vendor to provide flaw remediation procedures that cover the entire product.
+
+
+3.2.3 Secure Update of Platform
+Requirement:
+The platform can be updated to a newer version in the field such that the <confidentiality,> integrity and authenticity of the platform is maintained.
+Value:
+Addressing security flaws, functional bugs, or improvements may require an update of the platform in the field. Composite developers and evaluators can be assured that the update mechanism itself will not enable an attack.
+Considerations:
+Note that absence of this functionality shall be explained in the ST under ALC_FLR.2.
+The update mechanism shall counter downgrade attacks ("updating" to an older, potentially more vulnerable version). What is an "older" or "newer" version shall be defined in ALC_FLR.2.
+Note also that updates of the platform shall have a (globally) unique identifier as per "Verification of Platform Identity" and may require their own (re-)evaluation and (re-)certification.
+
+3.2.4 Secure Update of Application
+Requirement:
+The application can be updated to a newer version in the field such that the <confidentiality,> integrity and authenticity of the application is maintained.
+Value:
+Addressing security flaws, functional bugs, or improvements may require an update of the application in the field. Composite developers and evaluators can be assured that the application is not disclosed or inappropriately modified during this update.
+Consideration:
+The update mechanism shall counter downgrade attacks ("updating" to an older, potentially more vulnerable version). What is an "older" or "newer" version shall be defined in ALC_FLR.2.
+The update mechanism shall ensure, before updating the application, that the new version of the application is compatible with the underlying platform in its current version.
+A platform offering this may consider also offering "Secure Install of Application".
+
+3.2.5 Secure Uninstall of Application
+Requirement:
+The application can be uninstalled in the field such that all application data <with the exception of <list of objects not destroyed>> is destroyed.
+Value:
+The user invokes this functionality prior to disposing of the application instance or otherwise potentially allowing an attacker physical access to the application instance. As all application data is destroyed, the application user’s data is also destroyed.
+Considerations:
+The uninstallation mechanism shall counter downgrade attacks (uninstall the newer application, "fresh install" to an older, potentially more vulnerable version). What is an "older" or "newer" version shall be defined in ALC_FLR.2.
+The secure uninstall shall destroy all data of the application received after installation of the application. If the application developer has marked an application object as exempt from destruction during uninstallation (such as information allowing detection of a downgrade attack), then the uninstall operation shall destroy all application data not explicitly marked as exempt of uninstallation. Destruction shall be such that application data cannot be compromised even when the product is physically accessible to an attacker.
+If the application is (partially) defective, it shall still be possible to uninstall the application and then throw the product away with the application (user) data no longer recoverable in the product. Platforms with functionality from "Secure Encrypted Storage", "Residual Information Purging", or "Cryptographic KeyStore" will typically be able to fulfil this requirement more easily.
+The destruction method shall be appropriate for the persistent memory technology and attack potential. See also "Residual Information Purging".
+
+3.2.6 Decommission of Platform
+Requirement:
+The platform can be decommissioned.
+Value:
+The user invokes this functionality to reach the product end-of-life state of the platform, with no way back to operational state. As all data is destroyed, the user’s data is also destroyed.
+Considerations:
+The platform shall not be functional after the decommissioning.
+The decommissioning shall destroy all data (including the data of the application) received after production.
+
+3.2.7 Field Return of Platform
+Requirement:
+The platform can be returned to the vendor without user data.
+Value:
+The user invokes this functionality prior to returning the product instance to its provider in case investigation is needed; e.g. malfunction observed in the field. As the user’s data is destroyed, the user can be assured that not even the vendor can access personal information.
+Considerations:
+The field return shall destroy all data (including the data of the application) received after user delivery, such that none of this data can be compromised even when the product is physically accessible to an attacker or the vendor.
+This functionality still allows storage of platform instance unique data, such as data needed for "Attestation of Platform Genuineness" and "Attestation of Platform State", allowing the platform and product to continue to be operational.
+This functionality is not intended to counter attacks where an attacker has temporary physical access and then returns it to the user; those are countered by "Physical Attacker Resistance".
+
+3.3 Secure Communication
+Typically, a product will use secure channels to communicate with a server, another Connected Product, or a cloud service. The SFRs in this section can be used to describe the platform providing such functionality to the application.
+Note that the secure communication SFRs should be used when the platform provides the secure channels; if the platform provides only the cryptographic services that will be used to implement the secure channels, then the SFRs described in section 3.5, Cryptographic Functionality, can be used.
+
+3.3.1 Secure Communication Support
+Requirement:
+The platform provides one or more secure communication channel(s).
+The secure communication channel authenticates <list of endpoints> and protects against <list of attacks including disclosure, modification, replay, erasure> of messages between the endpoints, using <list of protocols and measures>.
+Value:
+The composite product developer can use the secure communication channels.
+The composite evaluator/certifier knows that if the product developer uses the functionality, it is secure in the above manner.
+The user, relying on the product developer and composite certifier, is assured that secure channels are used.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • List of endpoints: The list of endpoints to be protected using the protocols and measures listed hereafter. Endpoints can be identified by their quality, by the interface they are connected to, or by a more general category, e.g. all local endpoints. If different protocols and measures are used for different endpoints, defining different secure communication channels, then the SFR shall be iterated.
+    • List of attacks: The list of security issues to avoid, typically including disclosure, modification, replay, and erasure.
+    • List of protocols and measures: The list of protocols and other measures used to protect the communication channel, e.g. TLS 1.2 with TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8, or IPSEC with .... It is important to provide enough information to properly characterize the quality of the algorithms used.
+If multiple different secure communication channels are provided, this SFR should be iterated.
+This SFR could be sensitive to misleading claims; the fully authorized SESIP CB and evaluators shall ensure this is not misleading.
+
+3.3.2 Secure Communication Enforcement
+Requirement:
+The platform ensures that communication with <list of endpoints> can only be done over the secure communication channel(s) supported by the platform using <list of protocols and measures>.
+Value:
+The user and composite evaluator/certifier can trust that the product is securely communicating (typically with cloud services).
+Considerations:
+This SFR requires that at least one iteration of the "Secure Communication Support" SFR is claimed. Complete the variable parts of this SFR as follows:
+• List of endpoints: The list of endpoints identifies the secure channels the SFR applies to, as they have been defined in the corresponding "Secure Communication Support" SFRs.
+• List of protocols and measures: The list of protocols and other measures used for the secure channel implementation.
+This SFR implies that the platform handles all the unsecured communication layers under the secure communication channel (TCP/IP, DHCP, DNS, BT, etc.) and that the application does not have direct access to the communication layers underlying that secure channel.
+This SFR could be sensitive to misleading claims; the fully authorized SESIP CB and evaluators shall ensure this is not misleading.
+
+3.4 Extra Attacker Resistance
+In our regular attacker model, attackers have only logical (network) access to the product, application, and platform during the exploitation phase of the attack, and therefore:
+• do not have physical access to the specific product instance attacked, and
+• are unable to run their own hostile code on the platform.
+When this attacker model is not valid, adding SFRs from this section allows expression of resistance against
+physical and software attackers.
+Note that during the identification phase, the attacker is assumed to have physical access to his platform instance when preparing his attack.
+
+3.4.1 Limited Physical Attacker Resistance
+Requirement:
+The platform detects or prevents attacks by an attacker with physical access before the attacker compromises <list of Security Functional Requirements>.
+Value:
+For situations where a physical attacker is in scope for a limited set of functionalities such as valuable assets warranting a physical attack, but not for all functionality. The attacker is not limited in his physical attack; the attacker is limited in the target of his attack (the limited set of SFRs).
+Considerations:
+All attacks enabled by physical access within the attack potential need to be considered.
+With this SFR, local non-networked interfaces such as a USB port or MicroSD card reader shall now also be considered in the vulnerability analysis as accessible to the attacker (such as an "evil maid").
+Attackers (mis-)using production and debug functionality such as JTAG and ISD functionality would typically be countered by disabling this functionality prior to delivery to the customer. Invasive attacks such as physical tampering or perturbation would typically be countered by detection and decommissioning the product before the detected attack succeeds. Non-invasive attacks such as side channel attacks would typically be countered by not leaking secret information such as timing, power, and EM emissions, via side channels.
+The threat of replacement of the product is not covered by this SFR; it can be countered with SFRs "Verification of Platform Instance Identity" together with "Attestation of Platform Genuineness", allowing an application or user to detect replacement.
+
+3.4.2 Physical Attacker Resistance
+Requirement:
+The platform detects or prevents attacks by an attacker with physical access before the attacker compromises any of the other security functional requirements.
+Value:
+For situations where a physical attacker is in scope, such as products that are typically used outside a secured area, or when the products store highly valuable assets warranting a physical attack.
+Considerations:
+All attacks enabled by physical access within the attack potential need to be considered.
+With this SFR, local non-networked interfaces such as a USB port or MicroSD card reader shall now also be considered in the vulnerability analysis as accessible to the attacker (such as an "evil maid").
+Attackers (mis-)using production and debug functionality such as JTAG and ISD functionality would typically be countered by disabling this functionality prior to delivery to the customer. Invasive attacks such as physical tampering or perturbation would typically be countered by detection and decommissioning the product before the detected attack succeeds. Non-invasive attacks such as side channel attacks would typically be countered by not leaking secret information, such as timing, power, and EM emissions, via side channels.
+The threat of replacement of the product is not covered by this SFR; it can be countered with SFRs "Verification of Platform Instance Identity" together with "Attestation of Platform Genuineness", allowing an application or user to detect replacement.
+
+3.4.3 Software Attacker Resistance: Isolation of Platform
+Requirement:
+The platform provides isolation between the application and itself, such that an attacker able to run code as an application on the platform cannot compromise the other security functional requirements.
+Value:
+For situations where an attacker may be able to load his own code on the platform, or the attacker might subvert any part of the application.
+Considerations:
+This would typically require at least an OS with kernel-user mode separation.
+
+3.4.4 Software Attacker Resistance: Isolation of Platform Parts
+Requirement:
+The platform provides isolation between platform parts, such that an attacker able to run code in <list of vulnerable platform parts> cannot compromise <confidentiality and> integrity of <list of protected platform parts> nor the provision of any other Security Functional Requirements.
+Value:
+For situations where an attacker may be able to load his own code on inner parts of the platform.
+The platform developer can separate the critical assets in different parts of the platform, and thus safeguard them from compromises of other parts of the platform.
+Considerations:
+Complete the variable parts of this SFR as follows:
+    • The list of vulnerable platform parts defines the parts of the platform that are considered to be potentially compromised by an attacker and used to attack other parts of the platform.
+    • The list of protected platform parts defines the parts of the platform that are considered to be potentially targeted by attackers running code in other compromised parts, and that are protected against such attacks.
+A platform offering this functionality would typically also claim "Software Attacker Resistance: Isolation of Platform".
+This would typically require a micro-kernel or a hardware-based isolation technology.
+
+3.4.5 Software Attacker Resistance: Isolation of Application Parts
+Requirement:
+The platform provides isolation between parts of the application, such that an attacker able to run code as one of the <list of application parts> cannot compromise the <confidentiality and> integrity of the other application parts.
+Value:
+For situations where the product developer wants to separate the critical assets in its own application part (process, executable, etc.), and thus safeguard those assets from compromises by other parts of the application code that are too complex to be shown to be secure.
+Considerations:
+The variable part of this SFR, list of application parts, shall list the part types that may compose the application (modules, processes, applets), and between which some isolation is to be provided.
+This would typically require an OS with application-application memory separation or an interpreter-based platform with similar access rules, such as Java Card.
+
+3.5 CryptographicFunctionality
+These are common cryptographic functions that a platform can provide that are useful to the developer of a composite or to a product user.
+Standard CC interpretation applies for references to standards: All of the claimed parts of the specification need to be fully implemented, so precise references are encouraged. Evaluators and certifiers shall verify all aspects of the parts of standards referenced.
+
+3.5.1 Cryptographic Operation
+Requirement:
+The platform provides <list of cryptographic operations> functionality with <list of algorithms> as specified in <specification> for key lengths <list of key lengths> and modes <list of modes>.
+Value:
+Evaluators and developers of composites can be assured of standard-compliant cryptographic functions.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of cryptographic operations defines the operations that can be considered, typically selected from encryption, decryption, hashing, signing, and signature verification.
+    • The list of algorithms provides a reference to the cryptographic algorithms used.
+    • The specification references the standard in which the operation is defined (including a section or similar information if relevant).
+    • The list of key lengths defines the key lengths that are supported for that cryptographic operation.
+    • The list of modes defines the operational modes that are supported for that cryptographic operation.
+A typical example of a fully defined SFR would be: The platform provides the application with encryption and decryption functionality as specified in NIST FIPS 197 (AES) with 256-bit keys in GCM mode.
+This SFR should be iterated if more than one algorithm is provided. For the sake of clarity, it may be preferable to use a table to define the supported parameters.
+The cryptographic operation shall keep the confidentiality of the secret keys against the attacker. Even with the standard attacker model, timing and padding oracle attacks shall be considered if they are within the attack potential.
+Note that this SFR is for the cryptographic functionality available to the application. This SFR should not be used to only restate the crypto functionality claimed in other SFRs (such as "Secure Encrypted Storage", "Secure Communication Support", "Secure Communication Enforcement") unless that functionality is separately made available to the application.
+
+3.5.2 Cryptographic Key Generation
+Requirement:
+The platform provides a way to generate cryptographic keys for use in <list of cryptographic algorithms> as specified in <specification> for key lengths <list of key lengths>.
+Value:
+Evaluators and developers of composites can be assured of standard-compliant cryptographic key generation.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of cryptographic algorithms provides a reference to the algorithms used.
+    • The specification references the standard in which the operation is defined (including a section or similar information if relevant).
+    • The list of key lengths defines the key lengths that are supported for that cryptographic operation.
+This SFR should be iterated if keys are generated for more than one algorithm. For the sake of clarity, it may
+be preferable to use a table to define the supported parameters.
+The specification of the key generation algorithm can be useful for use in specific product evaluation schemes. Regardless of the algorithm used, every attack within the attack potential applies: Attacks such as ROCA are always to be checked against.
+
+3.5.3 Cryptographic KeyStore
+Requirement:
+The platform provides a way to store <list of assets, such as cryptographic keys and passwords> such that not even the application can compromise the <selection: confidentiality, integrity, authenticity> of this data. This data can be used for the cryptographic operations <list of operations>.
+Value:
+Evaluators and developers of composites can be assured that keys cannot be disclosed accidentally, provided that the keys are stored only in the KeyStore.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of assets defines the types of assets to be protected by the KeyStore.
+    • The properties confidentiality, integrity, and authenticity define the protection afforded.
+    • The list of operations defines the operations that an application can perform on the assets stored in the KeyStore without having to access the assets’ values.
+A software KeyStore in the platform will typically require either “Software Attacker Resistance: Isolation of Platform” in the platform or code review or automated code verification of the product.
+
+3.5.4 Cryptographic Random Number Generation
+Requirement:
+The platform provides a way based on <list of entropy sources> to generate random numbers to as specified in <specification>.
+Value:
+Evaluators and developers of composites can be assured of standard-compliant cryptographic key generation. Random number generation can also be used for other usage of strong cryptographic numbers e.g. authentication, etc.
+Considerations:
+    Complete the variable parts of this SFR as follows:
+    • The list of entropy sources defines how the randomness is generated from physical and computational resources.
+    • The specification references the standard in which the operation is defined (including a section or similar information if relevant).
+The specification of the number generation algorithm can be useful for use in specific product evaluation schemes. Regardless of the algorithm used, every attack within the attack potential applies: Weak entropy and predictability shall always be checked against.
