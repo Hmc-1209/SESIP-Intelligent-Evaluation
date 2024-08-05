@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 import { AppContext } from "../App";
 import { ToastContainer, toast } from 'react-toastify';
-import { update_username } from "../requests/user_requests";
+import { update_password, update_username } from "../requests/user_requests";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,6 +22,7 @@ const Setting = () => {
     const submit_update = async () => {
         setLoading(0);
         const access_token = window.localStorage.getItem("access_token");
+        console.log(updateMode)
         if(updateMode === 0) {
             const new_username = document.getElementById("change_username").value;
             if (new_username === "") {
@@ -38,6 +39,31 @@ const Setting = () => {
                     return;
                 }
                 success("The username has been updated.")
+                setLoading(false);
+                return;
+            } else {
+                error("Unknown error happend. Please Try again later.")
+                setLoading(false);
+                return;
+            }
+        } else {
+            const old_password = document.getElementById("old_password").value;
+            const new_password = document.getElementById("change_password").value;
+            const new_password_confirm = document.getElementById("change_password_confirm").value;
+            if (old_password === "" || new_password === "" || new_password_confirm === "") {
+                error("Information incomplete.");
+                setLoading(false);
+                return;
+            }
+            if (new_password !== new_password_confirm) {
+                error("Password not match.");
+                setLoading(false);
+                return;
+            }
+
+            const response = await update_password(access_token, old_password, new_password);
+            if (response) {
+                success("The password has been updated.")
                 setLoading(false);
                 return;
             } else {
