@@ -552,7 +552,347 @@ The platform ensures the availability and proper operation of <list of Security 
 Value:
 This can be used to show resistance when the platform is under denial of service attacks, such as the IEC 62443 CR 7.1 Denial of service protection and CR 7.2 Resource management requirements.
 Considerations:
-All attacks within the attack potential and any additional attacker resistances are in scope.
-This SFR describes the platform’s resistance to denial of service attacks. If the platform’s restraints to avoid being the cause of a denial of service attack on the environment is required, use the SFR in section 3.8.1.
+All attacks within the attack potential and any additional attacker resistances are in scope. This SFR describes the platform’s resistance to denial of service attacks. If the platform’s restraints to avoid being the cause of a denial of service attack on the environment is required, use the SFR in section 3.8.1.
 
 4 SECURITY ASSURANCE REQUIREMENTS
+This document contains five hierarchical sets of Common Criteria assurance packages that are suitable to 
+evaluate IoT platforms or parts thereof.
+The sets are named SESIP1, SESIP2, SESIP3, SESIP4, and SESIP5 and are hierarchical:
+    • SESIP Assurance Level 1 (SESIP1) is a self-assessment-based level: The developer shall provide a simplified Security Target, describing the security claims of his product, together with a compliance rationale describing why he believes these claims are met. Only minimal evaluator effort is needed: Checks on consistency and clarity of these compliance rationales are performed. There is no independent check by the evaluators that the platform implements the SFRs. SESIP1 provides a basic level of assurance.
+    • SESIP Assurance Level 2 (SESIP2) is a black-box penetration testing level: The evaluation is structured around a time-limited penetration testing effort. No design or source code is required to be available besides a full functional specification. This is the highest level that can be applied to a closed-source platform without cooperation by the developer. SESIP2 provides a moderate level of assurance.
+    • SESIP Assurance Level 3 (SESIP3) is a traditional white-box vulnerability analysis: The evaluation is structured around a time-limited source code analysis combined with a time-limited penetration testing effort. Other assurance components have only been included to support this approach to save as much effort as possible. SESIP3 provides a substantial level of assurance.
+    • SESIP Assurance Level 4 (SESIP4) is intended to reuse SOG-IS/EUCC certified platforms or platform parts by licensed evaluation laboratories, allowing those platforms to utilize the mappings from SESIP to specific commercial product domains. A SESIP4 evaluation must then be performed as a complement to a SOG-IS/EUCC certification that includes at least all the standard Common Criteria assurance components, and in particular AVA_VAN.4. The current methodology simply provides guidance on how to obtain a SESIP4 certificate in addition to such a SOG-IS/EUCC certificate.
+    • SESIP Assurance Level 5 (SESIP5) is intended to reuse SOG-IS/EUCC certified platforms or platform parts by licensed evaluation laboratories, allowing those platforms to utilize the mappings from SESIP to specific commercial product domains. A SESIP5 evaluation must then be performed as a complement to a SOG-IS/EUCC certification that includes at least all the standard Common Criteria assurance components, and in particular AVA_VAN.5 The current methodology simply provides guidance on how to obtain a SESIP5 certificate in addition to such a SOG-IS/EUCC certificate.
+Augmentation of the assurance requirements is not allowed in SESIP, so a platform developer cannot claim compliance to a component of higher assurance than those specified in the SESIP level mentioned in the Security Target. However, the SESIP-accredited certification bodies of a certification scheme may decide to add an SAR or use a higher-level SAR to any SESIP level, provided that these criteria apply to all certifications performed under that scheme.
+
+4.1 SESIP Assurance Level 1 (SESIP1)
+SESIP1 is based on self-assessment by the developer, with only minimal verification by an evaluator. There is no independent check by the evaluators that the platform implements the SFRs.
+At this assurance level, the developer is expected to provide:
+    • A simplified Security Target with compliance rationale based on the developer’s self-assessment (an ST template is included as an annex). The compliance rationale includes:
+        o A reference to (self-)check for publicly known vulnerabilities against the platform
+        o References to guidance documents describing the objectives for the environment
+        o A reference to the public facing procedures describing how flaws are reported, tracked and corrected, and the resulting updates communicated
+        o A description of the coverage of every SFR by the platform’s security features and the way in which these features’ security characteristics have been assessed by the developer
+        o In the case of a composite platform, a description of the way the environment objectives are met for every platform part used in the composite platform
+    • The referred (self-)check against publicly known vulnerabilities and the referred guidance documents. The public facing procedures need to be available to the public (and hence the evaluators) already.
+    • Internal Flaw Reporting procedures describing internal (as well as the public facing) procedures describing how flaws are reported, tracked and corrected, and the resulting updates communicated
+
+4.1.1 Objectives
+SESIP1 provides assurance by using a simplified Security Target, augmented by a self-assessment rationale. 
+
+4.1.2 Assurance Components
+| Assurance Class                 | Assurance Families                                             |
+|---------------------------------|----------------------------------------------------------------|
+| ASE: Security Target evaluation | ASE_INT.1 ST Introduction                                      |
+|                                 | ASE_OBJ.1 Security requirements for the operational environment|
+|                                 | ASE_REQ.3 Listed security requirements                         |
+|                                 | ASE_TSS.1 TOE summary specification                            |
+| AGD: Guidance documents         | AGD_OPE.1 Operational user guidance                            |
+|                                 | AGD_PRE.1 Preparative procedures                               |
+| ALC: Life-cycle support         | ALC_FLR.2 Flaw reporting procedures                            |
+| AVA: Vulnerability Assessment   | AVA_VAN.1 Vulnerability survey                                 |
+
+4.1.3 Security Target Requirements
+ASE_INT.1: The ST should also list the SESIP version.
+ASE_OBJ.1: All security objectives concerning the operational environment shall be listed with references to the place in the guidance documents where these objectives are addressed.
+ASE_REQ.3: If multiple instances of a claim for security functionality are required, the body of an SFR may be iterated. For example, if multiple secure communication channels are supported, the “Secure Communication Support” may be iterated as follows:The secure communication channel: 1. Authenticates servers and protects against disclosure, modification of messages between the endpoints, using TLS 1.2 with TLS_RSA_WITH_AES_128_CBC_SHA cipher suite2. Authenticates servers and clients and protects against disclosure, modification of messages between the endpoints, using SSH 1.2 with aes256-cbc using hmac-sha2-256 for SSH transport, rsa-sha2-256 SSH public-key based authentication and diffie-hellman-group14-sha256 key exchange
+The evaluator determines that the statement of security assurance requirements matches one of the SESIP assurance levels defined in this chapter. If the SARs are listed or copied in the ST, the evaluator determines that the set of claimed SARs exactly matches one of the SESIP assurance levels defined in SESIP (this document). It is not permitted to extend or augment a SESIP assurance level.
+The evaluator determines that it is clear to the reader of the ST what SFRs are covered by what SARs. Multiple claims of SESIP assurance levels are allowed (as described in “Additive Composition within SESIP”), provided the claims are clear.
+ASE_TSS.1: The TSS shall include a self-assessment by the developer of how the platform correctly implements the SFRs. This self-assessment may be provided as a separate document (such as a filled-in questionnaire); however, it is considered part of the public ST.
+The self-assessment shall consider each implementation of the SFRs, describing how the developer has supported his assessment, based on, for instance:
+    • Testing, either by the developer or by a third party
+    • Conformance to another standard by the platform or part of the platform
+    • Reliance on the statements of another party on the platform or a part of the platform
+The self-assessment shall indicate what procedures cover ALC_FLR.2 if “Secure Update of Platform” is included in the Security Target.
+
+4.1.4 Guidance Documents Requirements
+AGD_OPE.1: As per [CC Part 3].
+AGD_PRE.1: As per [CC Part 3].
+
+4.1.5 Life-cycle Support Requirements
+Refinement:
+Many IoT platforms will require a method to update in the field to defend against new threats or against vulnerabilities that were found after delivery to the user. For other IoT platforms (e.g. a very simple low-power sensor that communicates only one way), this would be impractical or overkill.
+To enable both platform types, this assurance requirement can be met in two ways:
+    • Note that these platforms shall have the SFR “Secure Update of Platform” included in the Security Target.
+    • For platforms that cannot be updated, the Security Target shall contain a rationale for why it is acceptable that this platform cannot be updated in the field. It is acceptable that a hardware root of trust cannot be updated in the field.
+In both cases, the flaw reporting procedure shall describe how flaws are to be reported to the developer, and how updates to the platform or guidance (or retraction of the product as certified) are communicated to the users of the platform.
+At SESIP1 and SESIP2 level, flaw reporting procedure steps not visible to the users may be omitted from the description as these are not verifiable by the evaluators. The public facing procedures shall be described.
+
+4.1.6 Vulnerability Assessment Requirements
+AVA_VAN.1: The vulnerability survey may be performed by the developer or evaluator. The evaluator is to determine whether the testing evidence submitted by the developer considers all applicable public domain sources to identify potential vulnerabilities in the platform. This testing may utilize appropriate penetration test tools available in the public domain to test for publicized potential vulnerabilities.
+
+4.2 SESIP Assurance Level 2 (SESIP2)
+SESIP2 is a moderate level of assurance for (parts of) IoT platforms.
+SESIP2 provides significantly more assurance than SESIP1 by requiring a vulnerability analysis and actual penetration testing on the platform by an evaluator but will provide less assurance than the higher assurance provided by white-box SESIP3.
+At this assurance level, the developer is expected to provide:
+    • A simplified Security Target with compliance rationale based on the developer’s self-assessment (ST templates are included as annex). The compliance rationale includes:
+        o References to guidance documents describing the objectives for the environment
+        o A reference to the public facing procedures describing how flaws are reported, tracked, and corrected, and the resulting updates communicated
+        o A description of the coverage of every SFR by the platform’s security features and the way in which these features’ security characteristics have been assessed by the developer
+        o In the case of a composite platform, a description of the way the environment objectives are met for every platform part used in the composite platform
+    • Guidance documents. This typically consists of the existing user manuals and data sheets.
+    • A complete functional specification. This typically consists of existing programmer’s manuals, data books or API specifications, and a mapping showing what interfaces implement the SFRs declared in the Security Target.
+    • Proof of functional conformance testing.
+    • Internal Flaw Reporting procedures describing internal (as well as the public facing) procedures describing how flaws are reported, tracked and corrected, and the resulting updates communicated.
+
+4.2.1 Objectives
+SESIP2 provides assurance by an analysis of the SFRs in the simplified Security Target, using a full functional specification, guidance documentation, and the platform being tested, to understand the security behavior.
+The analysis is supported by independent testing of the platform, and a vulnerability analysis demonstrating resistance to penetration attackers with a Basic attack potential. The vulnerability analysis is based upon mapping of SFRs to interfaces and guidance evidence provided, and the description of all interfaces as provided by the functional specification.
+SESIP2 also provides assurance through the assessment of the developer’s procedures to produce and distribute updates to IoT Platforms in the field (ALC_FLR.2).
+
+4.2.2 Assurance Components
+| Assurance Class                 | Assurance Families                                             |
+|---------------------------------|----------------------------------------------------------------|
+| ASE: Security Target evaluation | ASE_INT.1 ST Introduction                                      |
+|                                 | ASE_OBJ.1 Security requirements for the operational environment|
+|                                 | ASE_REQ.3 Listed security requirements                         |
+|                                 | ASE_TSS.1 TOE summary specification                            |
+| ADV: Development                | ADV_FSP.4 Complete functional specification                    |
+| AGD: Guidance documents         | AGD_OPE.1 Operational user guidance                            |
+|                                 | AGD_PRE.1 Preparative procedures                               |
+| ALC: Life-cycle support         | ALC_FLR.2 Flaw reporting procedures                            |
+| ATE: Tests                      | ATE_IND.1 Independent testing: conformance                     |
+| AVA: Vulnerability Assessment   | AVA_VAN.2 Vulnerability survey                                 |
+
+4.2.3 Security Target Requirements
+As per section 4.1.3.
+
+4.2.4 Development Requirements
+ADV_FSP.4: The objective of ADV_FSP.4 in the SESIP context is to ensure that the platform developer has precisely specified all the platform’s interfaces with a sufficient level of details, including direct error messages, as described in the Developer action elements and in the Content and presentation elements. The evaluator shall then verify that the provided specification contains the required elements, and that it provides a full coverage of the SFRs, with the help of the mapping provided by the developer.
+
+4.2.5 Guidance Documents Requirements
+As per section 4.1.4.
+
+4.2.6 Life-cycle Support Requirements
+As per section 4.1.5.
+
+4.2.7 Tests Requirements
+ATE_IND.1: Developers and third parties are encouraged to reuse industry standard testing, provided this is accepted by the CB.
+
+4.2.8 Vulnerability Analysis Requirements
+ADV_IMP package not being claimed at this SESIP level does not forbid the vulnerability assessment to be based on source code review if provided; this may reduce the testing effort. In any case, the use of source code review in vulnerability analysis should be clearly mentioned in the evaluation report.
+In case of a composite platform, the evaluator shall verify that all objectives for the environment of the platform parts fulfilled by another platform part are accurately fulfilled. All guidance of one platform part for another platform part should be considered as part of the vulnerability analysis.
+
+4.3 SESIP Assurance Level 3 (SESIP3)
+SESIP3 is a substantial level of assurance for (parts of) IoT platforms. It provides significantly more assurance than SESIP2 by requiring significant source code analysis by an evaluator as input to the vulnerability analysis. Use of the source code analysis will increase the assurance gained from the vulnerability analysis and penetration testing but will provide less assurance than the extended-substantial assurance provided by SESIP4.
+At this assurance level, the developer is expected to provide:
+    • A simplified Security Target with compliance rationale based on the developer’s self-assessment (ST templates are included as annex). The compliance rationale includes:
+        o References to guidance documents describing the objectives for the environment
+        o A reference to the public facing procedures describing how flaws are reported, tracked, and corrected, and the resulting updates communicated
+        o A description of the coverage of every SFR by the platform’s security features and the way in which these features’ security characteristics have been assessed by the developer
+        o In the case of a composite platform, a description of the way the environment objectives are met for every platform part used in the composite platform
+    • Guidance documents. This typically consists of the existing user manuals and data sheets.
+    • A complete functional specification. This typically consists of existing programmer’s manuals, data books or API specifications, and a mapping showing what interfaces implement the SFRs declared in the Security Target.
+    • The full source code, and a mapping showing where in the source code the SFRs are implemented. This mapping typically is a minor extension of the mapping for the functional specification.
+    • Proof of functional conformance testing.
+    • A short description showing how the platform’s version number is maintained to be uniquely identifying the platform in its version and showing that the whole platform (source code and all that is described above) is maintained in a standard version management system (such as CVS, GIT or SVN).
+    • Internal Flaw Reporting procedures describing internal (as well as the public facing) procedures describing how flaws are reported, tracked and corrected, and the resulting updates communicated
+
+4.3.1 Objectives
+SESIP3 provides assurance by a simplified security target, and an analysis of the SFRs in that ST, using a full functional specification, guidance documentation, and the implementation representation, to understand the security behavior.The analysis is supported by independent testing of the TSF, and a vulnerability analysis (based upon the functional specification, implementation representation and guidance evidence provided) demonstrating resistance to penetration attackers with an Enhanced-Basic attack potential.
+SESIP3 also provides assurance using development environment controls and additional platform configuration management including automation, and evidence of secure delivery procedures.
+
+4.3.2 Assurance Components
+| Assurance Class                 | Assurance Families                                                                     |
+|---------------------------------|----------------------------------------------------------------------------------------|
+| ASE: Security Target evaluation | ASE_INT.1 ST Introduction                                                              |
+|                                 | ASE_OBJ.1 Security requirements for the operational environment                        |
+|                                 | ASE_REQ.3 Listed security requirements                                                 |
+|                                 | ASE_TSS.1 TOE summary specification                                                    |
+| ADV: Development                | ADV_FSP.4 Complete functional specification                                            |
+|                                 | ADV_IMP.3 Complete mapping of the implementation representation of the TSF to the SFRs |
+| AGD: Guidance documents         | AGD_OPE.1 Operational user guidance                                                    |
+|                                 | AGD_PRE.1 Preparative procedures                                                       |
+| ALC: Life-cycle support         | ALC_CMC.1 Labelling of the TOE                                                         |
+|                                 | ALC_CMS.1 TOE CM coverage                                                              |
+|                                 | ALC_FLR.2 Flaw reporting procedures                                                    |
+| ATE: Tests                      | ATE_IND.1 Independent testing: conformance                                             |
+| AVA: Vulnerability Assessment   | AVA_VAN.3 Vulnerability survey                                                         |
+
+4.3.3 Security Target Requirements
+As per section 4.1.3.
+
+4.3.4 Development Requirements
+ADV_FSP.4: As per [CC Part 3].
+
+4.3.5 Guidance Documents Requirements
+As per section 4.1.4.
+
+4.3.6 Life-cycle Support Requirements
+ALC_CMC.1: As per [CC Part 3].
+ALC_CMS.1: As per [CC Part 3].
+ALC_FLR.2: As per section 3.1.4.
+At SESIP3 level and higher, the entire flaw reporting procedure is to be described; not just the externally visible steps required for SESIP1 and SESIP2 levels.
+
+4.3.7 Tests Requirements
+As per section 4.2.7.
+
+4.3.8 Vulnerability Analysis Requirements
+AVA_VAN.3: As per [CC Part 3].
+In case of a composite platform, the evaluator shall verify that all objectives for the environment of the platform parts fulfilled by another platform part are accurately fulfilled. All guidance of one platform part for another platform part should be considered as part of the vulnerability analysis.
+
+4.4 SESIP Assurance Level 4 (SESIP4)
+SESIP4 is an extended-substantial level of assurance for (parts of) IoT platforms. It is intended to provide significantly more assurance than SESIP3 by raising the required product resistance level, adding design implementation analysis, and strengthening the production environment assessment.
+A SESIP4 evaluation must be performed as a complement to a SOG-IS/EUCCC certification that includes at least all the standard Common Criteria assurance components listed below, and in particular AVA_VAN.4. 
+The current methodology simply provides guidance on how to obtain a SESIP4 certificate in addition to such a SOG-IS/EUCC certificate.
+
+4.4.1 Objectives
+SESIP4 provides assurance by a simplified security target, and an analysis of the SFRs in that ST, using a full functional specification, guidance documentation, and the implementation representation, to understand the security behavior.
+The analysis is supported by independent testing of the TSF, selective independent confirmation of the developer test results and a vulnerability analysis (based upon the functional specification, implementation representation and guidance evidence provided) demonstrating resistance to penetration attackers with a moderate attack potential.
+SESIP4 also provides assurance using development environment controls and additional platform configuration management including automation and definition of tools used, evidence of secure delivery procedures and site security procedures.
+In terms of evaluation, in this version of the standard, a SESIP4 is intended to complement a previous Common Criteria evaluation performed by a SOG-IS/EUCC accredited laboratory. The purpose of the SESIP4 evaluation therefore is to import the Common Criteria certificate into the SESIP4 ecosystem, which is obtained by writing a SESIP Security Target.
+In a SESIP4 evaluation, the evaluator does not repeat the work of the CC evaluation; instead, the evaluator’sfocus is on the verification of the translation of the CC Security Target into the SESIP Security Target. This is expected to be a straightforward task: In most cases, the CC and SESIP evaluators should be the same entity, and the CC Security Target should be structured in a way that eases its translation into SESIP, for instance by using wording close to the SESIP SFRs in the TOE Summary Specification section.
+In addition to the CC Security Target content (see next section), a SESIP4 Security Target must also include the rationale required for every SESIP evaluation:
+    • References to guidance documents describing the objectives for the environment
+    • A reference to the public facing procedures describing how flaws are reported, tracked, and corrected, and the resulting updates communicated
+    • In the case of a composite platform, a description of the way the environment objectives are met for every platform part used in the composite platform
+The SESIP-specific elements of the Security Target may be included in a dedicated document and evaluated separately, preferably by the same laboratory, under the responsibility of a SESIP scheme’s certification authority.
+
+4.4.2 Assurance Components
+Table 4.4
+| Assurance Class                 | Assurance Families                                                                     |
+|---------------------------------|----------------------------------------------------------------------------------------|
+| ASE: Security Target evaluation | ASE_INT.1 ST Introduction                                                              |
+|                                 | ASE_OBJ.1 Security requirements for the operational environment                        |
+|                                 | ASE_REQ.3 Listed security requirements                                                 |
+|                                 | ASE_TSS.1 TOE summary specification                                                    |
+| ADV: Development                | ADV_ARC.1 Security architecture description                                            |
+|                                 | ADV_FSP.4 Complete functional specification                                            |
+|                                 | ADV_IMP.3 Complete mapping of the implementation representation of the TSF to the SFRs |
+| AGD: Guidance documents         | AGD_OPE.1 Operational user guidance                                                    |
+|                                 | AGD_PRE.1 Preparative procedures                                                       |
+| ALC: Life-cycle support         | ALC_CMC.1 Labelling of the TOE                                                         |
+|                                 | ALC_CMS.1 TOE CM coverage                                                              |
+|                                 | ALC_DEL.1 Delivery procedures                                                          |
+|                                 | ALC_DVS.1 Identification of security measures                                          |
+|                                 | ALC_FLR.2 Flaw reporting procedures                                                    |
+|                                 | ALC_TAT.1 Well-defined development tools                                               |
+| ATE: Tests                      | ATE_COV.1 Evidence of coverage                                                         |
+|                                 | ATE_FUN.1 Functional testing                                                           |
+|                                 | ATE_IND.1 Independent testing: conformance                                             |
+| AVA: Vulnerability Assessment   | AVA_VAN.4 Methodical vulnerability analysis                                            | 
+
+4.4.3 Security Target Requirements
+As per section 4.3.3.
+The Security Target introduction (ASE_TSS.1) must refer to the prerequisite Common Criteria certification, in particular by including the certification body and certificate number.
+In order to achieve the accessibility and reusability objectives, SESIP SFRs must be listed in the Security Target, and the associated compliance rationale must include a reference to the SFRs included in the original CC Security Target.
+The TOE Summary Specification must be expressed as in other SESIP levels, typically “embedded” in the list of SFRs. Developers can reuse the content provided in the original CC Security Target, provided that they ensure that this content meets SESIP’s accessibility requirements.
+ASE_OBJ.1: As per section 4.3.3.
+ASE_REQ.3: As per section 4.3.3.
+ASE_TSS.1: As per section 4.3.3.
+The TOE Summary Specification must be expressed as in other SESIP levels, typically “embedded” in the list of SFRs. Developers can reuse the content provided in the original CC Security Target, provided that they ensure that this content meets SESIP’s accessibility requirements.
+
+4.4.4 Development Requirements
+As per [CC Part 3] for all ADV requirements listed in Table 4-4.
+
+4.4.5 Guidance Documents Requirements
+As per [CC Part 3] for all AGD requirements listed in Table 4-4.
+
+4.4.6 Life-cycle Support Requirements
+As per [CC Part 3] for all ALC requirements listed in Table 4-4.
+
+4.4.7 Tests Requirements
+As per [CC Part 3] for all ATE requirements listed in Table 4-4.
+
+4.4.8 Vulnerability Analysis Requirements
+As per [CC Part 3] for all AVA requirements listed in Table 4-4.
+
+4.5 SESIP Assurance Level 5 (SESIP5)
+SESIP5 is the same as the standard high assurance level currently being used for smartcards, secure elements, e-passports, etc. It provides a very robust defense against very advanced threats.
+A SESIP5 evaluation must be performed as a complement to a SOG-IS/EUCC certification that includes at least all the standard Common Criteria assurance components listed below, and in particular AVA_VAN.5. 
+The current methodology simply provides guidance on how to obtain a SESIP5 certificate in addition to such a SOG-IS/EUCC certificate.
+
+4.5.1 Objectives
+SESIP5 provides assurance by a full security target and an analysis of the SFRs in that ST, using a functional and complete interface specification, guidance documentation, a description of the basic modular design of the platform, and the entire implementation, to understand the security behavior.
+The analysis is supported by independent testing of the TSF, evidence of developer testing based on the functional specification and platform design, selective independent confirmation of the developer test results, and a vulnerability analysis (based upon the functional specification, platform design, implementation representation, security architecture description and guidance evidence provided) demonstrating resistance to penetration attackers with a High attack potential.
+SESIP5 also provides assurance using development environment controls and additional platform configuration management including automation, evidence of secure delivery procedures, and where possible, procedures for updating the platform in the field.
+SESIP5 includes the SESIP-specific ASE_REQ.3 assurance requirement, which establishes a link between the SOG-IS/EUCC certification and the SESIP ecosystem, by mapping the Common Criteria SFRs to SESIP SFRs.
+In terms of evaluation, in this version of the standard, a SESIP5 is intended to complement a previous Common Criteria evaluation performed by a SOG-IS/EUCC accredited laboratory. The purpose of the SESIP5 evaluation therefore is to import the Common Criteria certificate into the SESIP5 ecosystem, which is obtained by writing a SESIP Security Target.
+In a SESIP5 evaluation, the evaluator does not repeat the work of the CC evaluation; instead, the evaluator’s focus is on the verification of the translation of the CC Security Target into the SESIP Security Target. This is expected to be a straightforward task: In most cases, the CC and SESIP evaluators should be the same entity, and the CC Security Target should be structured in a way that eases its translation into SESIP, for instance by using wording close to the SESIP SFRs in the TOE Summary Specification section.
+In addition to the CC Security Target content (see next section), a SESIP5 Security Target must also include the rationale required for every SESIP evaluation:
+    • References to guidance documents describing the objectives for the environment
+    • A reference to the public facing procedures describing how flaws are reported, tracked, and corrected, and the resulting updates communicated
+    • In the case of a composite platform, a description of the way the environment objectives are met for every platform part used in the composite platform
+The SESIP-specific elements of the Security Target may be included in a dedicated document and evaluated separately, preferably by the same laboratory, under the responsibility of a SESIP scheme’s certification authority.
+
+4.5.2 Assurance Components
+Table 4.5: Same as Table 4.4, there is no differences between them.
+All requirements but those in the ASE assurance class are as per [CC Part 3], and they are performed in the context of the prerequisite Common Criteria certification.
+
+4.5.3 Security Target Requirements
+As per section 4.3.3.
+The Security Target introduction (ASE_TSS.1) must refer to the prerequisite Common Criteria certification, in particular by including the certification body and certificate number.
+In order to achieve the accessibility and reusability objectives, SESIP SFRs must be listed in the Security Target, and the associated compliance rationale must include a reference to the SFRs included in the original CC Security Target.
+The TOE Summary Specification must be expressed as in other SESIP levels, typically “embedded” in the list of SFRs. Developers can reuse the content provided in the original CC Security Target, provided that they ensure that this content meets SESIP’s accessibility requirements.
+ASE_OBJ.1: As per section 4.3.3.
+ASE_REQ.3: As per section 4.3.3.
+In order to achieve the accessibility and reusability objectives, SESIP SFRs must be listed in the Security Target, and the associated compliance rationale must include a reference to the SFRs included in the original CC Security Target.
+ASE_TSS.1: As per section 4.3.3.
+The TOE Summary Specification must be expressed as in other SESIP levels, typically “embedded” in the list of SFRs. Developers can reuse the content provided in the original CC Security Target, provided that they ensure that this content meets SESIP’s accessibility requirements.
+
+4.5.4 Development Requirements
+As per [CC Part 3] for all ADV requirements listed in Table 4-5.
+
+4.5.5 Guidance Documents Requirements
+As per [CC Part 3] for all AGD requirements listed in Table 4-5.
+
+4.5.6 Life-cycle Support Requirements
+As per [CC Part 3] for all ALC requirements listed in Table 4-5.
+
+4.5.7 Tests Requirements
+As per [CC Part 3] for all ATE requirements listed in Table 4-5.
+
+4.5.8 Vulnerability Assessment Requirements
+As per [CC Part 3] for all AVA requirements listed in Table 4-5.
+
+
+Annex D SECURITY TARGET TEMPLATE
+This annex defines a template for a SESIP security target. In this version of the standard, this template applies only for levels SESIP1 to SESIP3, for which full evaluations can be performed.
+Apart from the section numbering, the template provides the various required sections in a SESIP Security Target. The descriptions provided <in italics between brackets> need to be replaced with the Security Target’s actual descriptions.
+
+D.1 Security Target Title Page:
+Security Target for <Platform name>
+Version <1.0>, dated <yyyy-mm-dd>
+<Development Organization>
+Based on SESIP methodology, version <SESIP Version>
+
+D.2 Introduction
+The Security Target describes the platform (in this chapter) and the exact security properties of the platform that are evaluated against SESIP.
+
+D.2.1 ST Reference
+See title page.
+
+D.2.2 Platform Reference
+<Unique identification of the platform>
+| Platform name           | <Platform name>                                      |
+| Platform version        | <Platform version>                                   |
+| Platform identification | <Platform id details>                                |
+| Platform Type           | <e.g. microcontroller platform for IoT applications> |
+
+D.2.3 Included Guidance Documents
+The following documents are included with the platform:
+| Reference | Name                         | Version |
+|-----------|------------------------------|---------|
+| <[Ref]>   | <Full title of the document> | <Vx.y>  |
+|           |                              |         |
+The guidance should list in particular all the documents that will be provided to the valuator for the documentation review, covering AGD_OPE.1 and AGD_PRE.1. This documentation is expected to be available to the customers without restrictions.
+
+D.2.4 (Optional) Other Certification
+The product has previously been evaluated following the <name/reference of the methodology>:
+| Scheme               | <Scheme name>                |
+|----------------------|------------------------------|
+| Certification body   | <Name of certification body> |
+| Certification number | <Full certificate number>    |
+| Certificate date     | <Certificate issuance date>  |
+The developer may also include a link to the certificate on internet, and/or a copy of the certificate.
+
+D.2.5 Platform Functional Overview and Description
+<A short introduction and description of the platform shall be provided. Typically, this would be taken from the datasheet. An overview picture and feature set should be described. 1-2 pages are expected.>
+The platform consists of a <describe platform parts; e.g. microcontroller and platform implementing secure boot>.
+The platform is intended to be used by <e.g. an integrator that deploys it into an IoT solution together with its own user application, providing assurance that the IoT application is securely booted and operates securely>.
+The main security features of the platform are as follows:
+    • <Secure boot.
+    • Crypto processor.
+    • ….>
+The platform scope is depicted in <Refer to a figure showing the platform architecture and scope>. The blue parts are within the evaluation scope and the gray parts are outside of the evaluated scope. The out of scope part comprises <to be completed by developer>.
+The physical scope includes <write specific scope details, which may be a silicon chip, a PCB, …>
