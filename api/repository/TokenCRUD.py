@@ -11,6 +11,7 @@ async def generate_access_token(data: dict) -> str | bool:
     if user:
         if JWTtoken.verify_password(data["password"], user.password):
             data["id"] = user.user_id
+            del data["password"]
             return JWTtoken.generate_access_token(data)
 
     return False

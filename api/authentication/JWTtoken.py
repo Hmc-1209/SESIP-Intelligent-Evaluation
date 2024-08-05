@@ -27,11 +27,10 @@ async def get_current_user(token=Depends(oauth2_token_scheme)):
 
         user = await check_user(payload["id"])
 
-        if user:
-            if verify_password(payload["password"], user.password):
-                return user
+        if not user:
+            raise validation_failed
 
-        raise validation_failed
+        return user
 
     except JWTError:
         raise token_expired
