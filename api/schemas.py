@@ -39,16 +39,13 @@ class ListST(BaseST):
 class DetailST(ListST):
     st_details: dict
     st_file: str
-    eval_details: str
-    is_valid: bool
+    eval_details: str | None
+    is_valid: bool | None
 
 
 class CreateST(BaseST):
     st_details: dict
     st_file: str
-    eval_details: str
-    eval_file: str
-    is_valid: bool
 
 
 class UpdateST(BaseST):
