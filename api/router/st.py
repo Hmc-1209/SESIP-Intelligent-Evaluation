@@ -49,8 +49,8 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_security_target(st_name: str, new_st: UploadFile, current_user=Depends(get_current_user)) -> None:
-    st_id = await create_st(st_name, current_user.user_id)
+async def create_security_target(new_st: UploadFile, current_user=Depends(get_current_user)) -> int:
+    st_id = await create_st(os.path.splitext(new_st.filename)[0], current_user.user_id)
 
     if not st_id:
         raise bad_request
@@ -63,6 +63,8 @@ async def create_security_target(st_name: str, new_st: UploadFile, current_user=
 
     with open(filepath, "wb") as f:
         f.write(await new_st.read())
+
+    return st_id
 
 
 @router.patch("/{st_id}")
