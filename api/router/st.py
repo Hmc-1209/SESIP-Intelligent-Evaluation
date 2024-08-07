@@ -1,6 +1,9 @@
 from fastapi import APIRouter, Depends, status, UploadFile
 from fastapi.responses import FileResponse
+
 import os
+import shutil
+
 import json
 
 from authentication.JWTtoken import get_current_user
@@ -128,3 +131,8 @@ async def delete_security_target(st_id: int, current_user=Depends(get_current_us
 
     if not await delete_st_by_id(st_id):
         raise bad_request
+
+    dir_path = os.path.join(base_path, str(st_id))
+
+    if os.path.exists(dir_path):
+        shutil.rmtree(dir_path)
