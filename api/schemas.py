@@ -43,10 +43,5 @@ class DetailST(ListST):
     is_valid: bool | None
 
 
-class CreateST(BaseST):
-    st_details: dict
-    st_file: str
-
-
 class UpdateST(BaseST):
     owner_id: int | None = None

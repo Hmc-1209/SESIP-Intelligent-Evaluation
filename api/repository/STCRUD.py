@@ -1,6 +1,6 @@
-from database import db, execute_stmt_in_tran
+from database import db, execute_stmt_in_tran, create_with_result
 from models import SecurityTarget
-from schemas import BaseST, DetailST, CreateST, UpdateST
+from schemas import BaseST, DetailST, UpdateST
 
 
 async def get_st_by_id(st_id: int) -> DetailST:
@@ -18,15 +18,11 @@ async def get_st_by_user_id(user_id: int) -> list[DetailST]:
     return await db.fetch_all(stmt)
 
 
-async def create_st(new_st: CreateST, owner_id: int) -> bool:
-    stmt = SecurityTarget.insert().values(st_name=new_st.st_name,
-                                          st_details=new_st.st_details,
-                                          st_file=new_st.st_file,
-                                          eval_details=new_st.eval_details,
-                                          eval_file=new_st.eval_file,
-                                          is_valid=new_st.is_valid,
+async def create_st(st_name: str, owner_id: int) -> int:
+    stmt = SecurityTarget.insert().values(st_name=st_name,
+                                          is_evaluated=False,
                                           owner_id=owner_id)
-    return await execute_stmt_in_tran([stmt])
+    return await create_with_result(stmt)
 
 
 async def update_st_by_id(st_id: int, new_st: UpdateST) -> bool:

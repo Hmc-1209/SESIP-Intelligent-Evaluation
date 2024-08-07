@@ -37,3 +37,17 @@ async def execute_stmt_in_tran(stmt_list: list[ClauseElement]) -> bool:
     except:
         await tran.rollback()
         return False
+
+
+async def create_with_result(stmt: ClauseElement) -> int:
+    tran = db.transaction()
+
+    try:
+        await tran.start()
+        result = await db.execute(stmt)
+        await tran.commit()
+        return result
+
+    except:
+        await tran.rollback()
+        return 0

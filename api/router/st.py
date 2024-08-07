@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, UploadFile
 from fastapi.responses import FileResponse
 import os
 
@@ -6,7 +6,7 @@ from authentication.JWTtoken import get_current_user
 from exception import bad_request, no_such_user, no_such_st, no_such_file, st_not_belongs
 from repository.STCRUD import *
 from repository.UserCRUD import get_user_by_id
-from schemas import ListST, DetailST, CreateST, UpdateST
+from schemas import ListST, DetailST, UpdateST
 from config import base_path
 
 router = APIRouter(prefix="/st", tags=["Security Target"])
@@ -49,9 +49,20 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_security_target(new_st: CreateST, current_user=Depends(get_current_user)) -> None:
-    if not await create_st(new_st, current_user.user_id):
+async def create_security_target(st_name: str, new_st: UploadFile, current_user=Depends(get_current_user)) -> None:
+    st_id = await create_st(st_name, current_user.user_id)
+
+    if not st_id:
         raise bad_request
+
+    dir_path = os.path.join(base_path, str(st_id))
+    filepath = os.path.join(dir_path, "st_file.pdf")
+
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
+    with open(filepath, "wb") as f:
+        f.write(await new_st.read())
 
 
 @router.patch("/{st_id}")
