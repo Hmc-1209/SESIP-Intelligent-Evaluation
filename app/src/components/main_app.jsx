@@ -3,9 +3,11 @@ import { AppContext } from "../App";
 import ReactDropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import CryptoJS from "crypto-js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import models from './models.json';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import get_user_st from "../requests/user_requests";
+import get_user_st, { upload_st } from "../requests/user_requests";
 // For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
 import "./css/main_app.css";
@@ -15,7 +17,9 @@ const MainApp = () => {
     // Static variables
     const model_options = models.available_models;
     const eval_result_status = ['Pending', 'Pass', 'Fail'];
-    
+    const success = (success_message) => toast.success(success_message);
+    const error = (error_message) => toast.error(error_message);
+
     // Context variables
     let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
 
@@ -24,6 +28,7 @@ const MainApp = () => {
     const [STFile, setSTFile] = useState(null);
     const [STUrl, setSTUrl] = useState('');
     const [STInfo, setSTInfo] = useState({ md5: '', sha256: '' });
+    const [currentSTID, setCurrentSTID] = useState(null);
     const [currentEvalResult, setCurrentEvalResult] = useState(eval_result_status[0]);
     const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0, 0, 0]);
     const [selectedResult, setSelectedResult] = useState(null);
@@ -84,8 +89,32 @@ const MainApp = () => {
     };
 
     useEffect(() => {
+        const upload_new_st_file = async () => {
+            if (STFile.name.split('/').pop().length > 50) {
+                error("Filename too long!");
+                setSTFile(null);
+                setSTUrl('');
+                setCurrentSTID(null);
+                setSTInfo({ md5: '', sha256: '' });
+                return;
+            }
+            const access_token = window.localStorage.getItem("access_token");
+            const response = await upload_st(access_token, STFile);
+            if (response !== 0 && response !== 'Request failed.') {
+                success("Upload success!");
+                setCurrentSTID(response);
+                return;
+            } else {
+                error("Failed to upload.");
+                setSTFile(null);
+                setSTUrl('');
+                setCurrentSTID(null);
+                setSTInfo({ md5: '', sha256: '' });
+                return;
+            }
+        }
         if (STFile !== null) {
-            console.log("Selected");
+            upload_new_st_file();
         }
     }, [STFile])
 
@@ -207,9 +236,11 @@ const MainApp = () => {
                     <i class="fa-solid fa-floppy-disk"></i> Save
                 </button>
                 <button className="save_evaluation_result_btn">
-                <i class="fa-solid fa-download"></i> Download
+                <i className="fa-solid fa-download"></i> Download
                 </button>
             </div>
+            <ToastContainer theme="colored" className="alert" limit={1} autoClose={2000}/>
+
         </div>
     )
 };
