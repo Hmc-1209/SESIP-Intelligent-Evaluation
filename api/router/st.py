@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Depends, status
+from fastapi.responses import FileResponse
+import os
 
 from authentication.JWTtoken import get_current_user
-from exception import bad_request, no_such_user, no_such_st, st_not_belongs
+from exception import bad_request, no_such_user, no_such_st, no_such_file, st_not_belongs
 from repository.STCRUD import *
 from repository.UserCRUD import get_user_by_id
 from schemas import ListST, DetailST, CreateST, UpdateST
+from config import base_path
 
 router = APIRouter(prefix="/st", tags=["Security Target"])
 
@@ -27,15 +30,22 @@ async def get_detail_security_target(st_id: int, current_user=Depends(get_curren
 
 
 @router.get("/download/{st_id}")
-async def download_eval_file(st_id: int, current_user=Depends(get_current_user)) -> str:
+async def download_eval_file(st_id: int, current_user=Depends(get_current_user)) -> FileResponse:
     st = await get_st_by_id(st_id)
+
+    filepath = os.path.join(base_path, str(st.st_id), "eval_file.docx")
+    filename = f"{st.st_id}-{st.st_details['TOE_NAME']} Evaluation Result.docx"
+
     if not st:
         raise no_such_st
 
     if not current_user.user_id == st.owner_id:
         raise st_not_belongs
 
-    return st.eval_file
+    if not st.is_evaluated or not os.path.isfile(filepath):
+        raise no_such_file
+
+    return FileResponse(filepath, media_type='application/octet-stream', filename=filename)
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
