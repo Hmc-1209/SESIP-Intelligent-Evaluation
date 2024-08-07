@@ -33,7 +33,7 @@ def evaluate(st_file_path):
     The third one will be the target of evaluation.
     I want you to understand them and help me evaluate the target with the first two files' rules.
     
-    In the second file, you will get a lot of "work units" for different level of SESIP.
+    In the second file, you will get a lot of "work units" for different levels of SESIP.
     I want your reply contains these details, with the format I give you:
     
     ------Response format starts------
@@ -55,11 +55,11 @@ def evaluate(st_file_path):
     
     Response format description:
     The TOE_Name, Developer_Organization and SESIP_Level should be considered first.
-    In Work_Units, there should be the same amount of objects as the Work_Units in the corresponding SESIP_Level,decided by the SESIP_evaluation_report section.
+    In Work_Units, there should be the same amount of objects as the Work_Units in the corresponding SESIP_Level, decided by the SESIP_evaluation_report section.
     In each of these Work_Units objects, the Work_Unit_Name should be the name of the work unit itself (ex: ASE_INT.1-1).
-    In each of these Work_Units objects, the Work_Unit_Description should be why the targeting Security Target meets the requirement of the work unit (or not) and why, along with where the information could be found (if possible), try being as detail as possible.
-    In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string with "pass" or "fail" reguarding the evaluation result of the corresponding work unit.
-    The SFRs_SARs_Evaluation_Result_Status should contain for values, in the order of passed_SFRs, failed_SFRs, passed_SARs, failed_SARs.
+    In each of these Work_Units objects, the Work_Unit_Description should be why the targeted Security Target meets the requirements of the work unit (or not), along with where the information could be found (if possible), try being as detail as possible.
+    In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'pass' or 'fail' regarding the evaluation result of the corresponding work unit.
+    The SFRs_SARs_Evaluation_Result_Status should contain values in the following order: passed_SFRs, failed_SFRs, passed_SARs, and failed_SARs.
     
     The following document is the SESIP methodology.
     ------SESIP Methodology starts------
