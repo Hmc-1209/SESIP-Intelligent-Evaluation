@@ -2,6 +2,7 @@ import openai
 import os
 from dotenv import load_dotenv
 import pdfplumber
+from config import api_key
 
 load_dotenv()
 
@@ -24,7 +25,7 @@ def evaluate(st_file_path):
         return False
     
     st = pdf_to_text(st_file_path)
-    openai.api_key = os.getenv("API_KEY")
+    openai.api_key = api_key
 
     prompt = '''
     The following information will contain three files' context for you to evaluate.

@@ -14,3 +14,4 @@ algorithm = os.getenv("ALGORITHM")
 access_token_expire_days = os.getenv("ACCESS_TOKEN_EXPIRE_DAYS")
 
 base_path = os.getenv("BASE_PATH")
+api_key = os.getenv("API_KEY")

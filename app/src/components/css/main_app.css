@@ -12,10 +12,12 @@
     height: 40px;
     padding: 20px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .main_app_navbar_subtitle {
     font-size: 15px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .main_app_content_section {
@@ -176,6 +178,7 @@
     width: 500px;
     margin: 5px;
     margin-left: 25px;
+    margin-bottom: 10px;
 }
 
 .st_detail_title {
@@ -319,4 +322,12 @@
 .save_evaluation_result_btn:hover {
     background-color: #707379;
     transition: all .2s;
+}
+
+.st_upload_pop_up {
+    position: fixed;
+    width: 600px;
+    height: 300px;
+    background-color: #323741;
+    color: aliceblue;
 }

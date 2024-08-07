@@ -79,9 +79,15 @@ const MainApp = () => {
             reader.readAsArrayBuffer(file);
         }
     };
-    const handleButtonClick = () => {
+    const handleUploadButtonClick = () => {
         document.getElementById('fileInput').click();
     };
+
+    useEffect(() => {
+        if (STFile !== null) {
+            console.log("Selected");
+        }
+    }, [STFile])
 
     
     return (
@@ -89,10 +95,10 @@ const MainApp = () => {
 
             {/* Navbar */}
             <div className="main_app_navbar">
-                <div>
+                <pre style={{"font-size":"30px"}}>
                     SESIP Intelligence Eval
-                    <div className="main_app_navbar_subtitle">LLM evaluated result will be provided using this tool.</div>
-                </div>
+                    {/* <div className="main_app_navbar_subtitle">LLM evaluated result will be provided using this tool.</div> */}
+                </pre>
                 <div className="main_app_navbar_button_group">
                     <button className="main_app_navbar_button">
                         <i className="fa-solid fa-user"></i>
@@ -121,6 +127,10 @@ const MainApp = () => {
                 </div>
             </div>
 
+            {/* <div className="st_upload_pop_up">
+
+            </div> */}
+
             {/* Evaluation section */}
             <div className="main_app_content_section">
                 <input
@@ -130,7 +140,7 @@ const MainApp = () => {
                     onChange={handleFileChange}
                 />
                 {STUrl === '' &&
-                    <button onClick={handleButtonClick} className="st_upload_btn">
+                    <button onClick={handleUploadButtonClick} className="st_upload_btn">
                         Upload Security Target
                     </button>
                 }
@@ -156,12 +166,13 @@ const MainApp = () => {
                             <pre className="st_detail_information">
                                 MD5 hash : {STInfo.md5}<br /><br />
                                 SHA256 hash : {STInfo.sha256}
+                                
                             </pre>    
                         </div>
 
                         {/* Model select dropdown list */}
-                        <div className="model_selector_label">Select Model for evaluation</div>
-                        <ReactDropdown options={model_options} value={model_options[0]} className="myControlClassName model_selector"/>
+                        <pre className="model_selector_label">Select Model for evaluation :</pre>
+                        <ReactDropdown options={model_options} value={model_options[0]} className="model_selector"/>
                         
                         {/* Evaluation button and result */}
                         <button className="porocess_evaluation_btn">Evaluate</button>
