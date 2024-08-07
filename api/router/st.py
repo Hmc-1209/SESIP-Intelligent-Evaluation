@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status, UploadFile
 from fastapi.responses import FileResponse
 import os
+import json
 
 from authentication.JWTtoken import get_current_user
 from exception import bad_request, no_such_user, no_such_st, no_such_file, st_not_belongs
@@ -26,7 +27,36 @@ async def get_detail_security_target(st_id: int, current_user=Depends(get_curren
     if not current_user.user_id == st.owner_id:
         raise st_not_belongs
 
-    return st
+    filepath = os.path.join(base_path, str(st.st_id), "eval_details.json")
+    eval_details = None
+
+    if st.is_evaluated and os.path.isfile(filepath):
+        eval_details = json.load(open(filepath, "r"))
+
+    return DetailST(st_id=st.st_id,
+                    st_name=st.st_name,
+                    st_details=st.st_details,
+                    eval_details=eval_details,
+                    is_evaluated=st.is_evaluated,
+                    is_valid=st.is_valid)
+
+
+@router.get("/file/{st_id}")
+async def get_security_target_content(st_id: int, current_user=Depends(get_current_user)) -> FileResponse:
+    st = await get_st_by_id(st_id)
+
+    filepath = os.path.join(base_path, str(st.st_id), "st_file.pdf")
+
+    if not st:
+        raise no_such_st
+
+    if not current_user.user_id == st.owner_id:
+        raise st_not_belongs
+
+    if not os.path.isfile(filepath):
+        raise no_such_file
+
+    return FileResponse(filepath, media_type="application/pdf")
 
 
 @router.get("/download/{st_id}")

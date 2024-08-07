@@ -1,4 +1,5 @@
 from pydantic import BaseModel, ConfigDict
+# from fastapi.responses import FileResponse
 
 
 # ----- Schemas for User table -----
@@ -38,8 +39,8 @@ class ListST(BaseST):
 
 class DetailST(ListST):
     st_details: dict
-    st_file: str
-    eval_details: str | None
+    eval_details: dict | None
+    is_evaluated: bool
     is_valid: bool | None
 
 
