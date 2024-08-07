@@ -2,7 +2,7 @@ import openai
 import os
 from dotenv import load_dotenv
 import pdfplumber
-from config import api_key
+# from config import api_key
 
 load_dotenv()
 
@@ -18,14 +18,14 @@ def pdf_to_text(pdf_file):
 def evaluate(st_file_path):
 
     try:
-        sesip_methodology = open("./prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
-        sesip_evaluation_report = open("./prompt/SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
+        sesip_methodology = open("api\LLM\prompt\SESIP_Methodology.txt", 'r', encoding='utf-8').read()
+        sesip_evaluation_report = open("api\LLM\prompt\SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
     except Exception as e:
         print(f"Failed with error {e}")
         return False
     
     st = pdf_to_text(st_file_path)
-    openai.api_key = api_key
+    openai.api_key = os.getenv("API_KEY")
 
     prompt = '''
     The following information will contain three files' context for you to evaluate.
@@ -68,7 +68,7 @@ def evaluate(st_file_path):
     ------SESIP Methodology ends------
     
     The following document is the sesip evaluation report.
-    ------SESIP Evaluation Report starts------
+    ------SESIP Evaaluation Report starts------
     ''' + sesip_evaluation_report + '''
     ------SESIP Evaluation Report ends------
     
@@ -81,15 +81,15 @@ def evaluate(st_file_path):
     '''
 
     try:
-        response = openai.completions.create(
-            engine="gpt-4o",
-            prompt=prompt,
-            max_tokens=20000,
-            temperature=0.7
+        response = openai.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
         )
-        print(response)
+        print(response['choices'][0]['message']['content'])
     except Exception as e:
         print(f"Failed with error {e}")
 
 
-evaluate("...")
+evaluate(r"...")
