@@ -56,12 +56,20 @@ def evaluate(st_file_path):
     
     Response format description:
     The TOE_Name, Developer_Organization and SESIP_Level should be considered first.
-    In Work_Units, there should be the same amount of objects as the Work_Units in the corresponding SESIP_Level, decided by the SESIP_evaluation_report section.
+    In Work_Units, there should be the same amount of objects as the Work_Units in the corresponding SESIP_Level, decided by the SESIP_evaluation_report section (For example, under "Work Units for SESIP 1"). So you need to first understand which SESIP Level the present ST wants to evaluate and get the corresponding work units under the SESIP Evaluation Report section.
     In each of these Work_Units objects, the Work_Unit_Name should be the name of the work unit itself (ex: ASE_INT.1-1).
-    In each of these Work_Units objects, the Work_Unit_Description should be why the targeted Security Target meets the requirements of the work unit (or not), along with where the information could be found (if possible), try being as detail as possible.
+    In each of these Work_Units objects, the Work_Unit_Description should not only state whether the targeted Security Target meets the requirements of the work unit but also provide detailed reasoning. Specifically, the response should include:
+    1. Why the requirements are met or not met, with a clear explanation of the factors contributing to this conclusion.
+    2. Precise references to the Security Target (ST) document, including the page number, paragraph, and if possible, the line number where the relevant information can be found.
+    3. If the work unit is partially met, describe which aspects are fulfilled and which are lacking, with corresponding references in the ST.
+    4. A brief quoted excerpt from the relevant section of the ST document to support the evaluation, using ... to indicate where the text has been truncated if necessary.
+    Please ensure the explanation is thorough, identifying exact locations in the ST document to support the evaluation. The explanation of why the work unit pass or fail should be detailed. For example why the infomation being found could prove the work unit requirement have been met.
     In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'pass' or 'fail' regarding the evaluation result of the corresponding work unit.
-    The SFRs_SARs_Evaluation_Result_Status should contain values in the following order: passed_SFRs, failed_SFRs, passed_SARs, and failed_SARs.
+    No matter the Work_Unit is pass or failed, it sould be listed in the Work_Unit array, not just listing out the passed one.
+    The SFRs_SARs_Evaluation_Result_Status should contain values in the following order: passed_work_unit_numbers, failed_work_unit_numbers. Listed the passed and failed work units corresponding to the result from Work_Units array, it should be a number.
     
+    Make sure the response contains only the json data (without code block format), no other texts outside of it.
+
     The following document is the SESIP methodology.
     ------SESIP Methodology starts------
     ''' + sesip_methodology + '''
@@ -87,9 +95,11 @@ def evaluate(st_file_path):
                 {"role": "user", "content": prompt}
             ]
         )
-        print(response['choices'][0]['message']['content'])
+        response_text = response.choices[0].message.content
+        print("Evaluation complete!")
+        with open(r"api\LLM\evaluate-result.json", "w", encoding="utf-8") as f:
+            f.write(response_text)
+        print("Response written to evaluation-result.json")
+
     except Exception as e:
         print(f"Failed with error {e}")
-
-
-evaluate(r"...")
