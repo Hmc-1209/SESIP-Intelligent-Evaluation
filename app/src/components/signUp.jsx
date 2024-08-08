@@ -71,6 +71,7 @@ const SignUp = () => {
             name="password_input"
             id="password_input"
             className="LogInFormInput"
+            autoComplete=""
             />
             <label htmlFor="password_confirm_input_label" className="LogInFormLabel">
             Confirm Password
@@ -80,6 +81,7 @@ const SignUp = () => {
             name="password_confirm_input"
             id="password_confirm_input"
             className="LogInFormInput"
+            autoComplete=""
             />
         </div>
 

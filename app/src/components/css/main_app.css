@@ -128,6 +128,15 @@
     display: block;
 }
 
+.main_app_evaluation_loading_background {
+    width: 10%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .main_app_st_section {
     display: flex;
     align-items: flex-start;
@@ -136,7 +145,7 @@
 
 .st_upload_btn {
     min-width: calc(50% - 5px);
-    height: 900px;
+    height: 800px;
     font-size: 20px;
     color: #353535;
     background-color: rgba(0, 0, 0, 0);
@@ -152,7 +161,7 @@
 
 .st_content_display {
     min-width: calc(50% - 25px);
-    height: 900px;
+    height: 800px;
     padding: 10px;
     border: #353535 1px solid;
     border-radius: 5px;

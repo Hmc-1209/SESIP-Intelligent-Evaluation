@@ -7,7 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import models from './models.json';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import get_user_st, { get_st_info, upload_st } from "../requests/user_requests";
+import { ColorRing } from 'react-loader-spinner'
+import get_user_st, { get_st_info, st_evaluate, upload_st } from "../requests/user_requests";
 // For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
 import "./css/main_app.css";
@@ -21,7 +22,7 @@ const MainApp = () => {
     const error = (error_message) => toast.error(error_message);
 
     // Context variables
-    let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
+    let { alert, setAlert, setMode, loading, setLoading } = useContext(AppContext);
 
     // useState variables
     const [userST, setUserST] = useState(null);
@@ -29,11 +30,12 @@ const MainApp = () => {
     const [STUrl, setSTUrl] = useState('');
     const [STHash, setSTHash] = useState({ md5: '', sha256: '' });
     const [STInfo, setSTInfo] = useState(null);
+    const [STInfoDesciption, setSTInfoDescription] = useState(null);
     const [currentSTID, setCurrentSTID] = useState(null);
     const [currentEvalResult, setCurrentEvalResult] = useState(eval_result_status[0]);
     const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0]);
     const [selectedResult, setSelectedResult] = useState(null);
-    const [evalResults, setEvalResults] = useState([]); // Evaluation results should contain 1.name 2.status(pass or fail) 3.detail explain of the result
+    const [evalResults, setEvalResults] = useState([]);
 
     useEffect(() => {
         const get_st = async () => {
@@ -48,7 +50,6 @@ const MainApp = () => {
             catch(error) {
                 console.log("error");
             }
-            console.log(userST);
         }
 
         get_st();
@@ -83,6 +84,8 @@ const MainApp = () => {
                 setSTHash({ md5, sha256 });
             };
             reader.readAsArrayBuffer(file);
+        } else {
+            console.log(event.target, '123');
         }
     };
     const handleUploadButtonClick = () => {
@@ -99,6 +102,37 @@ const MainApp = () => {
         setEvalResultPassFailNums([0, 0]);
         setEvalResults([]);
         setSelectedResult(null);
+        setSTInfoDescription(null);
+    }
+
+    // Process evaluation
+    const get_evaluate_result = () => {
+        setLoading(1);
+        const access_token = window.localStorage.getItem("access_token");
+        const evaluate_request = async () => {
+            const response = await st_evaluate(access_token, currentSTID);
+            if (response) {
+                setEvalResults(response.eval_details.Work_Units);
+                setSTInfoDescription({
+                    TOE_Name: response.st_details.TOE_Name,
+                    Developer_Organizetion: response.st_details.Developer_Organizetion,
+                    SESIP_Level: response.st_details.SESIP_Level
+                })
+                setEvalResultPassFailNums([response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
+                setLoading(false);
+                setSTInfo(prevSTInfo => ({
+                    ...prevSTInfo,
+                    is_evaluated: true,
+                }));
+                success("Evaluation comlete!");
+                return;
+            } else {
+                error("Unknown error happend. Try again later.");
+                setLoading(false);
+                return;
+            }
+        }
+        evaluate_request();
     }
 
     useEffect(() => {
@@ -142,35 +176,47 @@ const MainApp = () => {
 
             {/* Navbar */}
             <div className="main_app_navbar">
-                <pre style={{"font-size":"30px"}}>
+                <pre style={{"fontSize":"30px"}}>
                     SESIP Intelligence Eval
                     {/* <div className="main_app_navbar_subtitle">LLM evaluated result will be provided using this tool.</div> */}
                 </pre>
                 <div className="main_app_navbar_button_group">
-                    <button className="main_app_navbar_button">
+                    <div className="main_app_navbar_button">
                         <i className="fa-solid fa-user"></i>
                         <div className="dropdown-wrapper">
                             {/* User Security Target select section */}
                             <div className="dropdown-content">
+                                {loading === 1 ?
+                                <button disabled><pre>◀  History ST</pre></button> :
                                 <button><pre>◀  History ST</pre></button>
+                                }
                                 <div className="user_st_lists">
                                     {userST && userST.map((st, index) => (
-                                        <div className="user_st_list_item" key={index}>
-                                            <button><pre>{st.st_name}</pre></button>
+                                        <div className="user_st_list_item" key={index} disabled>
+                                            {loading === 1 ?
+                                                <button><pre>{st.st_name}</pre></button> :
+                                                <button><pre>{st.st_name}</pre></button>
+                                            }
                                         </div>
                                     ))}
                                 </div>
                             </div>
                             {/* User settings button */}
                             <div className="dropdown-content">
-                                <button onClick={setting}><pre>Setting</pre></button>
+                                {loading === 1 ?
+                                    <button disabled><pre>Setting</pre></button> :
+                                    <button onClick={setting}><pre>Setting</pre></button>
+                                }   
                             </div>
                             {/* User log out button */}
                             <div className="dropdown-content">
-                                <button onClick={logOut}><pre>Log out</pre></button>
+                                {loading === 1 ?
+                                    <button disabled><pre>Log out</pre></button> :
+                                    <button onClick={logOut}><pre>Log out</pre></button>
+                                }
                             </div>
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
 
@@ -199,9 +245,9 @@ const MainApp = () => {
                                 Security Target Details
                             </pre>
                             <pre className="st_detail_information">
-                                TOE name : <br /><br />
-                                Developer Organization :<br /><br />
-                                SESIP Level : 
+                                TOE name : {STInfoDesciption ? STInfoDesciption.TOE_Name : ''}<br /><br />
+                                Developer Organization : {STInfoDesciption ? STInfoDesciption.Developer_Organizetion : ''}<br /><br />
+                                SESIP Level : {STInfoDesciption ? STInfoDesciption.SESIP_Level : ''}
                             </pre>
                             <pre className="st_detail_title">
                                 Checksum
@@ -209,7 +255,6 @@ const MainApp = () => {
                             <pre className="st_detail_information">
                                 MD5 hash : {STHash.md5}<br /><br />
                                 SHA256 hash : {STHash.sha256}
-                                
                             </pre>    
                         </div>
 
@@ -218,9 +263,9 @@ const MainApp = () => {
                         <ReactDropdown options={model_options} value={model_options[0]} className="model_selector"/>
                         
                         {/* Evaluation button and result */}
-                        {((STInfo === null) || (STInfo.is_evaluated !== false)) ? 
+                        {((STInfo === null) || (STInfo.is_evaluated !== false) || loading === 1) ? 
                         <button className="process_evaluation_btn" disabled>Evaluate</button> : 
-                        <button className="process_evaluation_btn">Evaluate</button>}
+                        <button className="process_evaluation_btn" onClick={get_evaluate_result}>Evaluate</button>}
 
                         <i><div className={"evaluation_result_label " + 
                                                 (currentEvalResult === eval_result_status[0] ? "eval_pending" :
@@ -228,6 +273,19 @@ const MainApp = () => {
                                                 "eval_fail")
                                         }>
                             {currentEvalResult}
+                            {loading === 1 && 
+                                <div className="main_app_evaluation_loading_background">
+                                    <ColorRing
+                                    visible={true}
+                                    height="100"
+                                    width="100"
+                                    ariaLabel="color-ring-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="color-ring-wrapper"
+                                    colors={['#5A7D7C', '#DADFF7', '#232C33', '#A0C1D1', '#B5B2C2']}
+                                    />
+                                </div>
+                            }
                         </div></i>
                         <pre className="eval_brief_result">
                             {evalResultPassFailNums[0]} work units passed the evaluation.<br />{evalResultPassFailNums[1]} work units failed the evaluation.<br /><br />
@@ -239,20 +297,33 @@ const MainApp = () => {
                 
                 <div className="result_container">
                     {evalResults.map(result => (
-                        <button className="result_brief_label" onClick={() => setSelectedResult(result)}>{result.name}</button>
+                        <button className="result_brief_label" onClick={() => setSelectedResult(result)} key={result.Work_Unit_Name} style={{display: 'flex'}}>
+                            {result.Work_Unit_Evaluation_Result_Status === 'pass' ?
+                             <div style={{ color: 'green', fontWeight: 'bold' }}>O  </div> :
+                             <div style={{ color: 'red', fontWeight: 'bold' }}>X  </div>} {result.Work_Unit_Name}
+                        </button>
                     ))}
                 </div>
                 <div className="result_detail_content">
-                    {selectedResult ? selectedResult.detail : "Select result for more information."}
+                    {selectedResult ?
+                    <pre>
+                        {selectedResult.Work_Unit_Description}
+                    </pre> : "Select result for more information."}
                 </div>
             </div>
             
             <div className="footer_btn_group">
+                {(loading === 1) ? 
+                <button className="save_evaluation_result_btn" disabled>
+                    <i className="fa-solid fa-xmark"></i> Clear
+                </button> :
                 <button className="save_evaluation_result_btn" onClick={clear_current_st}>
                     <i className="fa-solid fa-xmark"></i> Clear
                 </button>
+                }
                 
-                {(STInfo === null) ?
+                
+                {((STInfo === null) || loading === 1) ?
                 (<button className="save_evaluation_result_btn" disabled>
                     <i className="fa-solid fa-trash-can"></i> Delete
                 </button>

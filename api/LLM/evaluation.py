@@ -48,7 +48,7 @@ def evaluate(st_id: int):
             },
             ...
         ],
-        SFRs_SARs_Evaluation_Result_Status: [...]
+        Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status: [...]
     }
     ------Response format ends------
     
@@ -64,9 +64,9 @@ def evaluate(st_id: int):
     Please ensure the explanation is thorough, identifying exact locations in the ST document to support the evaluation. The explanation of why the work unit pass or fail should be detailed. For example why the infomation being found could prove the work unit requirement have been met.
     In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'pass' or 'fail' regarding the evaluation result of the corresponding work unit.
     No matter the Work_Unit is pass or failed, it sould be listed in the Work_Unit array, not just listing out the passed one.
-    The SFRs_SARs_Evaluation_Result_Status should contain values in the following order: passed_work_unit_numbers, failed_work_unit_numbers. Listed the passed and failed work units corresponding to the result from Work_Units array, it should be a number.
+    The Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status should contain values in the following order: passed_work_unit_numbers, failed_work_unit_numbers. Listed the passed and failed work units corresponding to the result from Work_Units array, it should be a number.
     
-    Make sure the response contains only the json data (without code block format), no other texts outside of it.
+    Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it.
 
     The following document is the SESIP methodology.
     ------SESIP Methodology starts------

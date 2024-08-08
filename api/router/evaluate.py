@@ -39,8 +39,8 @@ async def evaluate_security_target(st_id: int, current_user=Depends(get_current_
         eval_results = json.load(open(os.path.join(dir_path, 'eval_result.json'), 'r', encoding='utf-8'))
 
         st_details = copy_dict(eval_results, ["TOE_Name", "Developer_Organization", "SESIP_Level"])
-        eval_details = copy_dict(eval_results, ["Work_Units", "SFRs_SARs_Evaluation_Result_Status"])
-        is_valid = False if eval_results["SFRs_SARs_Evaluation_Result_Status"][1] else True
+        eval_details = copy_dict(eval_results, ["Work_Units", "Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"])
+        is_valid = False if eval_results["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
 
     except Exception as e:
         print(f"Failed with error {e}")

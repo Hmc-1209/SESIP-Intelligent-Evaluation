@@ -22,7 +22,6 @@ const Setting = () => {
     const submit_update = async () => {
         setLoading(0);
         const access_token = window.localStorage.getItem("access_token");
-        console.log(updateMode)
         if(updateMode === 0) {
             const new_username = document.getElementById("change_username").value;
             if (new_username === "") {
@@ -125,6 +124,7 @@ const Setting = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         disabled={oldPassword === ''}
+                        autoComplete=""
                     />
                     <label htmlFor="change_password_confirm" className={`setting_input_label ${password === '' ? 'grey' : ''}`}>
                         Confirm new password:
@@ -138,6 +138,7 @@ const Setting = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         disabled={oldPassword === ''}
+                        autoComplete=""
                     />
                 </div>
             )}

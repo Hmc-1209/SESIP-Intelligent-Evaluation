@@ -125,3 +125,27 @@ export const get_st_info = async (access_token, st_id) => {
   }
   return false;
 }
+
+export const st_evaluate = async (access_token, st_id) => {
+  try {
+    console.log(st_id);
+    const response = await axios.post(`${ip}/eval/${st_id}`, {}, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.data) {
+      console.log(response.data);
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}
