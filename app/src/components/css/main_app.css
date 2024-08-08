@@ -226,6 +226,11 @@
     background-color: rgba(223, 223, 223, 0.5);
     transition: all .2s;
 }
+.porocess_evaluation_btn:disabled {
+    background-color: rgba(192, 192, 192, 0.3);
+    opacity: .3;
+    cursor: not-allowed;
+}
 .evaluation_result_label {
     width: 45vw;
     height: 10vw;
@@ -309,7 +314,7 @@
     text-align: center;
 }
 .save_evaluation_result_btn {
-    width: 47%;
+    width: 30%;
     margin: 10px;
     padding: 10px 20px;
     font-size: 20px;
@@ -322,6 +327,12 @@
 .save_evaluation_result_btn:hover {
     background-color: #707379;
     transition: all .2s;
+}
+
+.save_evaluation_result_btn:disabled {
+    background-color: rgba(192, 192, 192, 0.3);
+    opacity: .3;
+    cursor: not-allowed;
 }
 
 .st_upload_pop_up {

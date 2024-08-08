@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import models from './models.json';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import get_user_st, { upload_st } from "../requests/user_requests";
+import get_user_st, { get_st_info, upload_st } from "../requests/user_requests";
 // For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
 import "./css/main_app.css";
@@ -27,10 +27,11 @@ const MainApp = () => {
     const [userST, setUserST] = useState(null);
     const [STFile, setSTFile] = useState(null);
     const [STUrl, setSTUrl] = useState('');
-    const [STInfo, setSTInfo] = useState({ md5: '', sha256: '' });
+    const [STHash, setSTHash] = useState({ md5: '', sha256: '' });
+    const [STInfo, setSTInfo] = useState(null);
     const [currentSTID, setCurrentSTID] = useState(null);
     const [currentEvalResult, setCurrentEvalResult] = useState(eval_result_status[0]);
-    const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0, 0, 0]);
+    const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0]);
     const [selectedResult, setSelectedResult] = useState(null);
     const [evalResults, setEvalResults] = useState([]); // Evaluation results should contain 1.name 2.status(pass or fail) 3.detail explain of the result
 
@@ -79,7 +80,7 @@ const MainApp = () => {
                 const binary = e.target.result;
                 const md5 = CryptoJS.MD5(CryptoJS.lib.WordArray.create(binary)).toString();
                 const sha256 = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(binary)).toString();
-                setSTInfo({ md5, sha256 });
+                setSTHash({ md5, sha256 });
             };
             reader.readAsArrayBuffer(file);
         }
@@ -88,6 +89,18 @@ const MainApp = () => {
         document.getElementById('fileInput').click();
     };
 
+    const clear_current_st = () => {
+        setCurrentEvalResult(eval_result_status[0]);
+        setCurrentSTID(null);
+        setSTFile(null);
+        setSTUrl('');
+        setSTHash({ md5: '', sha256: '' });
+        setSTInfo(null);
+        setEvalResultPassFailNums([0, 0]);
+        setEvalResults([]);
+        setSelectedResult(null);
+    }
+
     useEffect(() => {
         const upload_new_st_file = async () => {
             if (STFile.name.split('/').pop().length > 50) {
@@ -95,7 +108,7 @@ const MainApp = () => {
                 setSTFile(null);
                 setSTUrl('');
                 setCurrentSTID(null);
-                setSTInfo({ md5: '', sha256: '' });
+                setSTHash({ md5: '', sha256: '' });
                 return;
             }
             const access_token = window.localStorage.getItem("access_token");
@@ -103,13 +116,18 @@ const MainApp = () => {
             if (response !== 0 && response !== 'Request failed.') {
                 success("Upload success!");
                 setCurrentSTID(response);
+                const current_st_information = await get_st_info(access_token, response);
+                if (current_st_information) {
+                    setSTInfo(current_st_information);
+                    console.log(current_st_information);
+                }
                 return;
             } else {
                 error("Failed to upload.");
                 setSTFile(null);
                 setSTUrl('');
                 setCurrentSTID(null);
-                setSTInfo({ md5: '', sha256: '' });
+                setSTHash({ md5: '', sha256: '' });
                 return;
             }
         }
@@ -156,10 +174,6 @@ const MainApp = () => {
                 </div>
             </div>
 
-            {/* <div className="st_upload_pop_up">
-
-            </div> */}
-
             {/* Evaluation section */}
             <div className="main_app_content_section">
                 <input
@@ -193,8 +207,8 @@ const MainApp = () => {
                                 Checksum
                             </pre>
                             <pre className="st_detail_information">
-                                MD5 hash : {STInfo.md5}<br /><br />
-                                SHA256 hash : {STInfo.sha256}
+                                MD5 hash : {STHash.md5}<br /><br />
+                                SHA256 hash : {STHash.sha256}
                                 
                             </pre>    
                         </div>
@@ -204,7 +218,10 @@ const MainApp = () => {
                         <ReactDropdown options={model_options} value={model_options[0]} className="model_selector"/>
                         
                         {/* Evaluation button and result */}
-                        <button className="porocess_evaluation_btn">Evaluate</button>
+                        {((STInfo === null) || (STInfo.is_evaluated !== false)) ? 
+                        <button className="porocess_evaluation_btn" disabled>Evaluate</button> : 
+                        <button className="porocess_evaluation_btn">Evaluate</button>}
+
                         <i><div className={"evaluation_result_label " + 
                                                 (currentEvalResult === eval_result_status[0] ? "eval_pending" :
                                                 currentEvalResult === eval_result_status[1] ? "eval_pass" :
@@ -213,8 +230,7 @@ const MainApp = () => {
                             {currentEvalResult}
                         </div></i>
                         <pre className="eval_brief_result">
-                            {evalResultPassFailNums[0]} SARs passed the evaluation.<br />{evalResultPassFailNums[1]} SARs failed the evaluation.<br /><br />
-                            {evalResultPassFailNums[2]} SFRs passed the evaluation.<br />{evalResultPassFailNums[3]} SFRs failed the evaluation.<br />
+                            {evalResultPassFailNums[0]} work units passed the evaluation.<br />{evalResultPassFailNums[1]} work units failed the evaluation.<br /><br />
                         </pre>
                     </div>
                 </div>
@@ -232,12 +248,25 @@ const MainApp = () => {
             </div>
             
             <div className="footer_btn_group">
-                <button className="save_evaluation_result_btn">
-                    <i class="fa-solid fa-floppy-disk"></i> Save
+                <button className="save_evaluation_result_btn" onClick={clear_current_st}>
+                    <i className="fa-solid fa-xmark"></i> Clear
                 </button>
+                
+                {(STInfo === null) ?
+                (<button className="save_evaluation_result_btn" disabled>
+                    <i className="fa-solid fa-trash-can"></i> Delete
+                </button>
+                ) : (
                 <button className="save_evaluation_result_btn">
+                    <i className="fa-solid fa-trash-can"></i> Delete
+                </button>)}
+                
+                {((STInfo === null) || (STInfo.is_evaluated === false)) ?
+                <button className="save_evaluation_result_btn" disabled>
                 <i className="fa-solid fa-download"></i> Download
-                </button>
+                </button> : <button className="save_evaluation_result_btn">
+                <i className="fa-solid fa-download"></i> Download
+                </button>}
             </div>
             <ToastContainer theme="colored" className="alert" limit={1} autoClose={2000}/>
 

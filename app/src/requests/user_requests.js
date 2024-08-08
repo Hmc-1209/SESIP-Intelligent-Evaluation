@@ -103,3 +103,25 @@ export const upload_st = async (access_token, st_file) => {
       return error.response.data.detail;
     }
 }
+
+export const get_st_info = async (access_token, st_id) => {
+  try {
+    const response = await axios.get(`${ip}/st/${st_id}`, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.data) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}
