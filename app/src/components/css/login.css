@@ -45,7 +45,7 @@
 .LogInFormInput {
     width:90%;
     font-size: 25px;
-    background-color: #282c34;
+    background-color: #FFFFF0;
     color: rgb(109, 109, 109);
     border: 1px solid;
     border-radius: 5px;
@@ -76,7 +76,7 @@
     padding: 10px;
     font-size: 15px;
     border: none;
-    color: white;
+    color: #353535;
     background-color: rgba(0, 0, 0, 0);
     transition: ease-in-out .1s;
 }

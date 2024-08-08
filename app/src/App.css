@@ -23,6 +23,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
   overflow-x: hidden;
+  background-color: #FFFFF0;
 }
 body::-webkit-scrollbar {
   width: 8px;

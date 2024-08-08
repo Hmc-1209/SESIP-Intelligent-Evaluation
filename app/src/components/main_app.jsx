@@ -219,8 +219,8 @@ const MainApp = () => {
                         
                         {/* Evaluation button and result */}
                         {((STInfo === null) || (STInfo.is_evaluated !== false)) ? 
-                        <button className="porocess_evaluation_btn" disabled>Evaluate</button> : 
-                        <button className="porocess_evaluation_btn">Evaluate</button>}
+                        <button className="process_evaluation_btn" disabled>Evaluate</button> : 
+                        <button className="process_evaluation_btn">Evaluate</button>}
 
                         <i><div className={"evaluation_result_label " + 
                                                 (currentEvalResult === eval_result_status[0] ? "eval_pending" :

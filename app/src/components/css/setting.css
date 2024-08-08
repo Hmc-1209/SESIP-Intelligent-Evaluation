@@ -8,7 +8,6 @@
 }
 
 .user_setting_panel {
-    /* width: 60%; */
     display: flex;
     margin: 10px;
     flex-direction: column;
@@ -31,6 +30,7 @@
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 5px;
+    background-color: #FFFFF0;
 }
 .setting_input::placeholder {
     font-size: 15px;
@@ -38,10 +38,10 @@
 }
 
 .grey {
-    color: rgba(128, 128, 128, 0.205);
+    color: rgba(150, 150, 150, 0.75);
 }
 .grey::placeholder {
-    color: rgba(128, 128, 128, 0.205);
+    color: rgba(150, 150, 150, 0.75);
 }
 
 .return_btn {
@@ -57,14 +57,14 @@
 }
 
 .return_btn:hover {
-    color:rgb(255, 255, 255);
+    color:rgb(141, 141, 141);
     transition: ease-in-out .2s;
 }
 
 .setting_submit_btn {
     margin-top:10px;
     background-color: rgba(0, 0, 0, 0);
-    color: rgb(109, 109, 109);
+    color: #353535;
     border: rgb(109, 109, 109) 1px solid;
     font-size: 15px;
     padding: 5px 10px;
@@ -100,13 +100,13 @@
     margin-bottom: 5px;
     background-color: rgba(0, 0, 0, 0);
     border: none;
-    color: rgb(143, 143, 143);
+    color: #7e7e7e;
     transition: all .2s;
 }
 .updateModeBtn:hover {
-    color: rgb(187, 187, 187);
+    color: #353535;
     transition: all .2s;
 }
 .light {
-    color: rgb(221, 221, 221);
+    color: #353535;
 }
