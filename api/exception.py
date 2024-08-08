@@ -31,5 +31,8 @@ no_such_file = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
 eval_has_performed = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
                                    detail="Evaluation has been performed.")
 
+eval_not_performed = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                                   detail="Evaluation has not been performed.")
+
 evaluation_failed = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                   detail="Evaluation failed.")
