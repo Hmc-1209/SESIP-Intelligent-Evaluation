@@ -27,3 +27,9 @@ st_not_belongs = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
 
 no_such_file = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                              detail="File not found.")
+
+eval_has_performed = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                                   detail="Evaluation has been performed.")
+
+evaluation_failed = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                  detail="Evaluation failed.")

@@ -19,6 +19,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(router.token)
 app.include_router(router.user)
 app.include_router(router.st)
+app.include_router(router.evaluate)
 
 app.add_middleware(
     CORSMiddleware,

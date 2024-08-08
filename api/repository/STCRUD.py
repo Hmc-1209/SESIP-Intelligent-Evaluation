@@ -31,6 +31,13 @@ async def update_st_by_id(st_id: int, new_st: UpdateST) -> bool:
     return await execute_stmt_in_tran([stmt])
 
 
+async def update_st_after_eval(st_id: int, st_details: dict, is_valid: bool) -> bool:
+    stmt = SecurityTarget.update().where(SecurityTarget.c.st_id == st_id).values(st_details=st_details,
+                                                                                 is_evaluated=True,
+                                                                                 is_valid=is_valid)
+    return await execute_stmt_in_tran([stmt])
+
+
 async def delete_st_by_id(st_id: int) -> bool:
     stmt = SecurityTarget.delete().where(SecurityTarget.c.st_id == st_id)
     return await execute_stmt_in_tran([stmt])

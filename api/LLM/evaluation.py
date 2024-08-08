@@ -1,10 +1,8 @@
 import openai
 import os
-from dotenv import load_dotenv
 import pdfplumber
-# from config import api_key
 
-load_dotenv()
+from config import base_path, api_key
 
 
 def pdf_to_text(pdf_file):
@@ -15,16 +13,16 @@ def pdf_to_text(pdf_file):
     return text
 
 
-def evaluate(st_file_path):
-
+def evaluate(st_id: int):
     try:
-        sesip_methodology = open("api\LLM\prompt\SESIP_Methodology.txt", 'r', encoding='utf-8').read()
-        sesip_evaluation_report = open("api\LLM\prompt\SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
+        sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
+        sesip_evaluation_report = open("../api/LLM/prompt/SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
     except Exception as e:
         print(f"Failed with error {e}")
         return False
-    
-    st = pdf_to_text(st_file_path)
+
+    st_path = os.path.join(base_path, str(st_id), "st_file.pdf")
+    st = pdf_to_text(st_path)
     openai.api_key = os.getenv("API_KEY")
 
     prompt = '''
@@ -97,7 +95,9 @@ def evaluate(st_file_path):
         )
         response_text = response.choices[0].message.content
         print("Evaluation complete!")
-        with open(r"api\LLM\evaluate-result.json", "w", encoding="utf-8") as f:
+
+        details_path = os.path.join(base_path, str(st_id), "eval_result.json")
+        with open(details_path, "w", encoding="utf-8") as f:
             f.write(response_text)
         print("Response written to evaluation-result.json")
 

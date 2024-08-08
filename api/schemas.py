@@ -46,3 +46,9 @@ class DetailST(ListST):
 
 class UpdateST(BaseST):
     owner_id: int | None = None
+
+
+class EvaluateST(BaseModel):
+    st_details: dict
+    eval_details: dict
+    is_valid: bool
