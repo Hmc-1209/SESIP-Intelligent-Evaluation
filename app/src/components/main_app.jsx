@@ -121,7 +121,7 @@ const MainApp = () => {
                     ...prevSTInfo,
                     is_evaluated: true,
                 }));
-                setCurrentEvalResult(response.eval_details.is_valid === true ?
+                setCurrentEvalResult(response.is_valid === true ?
                      'Pass' : 'Fail');
                 success("Evaluation comlete!");
                 return;
@@ -143,7 +143,6 @@ const MainApp = () => {
         const response_info = await get_st_info(access_token, st_id);
         const response_pdf = await get_st_file_content(access_token, st_id);
         setSTUrl(URL.createObjectURL(response_pdf));
-        console.log(response_info)
         setCurrentSTID(response_info.st_id);
         if (response_info && response_pdf) {
             // If the ST had already been evaluated
@@ -175,7 +174,6 @@ const MainApp = () => {
     const delete_history_security_target = async () => {
         setLoading(0);
         const access_token = window.localStorage.getItem("access_token");
-        console.log(currentSTID)
         const response = await delete_history_st(access_token, currentSTID);
         if (response) {
             success("Security Target deleted.")
@@ -353,14 +351,15 @@ const MainApp = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Evaluation result section */}
             <div className="main_app_result_section">
-                
                 <div className="result_container">
                     {evalResults.map(result => (
-                        <button className="result_brief_label" onClick={() => setSelectedResult(result)} key={result.Work_Unit_Name} style={{display: 'flex'}}>
+                        <button className={"result_brief_label "+(selectedResult && (selectedResult.Work_Unit_Name===result.Work_Unit_Name)?"selected_result":"")} onClick={() => setSelectedResult(result)} key={result.Work_Unit_Name} style={{display: 'flex'}}>
                             {result.Work_Unit_Evaluation_Result_Status === 'pass' ?
                              <div style={{ color: 'green', fontWeight: 'bold', marginRight: '10px' }}>O</div> :
-                             <div style={{ color: 'red', fontWeight: 'bold', marginRight: '10px' }}>X</div>}{result.Work_Unit_Name}
+                             <div style={{ color: 'red', fontWeight: 'bold', marginRight: '10px' }}>X</div>}{result.Work_Unit_Name? result.Work_Unit_Name : "null"}
                         </button>
                     ))}
                 </div>
@@ -372,6 +371,7 @@ const MainApp = () => {
                 </div>
             </div>
             
+            {/* Footer functional buttons section */}
             <div className="footer_btn_group">
                 {(loading === 1) ? 
                 <button className="save_evaluation_result_btn" disabled>

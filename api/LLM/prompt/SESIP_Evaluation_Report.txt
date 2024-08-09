@@ -38,27 +38,27 @@ The results in these sections are listed in bold-faced type.
 In the following, the assessments of the different evaluator actions and of the subordinate evaluator work units are given.
 
 Work Units for SESIP 1:
-ASE_INT.1-1 (refers to ASE_INT.1.1C)
+ASE_INT.1-1
 The evaluator shall check that the ST introduction contains an ST reference, a TOE reference, a TOE overview and a TOE description.
 
-ASE_INT.1-2 (refers to ASE_INT.1.2C)
+ASE_INT.1-2
 The evaluator shall examine the ST reference to determine that it uniquely identifies the ST.
 Additional information:
 The evaluator determines that the ST reference identifies the ST itself, so that it may be easily distinguished from other STs, and that it also uniquely identifies each version of the ST, e.g. by including a version number and/or a date of publication.
 In evaluations where a CM system is provided, the evaluator may validate the uniqueness of the reference by checking the configuration list. In the other cases, the ST should have some referencing system that is capable of supporting unique references (e.g. use of numbers, letters or dates).
 
-ASE_INT.1-3 (refers to ASE_INT.1.3C)
+ASE_INT.1-3
 The evaluator shall examine the TOE reference to determine that it uniquely identifies the TOE.
 Additional information:
 The evaluator determines that the TOE reference uniquely identifies the TOE, so that it is clear to which TOE the ST refers, and that it also identifies the version of the TOE, e.g. by including a version/release/build number, or a date of release.
 
-ASE_INT.1-4 (refers to ASE_INT.1.3C)
+ASE_INT.1-4
 The evaluator shall examine the TOE reference to determine that it is not misleading.
 Additional information:
 If the TOE is related to one or more well-known products, it is allowed to reflect this in the TOE reference. However, this should not be used to mislead consumers and it must be made clear which part of the product has been evaluated.
 When a TOE needs some required non-TOE hardware/software/firmware to run properly, the TOE reference may include the name of the non-TOE hardware/software/firmware used by the TOE, however it must be made clear that the non-TOE hardware/software/firmware has not been evaluated.
 
-ASE_INT.1-5 (refers to ASE_INT.1.4C)
+ASE_INT.1-5
 The evaluator shall examine the TOE overview to determine that it describes the usage and major security features of the TOE.
 Additional information: 
 The TOE should briefly (i.e. several paragraphs) describe the usage and major security features of the TOE. The TOE overview should enable potential consumers to quickly determine whether the TOE may be suitable for their security needs.
@@ -66,22 +66,22 @@ The TOE overview may describe security features that provided by the product, an
 The TOE overview shall be consistent with information provided in other sections of the Security Target such as the TOE description, the security objectives, the security functional requirements, and the TOE summary specification.
 The evaluator determines that the overview is clear enough for consumers, and sufficient to give them a general understanding of the intended usage and major security features of the TOE.
 
-ASE_INT.1-6 (refers to ASE_INT.1.5C)
+ASE_INT.1-6
 The evaluator shall check that the TOE overview identifies the TOE type.
 
-ASE_INT.1-7 (refers to ASE_INT.1.5C)
+ASE_INT.1-7
 The evaluator shall examine the TOE overview to determine that the TOE type is not misleading.
 Additional information: 
 There are situations where the general consumer would expect certain functionality of the TOE because of its TOE type. If this functionality is absent in the TOE, the evaluator determines that the TOE overview adequately discusses this absence.
 There are also TOEs where the general consumer would expect that the TOE should be able to operate in a certain operational environment because of its TOE type. If the TOE is unable to operate in such an operational environment, the evaluator determines that the TOE overview adequately discusses this.
 
-ASE_INT.1-8 (refers to ASE_INT.1.6C)
+ASE_INT.1-8
 The evaluator shall examine the TOE overview to determine that it identifies any non-TOE hardware/software/firmware required by the TOE.
 Additional information: 
 While some TOEs are able to run stand-alone, other TOEs (notably software TOEs) need additional hardware, software or firmware to operate. If the TOE does not require any hardware, software or firmware, this work unit is not applicable and therefore considered to be satisfied.
 The evaluator determines that the TOE overview identifies any additional hardware, software and firmware needed by the TOE to operate.
 
-ASE_INT.1-9 (refers to ASE_INT.1.7C)
+ASE_INT.1-9
 The evaluator shall examine the TOE description to determine that it describes the physical scope of the TOE.
 Additional information: 
 The evaluator determines that the TOE description lists the hardware, firmware, software and guidance parts that constitute the TOE and describes them at a level of detail that is sufficient to give the reader a general understanding of those parts.
@@ -90,7 +90,7 @@ As a minimum the TOE description will cover the following elements:
 (b) The delivery method used by the developer to make available each part to the TOE consumer (Web site download, courier delivery, etc.)
 The evaluator also determines that there is no possible misunderstanding as to whether any hardware, firmware, software or guidance part is part of the TOE or not.
 
-ASE_INT.1-10 (refers to ASE_INT.1.8C)
+ASE_INT.1-10
 The evaluator shall examine the TOE description to determine that it describes the logical scope of the TOE.
 Additional information: 
 The evaluator determines that the TOE description discusses the logical security features offered by the TOE at a level of detail that is sufficient to give the reader a general understanding of those features.
@@ -100,37 +100,37 @@ However, the evaluator determines that the composed TOE ST clearly discusses whi
 ASE_INT.1-11
 The evaluator shall examine the TOE reference, TOE overview and TOE description to determine that they are consistent with each other.
 
-ASE_OBJ.1-1 (refers to ASE_OBJ.1.1C)
+ASE_OBJ.1-1
 The evaluator shall check that the statement of security objectives defines the security objectives for the operational environment.
 
-ASE_REQ.3-1 (refers to ASE_REQ.3.1C)
+ASE_REQ.3-1
 The evaluator shall check that the statement of security requirements describe the SFRs.
 Additional information:
 The evaluator shall check the statement of secutiry requirements mentioned the use SFRs.
 
-ASE_REQ.3-2 (refers to ASE_REQ.3.1C)
+ASE_REQ.3-2
 The evaluator shall check that the statement of security requirements describe the SARs.
 Additional information:
 The evaluator shall check the statement of secutiry requirements mentioned the use SARs and are referenced by SESIP.
 
-ASE_REQ.3-3 (refers to ASE_REQ.3.2C)
+ASE_REQ.3-3
 The evaluator shall check that all SFRs are drawn from the list of allowed Security Functional Requirements.
 Additional information:
 The evaluator shall check the SFRs are referenced by SESIP. If there are developer made SFRs that used to match specific use cases, it should be place in separate section.
 
-ASE_REQ.3-4 (refers to ASE_REQ.3.3C)
+ASE_REQ.3-4
 The evaluator shall check that the SFR “Verification of Platform Identity” are included.
 
-ASE_REQ.3-5 (refers to ASE_REQ.3.3C)
+ASE_REQ.3-5
 The evaluator shall check that the SFR “Secure Update of Platform” are included or under the ALC_FLR.2 it shall be argued why updates are not applicable.
 
-ASE_REQ.3-6 (refers to ASE_REQ.3.4C)
+ASE_REQ.3-6
 The evaluator shall check that the SARs are an exact SESIP assurance level, and no augmentation is allowed.
 
-ASE_REQ.3-7 (refers to ASE_REQ.3.5C)
+ASE_REQ.3-7
 The evaluator shall check that if multiple SESIP assurance levels are claimed, it is clear to readers of the ST which SFRs are covered by the SESIP assurance level.
 
-ASE_TSS.1-1 (refers to ASE_TSS.1.1C)
+ASE_TSS.1-1
 The evaluator shall examine the TOE summary specification to determine that it describes how the TOE meets each SFR.
 Additional information:
 The evaluator determines that the TOE summary specification provides, for each SFR from the statement of security requirements, a description on how that SFR is met.
@@ -143,19 +143,19 @@ The evaluator shall examine the TOE summary specification to determine that it i
 Additional information:
 If there is no TOE summary and the description of how each SFRs meets by the TOE is consistent with the TOE overview and the TOE desription, it should also be considered as meet the requirement of this work unit.
 
-AGD_OPE.1-1 (refers to AGD_OPE.1.1C)
+AGD_OPE.1-1
 The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the user-accessible functions and privileges that should be controlled in a secure processing environment, including appropriate warnings.
 Additional information:
 The configuration of the TOE may allow different user roles to have dissimilar privileges in making use of the different functions of the TOE. This means that some users are authorised to perform certain functions, while other users may not be so authorised. These functions and privileges should be described, for each user role, by the user guidance.
 The user guidance identifies, for each user role, the functions and privileges that must be controlled, the types of commands required for them, and the reasons for such commands. The user guidance should contain warnings regarding the use of these functions and privileges. Warnings should address expected effects, possible side effects, and possible interactions with other functions and privileges.
 For AGD families, if there is no user guidance provided but the information for each work unit can be find, it should be considered as meet the requirement of the work unit.
 
-AGD_OPE.1-2 (refers to AGD_OPE.1.2C)
+AGD_OPE.1-2
 The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the secure use of the available interfaces provided by the TOE.
 Additional informtion:
 The user guidance should provide advice regarding effective use of the TSF (e.g. reviewing password composition practises, suggested frequency of user file backups, discussion on the effects of changing user access privileges).
 
-AGD_OPE.1-3 (refers to AGD_OPE.1.3C)
+AGD_OPE.1-3
 The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the available security functionality and interfaces, in particular all security parameters under the control of the user, indicating secure values as appropriate.
 Additional information:
 The user guidance should contain an overview of the security functionality that is visible at the user interfaces.
@@ -166,36 +166,36 @@ For each user-accessible interface, the user guidance should:
 (c) describe the immediate TSF response, message, or code returned.
 The evaluator should consider the functional specification and the ST to determine that the TSF described in these documents is consistent to the operational user guidance. The evaluator has to ensure that the operational user guidance is complete to allow the secure use through the TSFI available to all types of human users. The evaluator may, as an aid, prepare an informal mapping between the guidance and these documents. Any omissions in this mapping may indicate incompleteness.
 
-AGD_OPE.1-4 (refers to AGD_OPE.1.4C)
+AGD_OPE.1-4
 The evaluator shall examine the operational user guidance to determine that it describes, for each user role, each type of security-relevant event relative to the user functions that need to be performed, including changing the security characteristics of entities under the control of the TSF and operation following failure or operational error.
 Additional information:
 All types of security-relevant events are detailed for each user role, such that each user knows what events may occur and what action (if any) he may have to take in order to maintain security. Security-relevant events that may occur during operation of the TOE (e.g. audit trail overflow, system crash, updates to user records, such as when a user account is removed when the user leaves the organisation) are adequately defined to allow user intervention to maintain secure operation.
 
-AGD_OPE.1-5 (refers to AGD_OPE.1.5C)
+AGD_OPE.1-5
 The evaluator shall examine the operational user guidance and other evaluation evidence to determine that the guidance identifies all possible modes of operation of the TOE (including, if applicable, operation following failure or operational error), their consequences and implications for maintaining secure operation.
 Additional information:
 Other evaluation evidence, particularly the functional specification, provide an information source that the evaluator should use to determine that the guidance contains sufficient guidance information.
 If test documentation is included in the assurance package, then the information provided in this evidence can also be used to determine that the guidance contains sufficient guidance documentation. The detail provided in the test steps can be used to confirm that the guidance provided is sufficient for the use and administration of the TOE.
 The evaluator should focus on a single human visible TSFI at a time, comparing the guidance for securely using the TSFI with other evaluation evidence, to determine that the guidance related to the TSFI is sufficient for the secure usage (i.e. consistent with the SFRs) of that TSFI. The evaluator should also consider the relationships between interfaces, searching for potential conflicts.
 
-AGD_OPE.1-6 (refers to AGD_OPE.1.6C)
+AGD_OPE.1-6
 The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the security measures to be followed in order to fulfil the security objectives for the operational environment as described in the ST.
 Additional information:
 The evaluator analyses the security objectives for the operational environment in the ST and determines that for each user role, the relevant security measures are described appropriately in the user guidance.
 The security measures described in the user guidance should include all relevant external procedural, physical, personnel and connectivity measures.
 Note that those measures relevant for secure installation of the TOE are examined in Preparative procedures (AGD_PRE).
 
-AGD_OPE.1-7 (refers to AGD_OPE.1.7C)
+AGD_OPE.1-7
 The evaluator shall examine the operational user guidance to determine that it is clear.
 Additional information:
 The evaluator should check whether other work units in AGD families passes to determine if the description is clear.
 
-AGD_OPE.1-8 (refers to AGD_OPE.1.7C)
+AGD_OPE.1-8
 The evaluator shall examine the operational user guidance to determine that it is reasonable.
 Additional information:
 The guidance is unreasonable if it makes demands on the TOE's usage or operational environment that are inconsistent with the ST or unduly onerous to maintain security.
 
-AGD_PRE.1-1 (refers to AGD_PRE.1.1C)
+AGD_PRE.1-1
 The evaluator shall examine the provided acceptance procedures to determine that they describe the steps necessary for secure acceptance of the TOE in accordance with the developer's delivery procedures.
 Additional information:
 If it is not anticipated by the developer's delivery procedures that acceptance procedures will or can be applied, this work unit is not applicable, and is therefore considered to be satisfied.
@@ -205,7 +205,7 @@ The acceptance procedures should provide detailed information about the followin
 (a) making sure that the delivered TOE is the complete evaluated instance;
 (b) detecting modification/masquerading of the delivered TOE.
 
-AGD_PRE.1-2 (refers to AGD_PRE.1.2C)
+AGD_PRE.1-2
 The evaluator shall examine the provided installation procedures to determine that they describe the steps necessary for secure installation of the TOE and the secure preparation of the operational environment in accordance with the security objectives in the ST.
 Additional information:
 If it is not anticipated that installation procedures will or can be applied (e.g. because the TOE may already be delivered in an operational state), this work unit is not applicable, and is therefore considered to be satisfied.
@@ -216,7 +216,7 @@ The installation procedures should provide detailed information about the follow
 (d) changing the installation specific security characteristics of entities under the control of the TSF (for example parameters, settings, passwords);
 (e) handling exceptions and problems.
 
-AGD_PRE.1-3 (refers to AGD_PRE.1.3C)
+AGD_PRE.1-3
 The evaluator shall perform all user procedures necessary to prepare the TOE to determine that the TOE and its operational environment can be prepared securely using only the supplied preparative procedures.
 Additional information:
 Preparation requires the evaluator to advance the TOE from a deliverable state to the state in which it is operational, including acceptance and installation of the TOE, and enforcing the SFRs consistent with the security objectives for the TOE specified in the ST.
@@ -224,60 +224,60 @@ The evaluator should follow only the developer's procedures and may perform the 
 This work unit may be performed in conjunction with the evaluation activities under Independent testing (ATE_IND).
 If it is known that the TOE will be used as a dependent component for a composed TOE evaluation, then the evaluator should ensure that the operational environment is satisfied by the base component used in the composed TOE.
 
-ALC_FLR.2-1 (refers to ALC_FLR.2.1C)
+ALC_FLR.2-1
 The evaluator shall examine the flaw remediation procedures documentation to determine that it describes the procedures used to track all reported security flaws in each release of the TOE.
 Additional information:
 The procedures describe the actions that are taken by the developer from the time each suspected security flaw is reported to the time that it is resolved. This includes the flaw's entire time frame, from initial detection through ascertaining that the flaw is a security flaw, to resolution of the security flaw.
 If a flaw is discovered not to be security-relevant, there is no need (for the purposes of the Flaw remediation (ALC_FLR) requirements) for the flaw remediation procedures to track it further; only that there be an explanation of why the flaw is not security-relevant.
 
-ALC_FLR.2-2 (refers to ALC_FLR.2.2C)
+ALC_FLR.2-2
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would produce a description of each security flaw in terms of its nature and effects.
 Additional information:
 The procedures identify the actions that are taken by the developer to describe the nature and effects of each security flaw in sufficient detail to be able to reproduce it. The description of the nature of a security flaw addresses whether it is an error in the documentation, a flaw in the design of the TSF, a flaw in the implementation of the TSF, etc. The description of the security flaw's effects identifies the portions of the TSF that are affected and how those portions are affected. For example, a security flaw in the implementation might be found that affects the identification and authentication enforced by the TSF by permitting authentication with the password “BACKDOOR”
 
-ALC_FLR.2-3 (refers to ALC_FLR.2.2C)
+ALC_FLR.2-3
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would identify the status of finding a correction to each security flaw.
 Additional information:
 The flaw remediation procedures identify the different stages of security flaws. This differentiation includes at least: suspected security flaws that have been reported, suspected security flaws that have been confirmed to be security flaws, and security flaws whose solutions have been implemented. It is permissible that additional stages (e.g. flaws that have been reported but not yet investigated, flaws that are under investigation, security flaws for which a solution has been found but not yet implemented) be included.
 
-ALC_FLR.2-4 (refers to ALC_FLR.2.3C)
+ALC_FLR.2-4
 The evaluator shall check the flaw remediation procedures to determine that the application of these procedures would identify the corrective action for each security flaw.
 Additional information:
 Corrective action may consist of a repair to the hardware, firmware, or software portions of the TOE, a modification of TOE guidance, or both. Corrective action that constitutes modifications to TOE guidance (e.g. details of procedural measures to be taken to obviate the security flaw) includes both those measures serving as only an interim solution (until the repair is issued) as well as those serving as a permanent solution (where it is determined that the procedural measure is the best solution).
 If the source of the security flaw is a documentation error, the corrective action consists of an update of the affected TOE guidance. If the corrective action is a procedural measure, this measure will include an update made to the affected TOE guidance to reflect these corrective procedures.
 
-ALC_FLR.2-5 (refers to ALC_FLR.2.4C)
+ALC_FLR.2-5
 The evaluator shall examine the flaw remediation procedures documentation to determine that it describes a means of providing the TOE users with the necessary information on each security flaw.
 Additional information:
 The necessary information about each security flaw consists of its description (not necessarily at the same level of detail as that provided as part of work unit ALC_FLR.2-2), the prescribed corrective action, and any associated guidance on implementing the correction.
 TOE users may be provided with such information, correction, and documentation updates in any of several ways, such as their posting to a website, their being sent to TOE users, or arrangements made for the developer to install the correction. In cases where the means of providing this information requires action to be initiated by the TOE user, the evaluator examines any TOE guidance to ensure that it contains instructions for retrieving the information.
 The only metric for assessing the adequacy of the method used for providing the information, corrections and guidance is that there be a reasonable expectation that TOE users can obtain or receive it. For example, consider the method of dissemination where the requisite data is posted to a website for one month, and the TOE users know that this will happen and when this will happen. This may not be especially reasonable or effective (as, say, a permanent posting to the website), yet it is feasible that the TOE user could obtain the necessary information. On the other hand, if the information were posted to the website for only one hour, yet TOE users had no way ofknowing this or when it would be posted, it is infeasible that they would ever get the necessary information.
 
-ALC_FLR.2-6 (refers to ALC_FLR.2.5C)
+ALC_FLR.2-6
 The evaluator shall examine the flaw remediation procedures to determine that they describe procedures for the developer to accept reports of security flaws or requests for corrections to such flaws.
 Additional information:
 The procedures ensure that TOE users have a means by which they can communicate with the TOE developer. By having a means of contact with the developer, the user can report security flaws, enquire about the status of security flaws, or request corrections to flaws. This means of contact may be part of a more general contact facility for reporting non-security related problems.
 The use of these procedures is not restricted to TOE users; however, only the TOE users are actively supplied with the details of these procedures. Others who might have access to or familiarity with the TOE can use the same procedures to submit reports to the developer, who is then expected to process them. Any means of submitting reports to the developer, other than those identified by the developer, are beyond the scope of this work unit; reports generated by other means need not be addressed.
 
-ALC_FLR.2-7 (refers to ALC_FLR.2.6C)
+ALC_FLR.2-7
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would help to ensure every reported flaw is corrected
 Additional information:
 The flaw remediation procedures cover not only those security flaws discovered and reported by developer personnel, but also those reported by TOE users. The procedures are sufficiently detailed so that they describe how it is ensured that each reported security flaw is corrected. The procedures contain reasonable steps that show progress leading to the eventual, inevitable resolution.
 The procedures describe the process that is taken from the point at which the suspected security flaw is determined to be a security flaw to the point at which it is resolved.
 
-ALC_FLR.2-8 (refers to ALC_FLR.2.6C)
+ALC_FLR.2-8
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would help to ensure that the TOE users are issued remediation procedures for each security flaw.
 Additional information:
 The procedures describe the process that is taken from the point at which a security flaw is resolved to the point at which the remediation procedures areprovided.
 The procedures for delivering corrective actions should be consistent with the security objectives; they need not necessarily be identical to the procedures used for delivering the TOE, as documented to meet ALC_DEL, if included in the assurance requirements. For example, if the hardware portion of a TOE were originally delivered by bonded courier, updates to hardware resulting from flaw remediation would likewise be expected to be distributed by bonded courier. Updates unrelated to flaw remediation would follow the procedures set forth in the documentation meeting the Delivery (ALC_DEL) requirements.
 
-ALC_FLR.2-9 (refers to ALC_FLR.2.7C)
+ALC_FLR.2-9
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would result in safeguards that the potential correction contains no adverse effects.
 Additional information:
 Through analysis, testing, or a combination of the two, the developer may reduce the likelihood that adverse effects will be introduced when a security flaw is corrected. The evaluator assesses whether the procedures provide detail in how the necessary mix of analysis and testing actions is to be determined for a given correction.
 The evaluator also determines that, for instances where the source of the security flaw is a documentation problem, the procedures include the means of safeguarding against the introduction of contradictions with other documentation.
 
-ALC_FLR.2-10 (refers to ALC_FLR.2.8C)
+ALC_FLR.2-10
 The evaluator shall examine the flaw remediation guidance to determine that the application of these procedures would result in a means for the TOE user to provide reports of suspected security flaws or requests for corrections to such flaws.
 Additional information:
 The guidance ensures that TOE users have a means by which they can communicate with the TOE developer. By having a means of contact with the developer, the user can report security flaws, enquire about the status of security flaws, or request corrections to flaws.
