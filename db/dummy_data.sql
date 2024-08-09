@@ -6,7 +6,7 @@ VALUES ('user1', '$2b$12$OhOTSBsRHkf9TOqHzfCScODkj0bbsWBMfa97BqLHufvRYlv9W4W9a')
        ('user3', '$2b$12$OhOTSBsRHkf9TOqHzfCScODkj0bbsWBMfa97BqLHufvRYlv9W4W9a'),
        ('user4', '$2b$12$OhOTSBsRHkf9TOqHzfCScODkj0bbsWBMfa97BqLHufvRYlv9W4W9a');
 
-INSERT INTO SecurityTarget (st_name, st_details, is_evaluated, is_valid, model, owner_id)
+INSERT INTO SecurityTarget (st_name, st_details, is_evaluated, eval_passed, eval_model, owner_id)
 VALUES ('111', '{"TOE_NAME": "123", "SESIP_Level": 1}', True, TRUE, 'gpt-4o', 1),
        ('222', '{"TOE_NAME": "234", "SESIP_Level": 2}', True, FALSE, 'gpt-4o-mini', 4),
        ('333', NULL, FALSE, NULL, '', 2),

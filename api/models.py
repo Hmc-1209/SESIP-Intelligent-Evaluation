@@ -17,7 +17,7 @@ SecurityTarget = sqlalchemy.Table(
     Column("st_name", sqlalchemy.VARCHAR(50), nullable=False),
     Column("st_details", sqlalchemy.JSON, nullable=True),
     Column("is_evaluated", sqlalchemy.BOOLEAN, nullable=False),
-    Column("is_valid", sqlalchemy.BOOLEAN, nullable=True),
-    Column("model", sqlalchemy.VARCHAR(15), nullable=True),
+    Column("eval_passed", sqlalchemy.BOOLEAN, nullable=True),
+    Column("eval_model", sqlalchemy.VARCHAR(15), nullable=True),
     Column("owner_id", sqlalchemy.INTEGER, ForeignKey("User.user_id"), nullable=False)
 )

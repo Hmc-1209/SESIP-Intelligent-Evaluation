@@ -41,8 +41,8 @@ async def get_detail_security_target(st_id: int, current_user=Depends(get_curren
                     st_details=st.st_details,
                     eval_details=eval_details,
                     is_evaluated=st.is_evaluated,
-                    is_valid=st.is_valid,
-                    model=st.model)
+                    eval_passed=st.eval_passed,
+                    eval_model=st.eval_model)
 
 
 @router.get("/file/{st_id}")

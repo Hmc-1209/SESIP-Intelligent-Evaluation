@@ -19,8 +19,8 @@ CREATE TABLE SecurityTarget
     st_name      VARCHAR(50) NOT NULL,
     st_details   JSON,
     is_evaluated BOOL        NOT NULL,
-    is_valid     BOOL,
-    model        VARCHAR(15),
+    eval_passed  BOOL,
+    eval_model   VARCHAR(15),
     owner_id     INT         NOT NULL,
     FOREIGN KEY (owner_id) REFERENCES User (user_id)
 );

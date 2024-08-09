@@ -18,7 +18,7 @@ def copy_dict(dictionary, keys):
 
 
 @router.post("/{st_id}", status_code=status.HTTP_201_CREATED)
-async def evaluate_security_target(st_id: int, model: str, current_user=Depends(get_current_user)) -> EvaluateST:
+async def evaluate_security_target(st_id: int, eval_model: str, current_user=Depends(get_current_user)) -> EvaluateST:
     # Validation
     st = await get_st_by_id(st_id)
     if not st:
@@ -30,11 +30,11 @@ async def evaluate_security_target(st_id: int, model: str, current_user=Depends(
     if st.is_evaluated:
         raise eval_has_performed
 
-    if model not in ["gpt-4o", "gpt-4o-mini"]:
+    if eval_model not in ["gpt-4o", "gpt-4o-mini"]:
         raise invalid_model
 
     # Evaluation
-    evaluate(st_id, model)
+    evaluate(st_id, eval_model)
 
     # Parsing
     try:
@@ -44,7 +44,7 @@ async def evaluate_security_target(st_id: int, model: str, current_user=Depends(
         st_details = copy_dict(eval_results, ["TOE_Name", "Developer_Organization", "SESIP_Level"])
         eval_details = copy_dict(eval_results,
                                  ["Work_Units", "Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"])
-        is_valid = False if eval_results["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
+        eval_passed = False if eval_results["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
 
     except Exception as e:
         print(f"Error: {e}")
@@ -56,8 +56,8 @@ async def evaluate_security_target(st_id: int, model: str, current_user=Depends(
 
     update_st = EvaluateST(st_details=st_details,
                            eval_details=eval_details,
-                           is_valid=is_valid,
-                           model=model)
+                           eval_passed=eval_passed,
+                           eval_model=eval_model)
 
     # Update the data in db
     if not await update_st_after_eval(st_id, update_st):

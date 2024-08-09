@@ -34,8 +34,8 @@ async def update_st_by_id(st_id: int, new_st: UpdateST) -> bool:
 async def update_st_after_eval(st_id: int, update_st: EvaluateST) -> bool:
     stmt = SecurityTarget.update().where(SecurityTarget.c.st_id == st_id).values(st_details=update_st.st_details,
                                                                                  is_evaluated=True,
-                                                                                 is_valid=update_st.is_valid,
-                                                                                 model=update_st.model)
+                                                                                 eval_passed=update_st.eval_passed,
+                                                                                 eval_model=update_st.eval_model)
     return await execute_stmt_in_tran([stmt])
 
 
