@@ -255,16 +255,16 @@
     align-items: center;
 }
 .eval_pending {
-    background-color: #35353575;
-    color: #cccccc75;
+    background-color: #35353585;
+    color: #cccccc85;
 }
 .eval_pass {
-    background-color: #3db44770;
-    color: #34d85d70;
+    background-color: #3db447c4;
+    color: #54fd7ec4;
 }
 .eval_fail {
-    background-color: #b43d3d70;
-    color: #d8343470;
+    background-color: #c73d3dc4;
+    color: #8d4545c4;
 }
 .eval_brief_result {
     margin-left: 30px;
