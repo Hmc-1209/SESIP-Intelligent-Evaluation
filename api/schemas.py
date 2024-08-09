@@ -52,3 +52,4 @@ class EvaluateST(BaseModel):
     st_details: dict
     eval_details: dict
     is_valid: bool
+    model: str

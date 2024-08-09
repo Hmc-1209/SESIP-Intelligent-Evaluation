@@ -1,6 +1,6 @@
 from database import db, execute_stmt_in_tran, create_with_result
 from models import SecurityTarget
-from schemas import BaseST, DetailST, UpdateST
+from schemas import BaseST, DetailST, UpdateST, EvaluateST
 
 
 async def get_st_by_id(st_id: int) -> DetailST:
@@ -31,10 +31,11 @@ async def update_st_by_id(st_id: int, new_st: UpdateST) -> bool:
     return await execute_stmt_in_tran([stmt])
 
 
-async def update_st_after_eval(st_id: int, st_details: dict, is_valid: bool) -> bool:
-    stmt = SecurityTarget.update().where(SecurityTarget.c.st_id == st_id).values(st_details=st_details,
+async def update_st_after_eval(st_id: int, update_st: EvaluateST) -> bool:
+    stmt = SecurityTarget.update().where(SecurityTarget.c.st_id == st_id).values(st_details=update_st.st_details,
                                                                                  is_evaluated=True,
-                                                                                 is_valid=is_valid)
+                                                                                 is_valid=update_st.is_valid,
+                                                                                 model=update_st.model)
     return await execute_stmt_in_tran([stmt])
 
 

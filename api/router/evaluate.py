@@ -42,7 +42,8 @@ async def evaluate_security_target(st_id: int, model: str, current_user=Depends(
         eval_results = json.load(open(os.path.join(dir_path, 'eval_result.json'), 'r', encoding='utf-8'))
 
         st_details = copy_dict(eval_results, ["TOE_Name", "Developer_Organization", "SESIP_Level"])
-        eval_details = copy_dict(eval_results, ["Work_Units", "Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"])
+        eval_details = copy_dict(eval_results,
+                                 ["Work_Units", "Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"])
         is_valid = False if eval_results["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
 
     except Exception as e:
@@ -53,10 +54,13 @@ async def evaluate_security_target(st_id: int, model: str, current_user=Depends(
     with open(os.path.join(dir_path, 'eval_details.json'), "w", encoding="utf-8") as f:
         f.write(json.dumps(eval_details))
 
+    update_st = EvaluateST(st_details=st_details,
+                           eval_details=eval_details,
+                           is_valid=is_valid,
+                           model=model)
+
     # Update the data in db
-    if not await update_st_after_eval(st_id, st_details, is_valid):
+    if not await update_st_after_eval(st_id, update_st):
         raise bad_request
 
-    return EvaluateST(st_details=st_details,
-                      eval_details=eval_details,
-                      is_valid=is_valid)
+    return update_st
