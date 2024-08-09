@@ -42,6 +42,7 @@ class DetailST(ListST):
     eval_details: dict | None
     is_evaluated: bool
     is_valid: bool | None
+    model: str | None
 
 
 class UpdateST(BaseST):
