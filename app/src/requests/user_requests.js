@@ -149,3 +149,48 @@ export const st_evaluate = async (access_token, st_id) => {
   }
   return false;
 }
+
+export const get_st_file_content = async (access_token, st_id) => {
+  try {
+    const response = await axios.get(`${ip}/st/file/${st_id}`, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      responseType: 'blob',
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.headers['content-type'] === 'application/pdf') {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}
+
+export const delete_history_st = async (access_token, st_id) => {
+  try {
+    const response = await axios.delete(`${ip}/st/${st_id}`, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.status === 204) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}

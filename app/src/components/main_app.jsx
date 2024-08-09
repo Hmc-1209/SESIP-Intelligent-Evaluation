@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import models from './models.json';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ColorRing } from 'react-loader-spinner'
-import get_user_st, { get_st_info, st_evaluate, upload_st } from "../requests/user_requests";
+import get_user_st, { delete_history_st, get_st_file_content, get_st_info, st_evaluate, upload_st } from "../requests/user_requests";
 // For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
 import "./css/main_app.css";
@@ -36,24 +36,7 @@ const MainApp = () => {
     const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0]);
     const [selectedResult, setSelectedResult] = useState(null);
     const [evalResults, setEvalResults] = useState([]);
-
-    useEffect(() => {
-        const get_st = async () => {
-            const token = window.localStorage.getItem("access_token");
-            try {
-                const user_st = await get_user_st();
-                if(user_st) {
-                    setUserST(user_st.data);
-                    setLoading(false);
-                }
-            }
-            catch(error) {
-                console.log("error");
-            }
-        }
-
-        get_st();
-    }, [])
+    const [isUploadingST, setIsUploadingST] = useState(false);
 
 
     // Logout initialization function
@@ -66,6 +49,20 @@ const MainApp = () => {
     }
     const setting = () => {
         setMode(3);
+    }
+
+    // Get the current user's STs
+    const get_st = async () => {
+        try {
+            const user_st = await get_user_st();
+            if(user_st) {
+                setUserST(user_st.data);
+                setLoading(false);
+            }
+        }
+        catch(error) {
+            console.log("error");
+        }
     }
 
     // Upload ST handling function
@@ -84,16 +81,16 @@ const MainApp = () => {
                 setSTHash({ md5, sha256 });
             };
             reader.readAsArrayBuffer(file);
-        } else {
-            console.log(event.target, '123');
         }
     };
     const handleUploadButtonClick = () => {
+        setIsUploadingST(true);
         document.getElementById('fileInput').click();
     };
 
+    // Clear the current used st
     const clear_current_st = () => {
-        setCurrentEvalResult(eval_result_status[0]);
+        setCurrentEvalResult('Pending');
         setCurrentSTID(null);
         setSTFile(null);
         setSTUrl('');
@@ -124,6 +121,8 @@ const MainApp = () => {
                     ...prevSTInfo,
                     is_evaluated: true,
                 }));
+                setCurrentEvalResult(response.eval_details.is_valid === true ?
+                     'Pass' : 'Fail');
                 success("Evaluation comlete!");
                 return;
             } else {
@@ -134,6 +133,66 @@ const MainApp = () => {
         }
         evaluate_request();
     }
+
+    // Get history st content and detail information
+    const get_history_st = async (st_id) => {
+        setIsUploadingST(false);
+        clear_current_st();
+        setLoading(0);
+        const access_token = window.localStorage.getItem("access_token");
+        const response_info = await get_st_info(access_token, st_id);
+        const response_pdf = await get_st_file_content(access_token, st_id);
+        setSTUrl(URL.createObjectURL(response_pdf));
+        console.log(response_info)
+        setCurrentSTID(response_info.st_id);
+        if (response_info && response_pdf) {
+            // If the ST had already been evaluated
+            if(response_info.st_details !== null) {
+                setEvalResults(response_info.eval_details.Work_Units);
+                setSTInfoDescription({
+                    TOE_Name: response_info.st_details.TOE_Name,
+                    Developer_Organizetion: response_info.st_details.Developer_Organizetion,
+                    SESIP_Level: response_info.st_details.SESIP_Level
+                })
+                setEvalResultPassFailNums([response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
+                setCurrentEvalResult(response_info.is_valid === true ? eval_result_status[1] : eval_result_status[2]);
+            }
+            setSTInfo({is_evaluated: response_info.is_evaluated});
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const binary = e.target.result;
+                const md5 = CryptoJS.MD5(CryptoJS.lib.WordArray.create(new Uint8Array(binary))).toString();
+                const sha256 = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(new Uint8Array(binary))).toString();
+                setSTHash({ md5, sha256 });
+            };
+            reader.readAsArrayBuffer(response_pdf);
+            setSTFile(response_pdf);
+            setLoading(false);
+        }
+    }
+
+    // Delete specific ST, it should also be the currently selected one
+    const delete_history_security_target = async () => {
+        setLoading(0);
+        const access_token = window.localStorage.getItem("access_token");
+        console.log(currentSTID)
+        const response = await delete_history_st(access_token, currentSTID);
+        if (response) {
+            success("Security Target deleted.")
+            setLoading(false);
+            clear_current_st();
+            get_st();
+            return;
+        }
+        error("Unknown problem happend. Try again later.")
+        return;
+    }
+
+
+    useEffect(() => {
+        
+        get_st();
+    }, [])
 
     useEffect(() => {
         const upload_new_st_file = async () => {
@@ -150,10 +209,10 @@ const MainApp = () => {
             if (response !== 0 && response !== 'Request failed.') {
                 success("Upload success!");
                 setCurrentSTID(response);
+                get_st();
                 const current_st_information = await get_st_info(access_token, response);
                 if (current_st_information) {
                     setSTInfo(current_st_information);
-                    console.log(current_st_information);
                 }
                 return;
             } else {
@@ -165,8 +224,9 @@ const MainApp = () => {
                 return;
             }
         }
-        if (STFile !== null) {
+        if (STFile !== null && isUploadingST) {
             upload_new_st_file();
+            setIsUploadingST(false);
         }
     }, [STFile])
 
@@ -194,8 +254,8 @@ const MainApp = () => {
                                     {userST && userST.map((st, index) => (
                                         <div className="user_st_list_item" key={index} disabled>
                                             {loading === 1 ?
-                                                <button><pre>{st.st_name}</pre></button> :
-                                                <button><pre>{st.st_name}</pre></button>
+                                                <button disabled><pre>{st.st_name}</pre></button> :
+                                                <button onClick={() => get_history_st(st.st_id)}><pre>{st.st_name}</pre></button>
                                             }
                                         </div>
                                     ))}
@@ -236,7 +296,7 @@ const MainApp = () => {
                 <div className="main_app_st_section">
                     {STUrl !== '' && 
                         <div className="st_content_display">
-                            <object data={STUrl} type="application/pdf" className="st_content" />
+                            <object data={STUrl} type="application/pdf" className="st_content" style={{ width: '100%' }}/>
                         </div>
                     }
                     <div className="st_section_right">
@@ -299,16 +359,16 @@ const MainApp = () => {
                     {evalResults.map(result => (
                         <button className="result_brief_label" onClick={() => setSelectedResult(result)} key={result.Work_Unit_Name} style={{display: 'flex'}}>
                             {result.Work_Unit_Evaluation_Result_Status === 'pass' ?
-                             <div style={{ color: 'green', fontWeight: 'bold' }}>O  </div> :
-                             <div style={{ color: 'red', fontWeight: 'bold' }}>X  </div>} {result.Work_Unit_Name}
+                             <div style={{ color: 'green', fontWeight: 'bold', marginRight: '10px' }}>O</div> :
+                             <div style={{ color: 'red', fontWeight: 'bold', marginRight: '10px' }}>X</div>}{result.Work_Unit_Name}
                         </button>
                     ))}
                 </div>
                 <div className="result_detail_content">
                     {selectedResult ?
-                    <pre>
+                    <div>
                         {selectedResult.Work_Unit_Description}
-                    </pre> : "Select result for more information."}
+                    </div> : "Select result for more information."}
                 </div>
             </div>
             
@@ -328,7 +388,7 @@ const MainApp = () => {
                     <i className="fa-solid fa-trash-can"></i> Delete
                 </button>
                 ) : (
-                <button className="save_evaluation_result_btn">
+                <button className="save_evaluation_result_btn" onClick={delete_history_security_target}>
                     <i className="fa-solid fa-trash-can"></i> Delete
                 </button>)}
                 

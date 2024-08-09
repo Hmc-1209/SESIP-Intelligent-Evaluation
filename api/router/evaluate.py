@@ -43,7 +43,7 @@ async def evaluate_security_target(st_id: int, current_user=Depends(get_current_
         is_valid = False if eval_results["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
 
     except Exception as e:
-        print(f"Failed with error {e}")
+        print(f"Error: {e}")
         raise evaluation_failed
 
     # Save Evaluation Details file
