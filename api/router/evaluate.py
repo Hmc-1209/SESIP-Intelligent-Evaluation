@@ -30,7 +30,7 @@ async def evaluate_security_target(st_id: int, eval_model: str, current_user=Dep
     if st.is_evaluated:
         raise eval_has_performed
 
-    if eval_model not in ["gpt-4o", "gpt-4o-mini"]:
+    if eval_model not in ["gpt-4o-mini"]:
         raise invalid_model
 
     # Evaluation

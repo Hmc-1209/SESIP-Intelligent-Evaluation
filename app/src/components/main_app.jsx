@@ -37,6 +37,7 @@ const MainApp = () => {
     const [selectedResult, setSelectedResult] = useState(null);
     const [evalResults, setEvalResults] = useState([]);
     const [isUploadingST, setIsUploadingST] = useState(false);
+    const [currentEvalModel, setCurrentEvalModel] = useState(model_options[0]);
 
 
     // Logout initialization function
@@ -60,7 +61,7 @@ const MainApp = () => {
                 setLoading(false);
             }
         }
-        catch(error) {
+        catch(error) { 
             console.log("error");
         }
     }
@@ -107,7 +108,7 @@ const MainApp = () => {
         setLoading(1);
         const access_token = window.localStorage.getItem("access_token");
         const evaluate_request = async () => {
-            const response = await st_evaluate(access_token, currentSTID);
+            const response = await st_evaluate(access_token, currentSTID, currentEvalModel);
             if (response) {
                 setEvalResults(response.eval_details.Work_Units);
                 setSTInfoDescription({
@@ -120,8 +121,9 @@ const MainApp = () => {
                 setSTInfo(prevSTInfo => ({
                     ...prevSTInfo,
                     is_evaluated: true,
+                    eval_model: response.eval_model
                 }));
-                setCurrentEvalResult(response.is_valid === true ?
+                setCurrentEvalResult(response.eval_passed === true ?
                      'Pass' : 'Fail');
                 success("Evaluation comlete!");
                 return;
@@ -145,6 +147,7 @@ const MainApp = () => {
         setSTUrl(URL.createObjectURL(response_pdf));
         setCurrentSTID(response_info.st_id);
         if (response_info && response_pdf) {
+            setCurrentEvalModel(response_info.eval_model);
             // If the ST had already been evaluated
             if(response_info.st_details !== null) {
                 setEvalResults(response_info.eval_details.Work_Units);
@@ -154,8 +157,9 @@ const MainApp = () => {
                     SESIP_Level: response_info.st_details.SESIP_Level
                 })
                 setEvalResultPassFailNums([response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
-                setCurrentEvalResult(response_info.is_valid === true ? eval_result_status[1] : eval_result_status[2]);
+                setCurrentEvalResult(response_info.eval_passed === true ? eval_result_status[1] : eval_result_status[2]);
             }
+            console.log(response_info);
             setSTInfo({is_evaluated: response_info.is_evaluated});
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -317,8 +321,14 @@ const MainApp = () => {
                         </div>
 
                         {/* Model select dropdown list */}
-                        <pre className="model_selector_label">Select Model for evaluation :</pre>
-                        <ReactDropdown options={model_options} value={model_options[0]} className="model_selector"/>
+                        {(!STInfo || !STInfo.is_evaluated) ? 
+                        <> 
+                            <pre className="model_selector_label">Select Model for evaluation :</pre>
+                            <ReactDropdown options={model_options} value={model_options[0]} className="model_selector" onChange={(e) => setCurrentEvalModel(e.value)}/>
+                        </> :
+                        <div className="model_selector_label">Using model: {currentEvalModel}</div>
+                        }
+                       
                         
                         {/* Evaluation button and result */}
                         {((STInfo === null) || (STInfo.is_evaluated !== false) || loading === 1) ? 
@@ -365,7 +375,7 @@ const MainApp = () => {
                 </div>
                 <div className="result_detail_content">
                     {selectedResult ?
-                    <div>
+                    <div className="work_unit_description">
                         {selectedResult.Work_Unit_Description}
                     </div> : "Select result for more information."}
                 </div>

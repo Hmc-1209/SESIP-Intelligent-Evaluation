@@ -38,7 +38,7 @@ def evaluate(st_id: int, model: str):
     ------SESIP Methodology ends------
     
     The following document is the sesip evaluation report.
-    ------SESIP Evaaluation Report starts------
+    ------SESIP Evaluation Report starts------
     ''' + sesip_evaluation_report + '''
     ------SESIP Evaluation Report ends------
     
@@ -47,7 +47,7 @@ def evaluate(st_id: int, model: str):
     ''' + st + '''
     ------Targeting Security Target ends------
 
-    If you met some texts like "From SESIP 1" or "As per ...", then replace the txet with corresponding text. Do not just skip it.
+    If you meet some texts like "From SESIP 1" or "As per ...", replace it with corresponding text. Do not just skip it.
 
     In the second file, you will get many "work units" for different levels of SESIP.
     I want your response contains these details, with the format I give you:
@@ -91,7 +91,7 @@ def evaluate(st_id: int, model: str):
         
         Work_Unit_Evaluation_Result_Status:
         In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'pass' or 'fail' regarding the evaluation result of the corresponding work unit.
-        No matter the Work_Unit is pass or failed, it sould be listed in the Work_Unit array, not just listing out the passed one.
+        No matter the Work_Unit is pass or fail, it sould be listed in the Work_Unit array, do not just only list out the passed one.
         
         Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status:
         Before creating the Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status array, count the number of 'pass' and 'fail' statuses in the Work_Units array to ensure that the sum equals the total number of work units.

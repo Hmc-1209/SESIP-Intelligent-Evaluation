@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ip } from "./request_host_ip";
 
-const get_user_st = async (access_token) => {
+const get_user_st = async () => {
     
     const token = window.localStorage.getItem("access_token");
 
@@ -126,20 +126,21 @@ export const get_st_info = async (access_token, st_id) => {
   return false;
 }
 
-export const st_evaluate = async (access_token, st_id) => {
+export const st_evaluate = async (access_token, st_id, model) => {
   try {
-    console.log(st_id);
     const response = await axios.post(`${ip}/eval/${st_id}`, {}, {
       headers: {
         accept: "application/json",
         Authorization: "Bearer " + access_token
+      },
+      params: {
+        eval_model: model
       },
       validateStatus: function (status) {
         return (status >= 200 && status < 300) || status === 404;
       },
     });
     if (response.data) {
-      console.log(response.data);
       return response.data;
     } else {
       return false;
