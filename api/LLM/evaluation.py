@@ -13,7 +13,7 @@ def pdf_to_text(pdf_file):
     return text
 
 
-def evaluate(st_id: int):
+def evaluate(st_id: int, model: str):
     try:
         sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
         sesip_evaluation_report = open("../api/LLM/prompt/SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
@@ -107,7 +107,7 @@ def evaluate(st_id: int):
 
     try:
         response = openai.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model,
             messages=[
                 {"role": "user", "content": prompt}
             ]

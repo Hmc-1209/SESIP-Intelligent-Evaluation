@@ -36,3 +36,6 @@ eval_not_performed = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
 
 evaluation_failed = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                   detail="Evaluation failed.")
+
+invalid_model = HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                              detail="Invalid model.")

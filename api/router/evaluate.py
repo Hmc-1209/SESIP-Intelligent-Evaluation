@@ -4,7 +4,7 @@ import os
 import json
 
 from authentication.JWTtoken import get_current_user
-from exception import bad_request, no_such_st, st_not_belongs, eval_has_performed, evaluation_failed
+from exception import bad_request, no_such_st, st_not_belongs, eval_has_performed, evaluation_failed, invalid_model
 from repository.STCRUD import *
 from LLM.evaluation import evaluate
 from schemas import EvaluateST
@@ -18,7 +18,7 @@ def copy_dict(dictionary, keys):
 
 
 @router.post("/{st_id}", status_code=status.HTTP_201_CREATED)
-async def evaluate_security_target(st_id: int, current_user=Depends(get_current_user)) -> EvaluateST:
+async def evaluate_security_target(st_id: int, model: str, current_user=Depends(get_current_user)) -> EvaluateST:
     # Validation
     st = await get_st_by_id(st_id)
     if not st:
@@ -30,8 +30,11 @@ async def evaluate_security_target(st_id: int, current_user=Depends(get_current_
     if st.is_evaluated:
         raise eval_has_performed
 
+    if model not in ["gpt-4o", "gpt-4o-mini"]:
+        raise invalid_model
+
     # Evaluation
-    evaluate(st_id)
+    evaluate(st_id, model)
 
     # Parsing
     try:
