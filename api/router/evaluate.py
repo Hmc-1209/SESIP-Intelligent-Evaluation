@@ -4,7 +4,7 @@ import os
 import json
 
 from authentication.JWTtoken import get_current_user
-from exception import bad_request, no_such_st, st_not_belongs, eval_has_performed, evaluation_failed, invalid_model
+from exception import *
 from repository.STCRUD import *
 from LLM.evaluation import evaluate
 from utils.file_process import generate_eval_report
@@ -34,6 +34,9 @@ async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int
 
     if eval_model not in ["gpt-4o-mini"]:
         raise invalid_model
+
+    if sesip_level not in [1, 2]:
+        raise invalid_level
 
     # Evaluation
     evaluate(st_id, eval_model, sesip_level)
