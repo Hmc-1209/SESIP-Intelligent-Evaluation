@@ -53,6 +53,7 @@ def update_description(p: Paragraph, description: str):
 
 def update_document(report_template: Document, unit_mapping: dict):
     p = report_template.paragraphs
+    not_found = []
 
     for i in range(len(p)):
         unit_name = p[i].text.split("(")[0].strip()
@@ -62,8 +63,11 @@ def update_document(report_template: Document, unit_mapping: dict):
                 update_description(p[i + 3], unit_mapping[unit_name]["description"])
 
             except KeyError:
-                print(f"No such work unit: {unit_name}")
+                not_found.append(unit_name)
                 pass
+
+    if not_found:
+        print(f"Could not find: {', '.join(not_found)}")
 
 
 def generate_eval_report(st_id: int, sesip_level: int):
