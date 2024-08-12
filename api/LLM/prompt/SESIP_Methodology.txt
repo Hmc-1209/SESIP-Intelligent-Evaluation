@@ -605,9 +605,6 @@ The self-assessment shall consider each implementation of the SFRs, describing h
     • Reliance on the statements of another party on the platform or a part of the platform
 The self-assessment shall indicate what procedures cover ALC_FLR.2 if “Secure Update of Platform” is included in the Security Target.
 
-4.1.4 Guidance Documents Requirements
-AGD_OPE.1: As per [CC Part 3].
-AGD_PRE.1: As per [CC Part 3].
 
 4.1.5 Life-cycle Support Requirements
 Refinement:
@@ -617,9 +614,6 @@ To enable both platform types, this assurance requirement can be met in two ways
     • For platforms that cannot be updated, the Security Target shall contain a rationale for why it is acceptable that this platform cannot be updated in the field. It is acceptable that a hardware root of trust cannot be updated in the field.
 In both cases, the flaw reporting procedure shall describe how flaws are to be reported to the developer, and how updates to the platform or guidance (or retraction of the product as certified) are communicated to the users of the platform.
 At SESIP1 and SESIP2 level, flaw reporting procedure steps not visible to the users may be omitted from the description as these are not verifiable by the evaluators. The public facing procedures shall be described.
-
-4.1.6 Vulnerability Assessment Requirements
-AVA_VAN.1: The vulnerability survey may be performed by the developer or evaluator. The evaluator is to determine whether the testing evidence submitted by the developer considers all applicable public domain sources to identify potential vulnerabilities in the platform. This testing may utilize appropriate penetration test tools available in the public domain to test for publicized potential vulnerabilities.
 
 4.2 SESIP Assurance Level 2 (SESIP2)
 SESIP2 is a moderate level of assurance for (parts of) IoT platforms.
@@ -660,18 +654,11 @@ As per section 4.1.3.
 4.2.4 Development Requirements
 ADV_FSP.4: The objective of ADV_FSP.4 in the SESIP context is to ensure that the platform developer has precisely specified all the platform’s interfaces with a sufficient level of details, including direct error messages, as described in the Developer action elements and in the Content and presentation elements. The evaluator shall then verify that the provided specification contains the required elements, and that it provides a full coverage of the SFRs, with the help of the mapping provided by the developer.
 
-4.2.5 Guidance Documents Requirements
-As per section 4.1.4.
-
 4.2.6 Life-cycle Support Requirements
 As per section 4.1.5.
 
 4.2.7 Tests Requirements
 ATE_IND.1: Developers and third parties are encouraged to reuse industry standard testing, provided this is accepted by the CB.
-
-4.2.8 Vulnerability Analysis Requirements
-ADV_IMP package not being claimed at this SESIP level does not forbid the vulnerability assessment to be based on source code review if provided; this may reduce the testing effort. In any case, the use of source code review in vulnerability analysis should be clearly mentioned in the evaluation report.
-In case of a composite platform, the evaluator shall verify that all objectives for the environment of the platform parts fulfilled by another platform part are accurately fulfilled. All guidance of one platform part for another platform part should be considered as part of the vulnerability analysis.
 
 4.3 SESIP Assurance Level 3 (SESIP3)
 SESIP3 is a substantial level of assurance for (parts of) IoT platforms. It provides significantly more assurance than SESIP2 by requiring significant source code analysis by an evaluator as input to the vulnerability analysis. Use of the source code analysis will increase the assurance gained from the vulnerability analysis and penetration testing but will provide less assurance than the extended-substantial assurance provided by SESIP4.
@@ -715,9 +702,6 @@ As per section 4.1.3.
 4.3.4 Development Requirements
 ADV_FSP.4: As per [CC Part 3].
 
-4.3.5 Guidance Documents Requirements
-As per section 4.1.4.
-
 4.3.6 Life-cycle Support Requirements
 ALC_CMC.1: As per [CC Part 3].
 ALC_CMS.1: As per [CC Part 3].
@@ -726,10 +710,6 @@ At SESIP3 level and higher, the entire flaw reporting procedure is to be describ
 
 4.3.7 Tests Requirements
 As per section 4.2.7.
-
-4.3.8 Vulnerability Analysis Requirements
-AVA_VAN.3: As per [CC Part 3].
-In case of a composite platform, the evaluator shall verify that all objectives for the environment of the platform parts fulfilled by another platform part are accurately fulfilled. All guidance of one platform part for another platform part should be considered as part of the vulnerability analysis.
 
 Annex D SECURITY TARGET TEMPLATE
 This annex defines a template for a SESIP security target. In this version of the standard, this template applies only for levels SESIP1 to SESIP3, for which full evaluations can be performed.
@@ -813,10 +793,6 @@ The following two Security Assurance Requirements are provided as examples.
 Flaw Reporting Procedure (ALC_FLR.2)
 In accordance with the requirement for a flaw reporting procedure (ALC_FLR.2), including a process to give generate any needed update and distribute it, the developer has defined the following procedure:
 <Describe the procedure, including where flaws can be reported (website and/or email address), how the reported flaws are handled in a timely manner, and how an application developer/end-user can get informed of the update. If the “Secure Update of Platform” SFR is removed, you have to provide a strong argumentation here why the platform is not worth getting an update. However, the process to receive the reports of flaws and handling them in a timely manner needs to be described in any case.>
-
-Vulnerability Survey (AVA_VAN.1)
-In accordance with the requirement for a vulnerability analysis survey (AVA_VAN.1) the developer has performed a vulnerability survey and submits the following test results to demonstrate the consideration of publicized potential vulnerabilities relating to the platform:
-<Describe what form the vulnerability survey took and describe the testing performed as a result, e.g. all attacks relating to a basic attack potential are considered in X public domain tool and so executed the tool with specified results.>
 
 D.4.2 Security Functional Requirements
 The platform fulfills the following Security Functional Requirements:

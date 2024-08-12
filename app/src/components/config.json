@@ -1,0 +1,9 @@
+{
+    "available_models": [
+        "gpt-4o-mini"
+    ],
+    "available_sesip_levels":[
+        "1",
+        "2"
+    ]
+}

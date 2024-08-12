@@ -126,7 +126,7 @@ export const get_st_info = async (access_token, st_id) => {
   return false;
 }
 
-export const st_evaluate = async (access_token, st_id, model) => {
+export const st_evaluate = async (access_token, st_id, model, sesip_level) => {
   try {
     const response = await axios.post(`${ip}/eval/${st_id}`, {}, {
       headers: {
@@ -134,7 +134,8 @@ export const st_evaluate = async (access_token, st_id, model) => {
         Authorization: "Bearer " + access_token
       },
       params: {
-        eval_model: model
+        eval_model: model,
+        sesip_level: sesip_level
       },
       validateStatus: function (status) {
         return (status >= 200 && status < 300) || status === 404;

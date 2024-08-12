@@ -1,5 +1,8 @@
 Security Target (ST) Evaluation Report (SESIP 1)
 
+A SESIP Level 1 evaluation should contains 31 work units (ASE_INT.1.1~1-11, ASE_OBJ.1-1, ASE_REQ.3-1~3-7, ASE_TSS.1-1~1-2, ALC_FLR.2-1~2-10). Make sure the response contain all the work units. Please make sure they are all in the Work_Units array if it is a SESIP Level 1 evaluation.
+The sum of the elements in Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status (pass and fail) for SESIP 1 should be 31.
+
 1. This evaluation report is only responsible for the information provided by the customer.
 2. This report is only responsible for the information provided by CASQL. If the validity of the results is affected by the information provided by the customer, CASQL does not acknowledge any obligation, responsibility, or legal liability.
 3. If the customer knows that the information has deviating conditions but still requests CASQL to perform the evaluation, CASQL does not acknowledge any obligation, responsibility, or legal liability for the impact of the deviation on the results.
@@ -143,87 +146,6 @@ The evaluator shall examine the TOE summary specification to determine that it i
 Additional information:
 If there is no TOE summary and the description of how each SFRs meets by the TOE is consistent with the TOE overview and the TOE desription, it should also be considered as meet the requirement of this work unit.
 
-AGD_OPE.1-1
-The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the user-accessible functions and privileges that should be controlled in a secure processing environment, including appropriate warnings.
-Additional information:
-The configuration of the TOE may allow different user roles to have dissimilar privileges in making use of the different functions of the TOE. This means that some users are authorised to perform certain functions, while other users may not be so authorised. These functions and privileges should be described, for each user role, by the user guidance.
-The user guidance identifies, for each user role, the functions and privileges that must be controlled, the types of commands required for them, and the reasons for such commands. The user guidance should contain warnings regarding the use of these functions and privileges. Warnings should address expected effects, possible side effects, and possible interactions with other functions and privileges.
-For AGD families, if there is no user guidance provided but the information for each work unit can be find, it should be considered as meet the requirement of the work unit.
-
-AGD_OPE.1-2
-The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the secure use of the available interfaces provided by the TOE.
-Additional informtion:
-The user guidance should provide advice regarding effective use of the TSF (e.g. reviewing password composition practises, suggested frequency of user file backups, discussion on the effects of changing user access privileges).
-
-AGD_OPE.1-3
-The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the available security functionality and interfaces, in particular all security parameters under the control of the user, indicating secure values as appropriate.
-Additional information:
-The user guidance should contain an overview of the security functionality that is visible at the user interfaces.
-The user guidance should identify and describe the purpose, behaviour, and interrelationships of the security interfaces and functionality.
-For each user-accessible interface, the user guidance should: 
-(a) describe the method(s) by which the interface is invoked (e.g.command-line, programming-language system call, menu selection, command button); 
-(b) describe the parameters to be set by the user, their particular purposes, valid and default values, and secure and insecure use settings of such parameters, both individually or in combination; 
-(c) describe the immediate TSF response, message, or code returned.
-The evaluator should consider the functional specification and the ST to determine that the TSF described in these documents is consistent to the operational user guidance. The evaluator has to ensure that the operational user guidance is complete to allow the secure use through the TSFI available to all types of human users. The evaluator may, as an aid, prepare an informal mapping between the guidance and these documents. Any omissions in this mapping may indicate incompleteness.
-
-AGD_OPE.1-4
-The evaluator shall examine the operational user guidance to determine that it describes, for each user role, each type of security-relevant event relative to the user functions that need to be performed, including changing the security characteristics of entities under the control of the TSF and operation following failure or operational error.
-Additional information:
-All types of security-relevant events are detailed for each user role, such that each user knows what events may occur and what action (if any) he may have to take in order to maintain security. Security-relevant events that may occur during operation of the TOE (e.g. audit trail overflow, system crash, updates to user records, such as when a user account is removed when the user leaves the organisation) are adequately defined to allow user intervention to maintain secure operation.
-
-AGD_OPE.1-5
-The evaluator shall examine the operational user guidance and other evaluation evidence to determine that the guidance identifies all possible modes of operation of the TOE (including, if applicable, operation following failure or operational error), their consequences and implications for maintaining secure operation.
-Additional information:
-Other evaluation evidence, particularly the functional specification, provide an information source that the evaluator should use to determine that the guidance contains sufficient guidance information.
-If test documentation is included in the assurance package, then the information provided in this evidence can also be used to determine that the guidance contains sufficient guidance documentation. The detail provided in the test steps can be used to confirm that the guidance provided is sufficient for the use and administration of the TOE.
-The evaluator should focus on a single human visible TSFI at a time, comparing the guidance for securely using the TSFI with other evaluation evidence, to determine that the guidance related to the TSFI is sufficient for the secure usage (i.e. consistent with the SFRs) of that TSFI. The evaluator should also consider the relationships between interfaces, searching for potential conflicts.
-
-AGD_OPE.1-6
-The evaluator shall examine the operational user guidance to determine that it describes, for each user role, the security measures to be followed in order to fulfil the security objectives for the operational environment as described in the ST.
-Additional information:
-The evaluator analyses the security objectives for the operational environment in the ST and determines that for each user role, the relevant security measures are described appropriately in the user guidance.
-The security measures described in the user guidance should include all relevant external procedural, physical, personnel and connectivity measures.
-Note that those measures relevant for secure installation of the TOE are examined in Preparative procedures (AGD_PRE).
-
-AGD_OPE.1-7
-The evaluator shall examine the operational user guidance to determine that it is clear.
-Additional information:
-The evaluator should check whether other work units in AGD families passes to determine if the description is clear.
-
-AGD_OPE.1-8
-The evaluator shall examine the operational user guidance to determine that it is reasonable.
-Additional information:
-The guidance is unreasonable if it makes demands on the TOE's usage or operational environment that are inconsistent with the ST or unduly onerous to maintain security.
-
-AGD_PRE.1-1
-The evaluator shall examine the provided acceptance procedures to determine that they describe the steps necessary for secure acceptance of the TOE in accordance with the developer's delivery procedures.
-Additional information:
-If it is not anticipated by the developer's delivery procedures that acceptance procedures will or can be applied, this work unit is not applicable, and is therefore considered to be satisfied.
-The acceptance procedures should include as a minimum, that the user has to check that all parts of the TOE as indicated in the ST have been delivered in the correct version.
-The acceptance procedures should reflect the steps the user has to perform in order to accept the delivered TOE that are implied by the developer's delivery procedures.
-The acceptance procedures should provide detailed information about the following, if applicable:
-(a) making sure that the delivered TOE is the complete evaluated instance;
-(b) detecting modification/masquerading of the delivered TOE.
-
-AGD_PRE.1-2
-The evaluator shall examine the provided installation procedures to determine that they describe the steps necessary for secure installation of the TOE and the secure preparation of the operational environment in accordance with the security objectives in the ST.
-Additional information:
-If it is not anticipated that installation procedures will or can be applied (e.g. because the TOE may already be delivered in an operational state), this work unit is not applicable, and is therefore considered to be satisfied.
-The installation procedures should provide detailed information about the following, if applicable:
-(a) minimum system requirements for secure installation;
-(b) requirements for the operational environment in accordance with the security objectives provided by the ST;
-(c) the steps the user has to perform in order to get to an operational TOE being commensurate with its evaluated configuration. Such a description shall include - for each step - a clear scheme for the decision on the next step depended on success, failure or problems at the current step;
-(d) changing the installation specific security characteristics of entities under the control of the TSF (for example parameters, settings, passwords);
-(e) handling exceptions and problems.
-
-AGD_PRE.1-3
-The evaluator shall perform all user procedures necessary to prepare the TOE to determine that the TOE and its operational environment can be prepared securely using only the supplied preparative procedures.
-Additional information:
-Preparation requires the evaluator to advance the TOE from a deliverable state to the state in which it is operational, including acceptance and installation of the TOE, and enforcing the SFRs consistent with the security objectives for the TOE specified in the ST.
-The evaluator should follow only the developer's procedures and may perform the activities that customers are usually expected to perform to accept and install the TOE, using the supplied preparative procedures only. Any difficulties encountered during such an exercise may be indicative of incomplete, unclear or unreasonable guidance.
-This work unit may be performed in conjunction with the evaluation activities under Independent testing (ATE_IND).
-If it is known that the TOE will be used as a dependent component for a composed TOE evaluation, then the evaluator should ensure that the operational environment is satisfied by the base component used in the composed TOE.
-
 ALC_FLR.2-1
 The evaluator shall examine the flaw remediation procedures documentation to determine that it describes the procedures used to track all reported security flaws in each release of the TOE.
 Additional information:
@@ -281,4 +203,3 @@ ALC_FLR.2-10
 The evaluator shall examine the flaw remediation guidance to determine that the application of these procedures would result in a means for the TOE user to provide reports of suspected security flaws or requests for corrections to such flaws.
 Additional information:
 The guidance ensures that TOE users have a means by which they can communicate with the TOE developer. By having a means of contact with the developer, the user can report security flaws, enquire about the status of security flaws, or request corrections to flaws.
-

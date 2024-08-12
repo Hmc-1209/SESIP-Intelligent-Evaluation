@@ -13,7 +13,7 @@ def pdf_to_text(pdf_file):
     return text
 
 
-def evaluate(st_id: int, model: str):
+def evaluate(st_id: int, model: str, sesip_lv: int):
     try:
         sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
         sesip_evaluation_report = open("../api/LLM/prompt/SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
@@ -34,11 +34,11 @@ def evaluate(st_id: int, model: str):
     
     The following document is the SESIP methodology.
     ------SESIP Methodology starts------
-    ''' + sesip_methodology + '''
+    ''' + sesip_methodology + f'''
     ------SESIP Methodology ends------
-    
-    The following document is the sesip evaluation report.
-    ------SESIP Evaluation Report starts------
+    port
+    The following document is the SESIP level{sesip_lv} evaluation report.
+    ------SESIP Evaluation Re starts------
     ''' + sesip_evaluation_report + '''
     ------SESIP Evaluation Report ends------
     
@@ -55,7 +55,6 @@ def evaluate(st_id: int, model: str):
     {
         TOE_Name: "",
         Developer_Organization: "",
-        SESIP_Level: "",
         Work_Units: [
             {
                 Work_Unit_Name: "",
@@ -69,10 +68,11 @@ def evaluate(st_id: int, model: str):
     ------Response format ends------
     
     Response format description:
-    The TOE_Name, Developer_Organization and SESIP_Level should be considered first, the SESIP Level will affect the amount of elements in Work_Units array.
+    The TOE_Name, Developer_Organization should be considered first, the SESIP Level will affect the amount of elements in Work_Units array.
     
     *Important notes starts*
-    A SESIP Level 1 evaluation should contains 42 work units (ASE_INT.1.1~1-11, ASE_OBJ.1-1, ASE_REQ.3-1~3-7, ASE_TSS.1-1~1-2, AGD_OPE.1-1~1-8, AGD_PRE.1-1~1-3, ALC_FLR.2-1~2-10). Make sure the response contain all the work units. Please make sure they are all in the Work_Units array if it is a SESIP Level 1 evaluation. So the sum of the elements in Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status should be 42.
+    Work Units like ASE_OPE, ASE_PRE, AVA_VAN do not need to evaluate since there are too many missing information. Just skip these work units.
+    If you provide a description of how the work unit were statisfied, also provide where did you find the information, detailed to which page, which seciton and (if possible), which line!!!!!
     *Important notes ends*
 
     Work_Units array:
@@ -80,6 +80,7 @@ def evaluate(st_id: int, model: str):
         In each of these Work_Units objects, the Work_Unit_Name should be the name of the work unit itself (ex: ASE_INT.1-1).
         
         Work_Unit_Description:
+        If there is lack of information, or any single part of rules that cannot be directly seen in the ST, do not blindly guess the answer even if the ST provide the outer link or reference, just mark it as fail. All information should be provided clearly for people to directly seen.
         In each of these Work_Units objects, the Work_Unit_Description should not only state whether the targeted Security Target meets the requirements of the work unit but also provide detailed reasoning. Specifically, the response for each work unit should include:
             1. Why the requirements of that work unit are met or not met, with a clear explanation of the factors contributing to this conclusion, also providing the evidence.
             2. Precise references to the Security Target (ST) document, including the page number, paragraph, and if possible, the line number where the relevant information(evidence) can be found.
@@ -88,13 +89,14 @@ def evaluate(st_id: int, model: str):
         Please ensure the explanation is thorough, identifying exact locations in the ST document to support the evaluation. The explanation of why the work unit pass or fail should be detailed. For example why the infomation being found could prove the work unit requirement have been met.
         At the end of each work unit description, there should be a statement like 'thus, the evaluator confirms it meet all requirements for content and presentation evidence' if the evaluation result is pass, similar to failed, there should also a statement to sum up like so.
         (ex. The TOE reference point out the TOE name (TOE_NAME), version (Rev. 2.4), identification code (IDENTIFIATION_CODE) and the type (Secure co-processor platform for embedded systems). The TOE reference had provided sufficient detail, the combination of them makes the TOE uniquely identifiable, thus the evaluator confirms that it meets all requirements for content and presentation evidence.)
+
         
         Work_Unit_Evaluation_Result_Status:
         In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'pass' or 'fail' regarding the evaluation result of the corresponding work unit.
         No matter the Work_Unit is pass or fail, it sould be listed in the Work_Unit array, do not just only list out the passed one.
         
         Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status:
-        Before creating the Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status array, count the number of 'pass' and 'fail' statuses in the Work_Units array to ensure that the sum equals the total number of work units.
+        Before creating the Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status array, count the number of 'pass' and 'fail' statuses in the Work_Units array to ensure that the sum equals the total number of work units!!!
         The Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status should contain values in the following order: passed_work_unit_numbers, failed_work_unit_numbers.
         Put the passed work unit amounts and failed work unit amounts in the first and second element in the Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status array.
         The two numbers sum should be equal to the amount of overall Work_Units corresponding to the SESIP Level of evaluation.

@@ -5,7 +5,7 @@ import "react-dropdown/style.css";
 import CryptoJS from "crypto-js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import models from './models.json';
+import config from './config.json';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ColorRing } from 'react-loader-spinner'
 import get_user_st, { delete_history_st, get_st_file_content, get_st_info, st_evaluate, upload_st } from "../requests/user_requests";
@@ -16,7 +16,8 @@ import "./css/main_app.css";
 const MainApp = () => {
 
     // Static variables
-    const model_options = models.available_models;
+    const model_options = config.available_models;
+    const sesip_levels = config.available_sesip_levels;
     const eval_result_status = ['Pending', 'Pass', 'Fail'];
     const success = (success_message) => toast.success(success_message);
     const error = (error_message) => toast.error(error_message);
@@ -38,6 +39,7 @@ const MainApp = () => {
     const [evalResults, setEvalResults] = useState([]);
     const [isUploadingST, setIsUploadingST] = useState(false);
     const [currentEvalModel, setCurrentEvalModel] = useState(model_options[0]);
+    const [currentSESIPLevel, setCurrentSESIPLevel] = useState(sesip_levels[0])
 
 
     // Logout initialization function
@@ -68,6 +70,7 @@ const MainApp = () => {
 
     // Upload ST handling function
     const handleFileChange = (event) => {
+        console.log(1);
         const file = event.target.files[0];
         if (file) {
             const fileUrl = URL.createObjectURL(file);
@@ -98,6 +101,8 @@ const MainApp = () => {
         setSTHash({ md5: '', sha256: '' });
         setSTInfo(null);
         setEvalResultPassFailNums([0, 0]);
+        setCurrentEvalModel(model_options[0]);
+        setCurrentSESIPLevel(sesip_levels[0]);
         setEvalResults([]);
         setSelectedResult(null);
         setSTInfoDescription(null);
@@ -108,16 +113,16 @@ const MainApp = () => {
         setLoading(1);
         const access_token = window.localStorage.getItem("access_token");
         const evaluate_request = async () => {
-            const response = await st_evaluate(access_token, currentSTID, currentEvalModel);
+            const response = await st_evaluate(access_token, currentSTID, currentEvalModel, parseInt(currentSESIPLevel));
             if (response) {
                 setEvalResults(response.eval_details.Work_Units);
                 setSTInfoDescription({
                     TOE_Name: response.st_details.TOE_Name,
                     Developer_Organizetion: response.st_details.Developer_Organizetion,
-                    SESIP_Level: response.st_details.SESIP_Level
                 })
                 setEvalResultPassFailNums([response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
                 setLoading(false);
+                setCurrentSESIPLevel(response.st_details.SESIP_Level);
                 setSTInfo(prevSTInfo => ({
                     ...prevSTInfo,
                     is_evaluated: true,
@@ -148,18 +153,17 @@ const MainApp = () => {
         setCurrentSTID(response_info.st_id);
         if (response_info && response_pdf) {
             setCurrentEvalModel(response_info.eval_model);
+            setCurrentSESIPLevel( response_info.st_details.SESIP_Level)
             // If the ST had already been evaluated
             if(response_info.st_details !== null) {
                 setEvalResults(response_info.eval_details.Work_Units);
                 setSTInfoDescription({
                     TOE_Name: response_info.st_details.TOE_Name,
                     Developer_Organizetion: response_info.st_details.Developer_Organizetion,
-                    SESIP_Level: response_info.st_details.SESIP_Level
                 })
                 setEvalResultPassFailNums([response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
                 setCurrentEvalResult(response_info.eval_passed === true ? eval_result_status[1] : eval_result_status[2]);
             }
-            console.log(response_info);
             setSTInfo({is_evaluated: response_info.is_evaluated});
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -184,6 +188,7 @@ const MainApp = () => {
             setLoading(false);
             clear_current_st();
             get_st();
+            setIsUploadingST(true);
             return;
         }
         error("Unknown problem happend. Try again later.")
@@ -308,8 +313,7 @@ const MainApp = () => {
                             </pre>
                             <pre className="st_detail_information">
                                 TOE name : {STInfoDesciption ? STInfoDesciption.TOE_Name : ''}<br /><br />
-                                Developer Organization : {STInfoDesciption ? STInfoDesciption.Developer_Organizetion : ''}<br /><br />
-                                SESIP Level : {STInfoDesciption ? STInfoDesciption.SESIP_Level : ''}
+                                Developer Organization : {STInfoDesciption ? STInfoDesciption.Developer_Organizetion : ''}
                             </pre>
                             <pre className="st_detail_title">
                                 Checksum
@@ -325,8 +329,12 @@ const MainApp = () => {
                         <> 
                             <pre className="model_selector_label">Select Model for evaluation :</pre>
                             <ReactDropdown options={model_options} value={model_options[0]} className="model_selector" onChange={(e) => setCurrentEvalModel(e.value)}/>
-                        </> :
-                        <div className="model_selector_label">Using model: {currentEvalModel}</div>
+                            <pre className="model_selector_label">Select SESIP Level for evaluation :</pre>
+                            <ReactDropdown options={sesip_levels} value={sesip_levels[0]} className="model_selector" onChange={(e) => setCurrentSESIPLevel(e.value)}/>
+                        </> : <>
+                            <div className="model_selector_label">Using model: {currentEvalModel}</div>
+                            <div className="model_selector_label">SESIP Level: {currentSESIPLevel}</div>
+                        </>
                         }
                        
                         
