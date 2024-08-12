@@ -77,7 +77,7 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
         raise eval_not_performed
 
     filepath = os.path.join(base_path, str(st.st_id), "eval_file.docx")
-    filename = f"{st.st_id}-{st.st_details['TOE_NAME']} Evaluation Result.docx"
+    filename = f"{st.st_id}-{st.st_details['TOE_Name']} Evaluation Result.docx"
 
     if not os.path.isfile(filepath):
         raise no_such_file
