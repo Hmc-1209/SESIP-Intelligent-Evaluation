@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import config from './config.json';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ColorRing } from 'react-loader-spinner'
-import get_user_st, { delete_history_st, get_st_file_content, get_st_info, st_evaluate, upload_st } from "../requests/user_requests";
+import get_user_st, { delete_history_st, get_st_file_content, get_st_info, get_st_report_download, st_evaluate, upload_st } from "../requests/user_requests";
 // For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
 import "./css/main_app.css";
@@ -70,9 +70,12 @@ const MainApp = () => {
 
     // Upload ST handling function
     const handleFileChange = (event) => {
-        console.log(1);
         const file = event.target.files[0];
         if (file) {
+            if (file.type !== 'application/pdf') {
+                error("Please upload a pdf file.");
+                return;
+            }
             const fileUrl = URL.createObjectURL(file);
             setSTFile(file);
             setSTUrl(fileUrl);
@@ -85,6 +88,7 @@ const MainApp = () => {
                 setSTHash({ md5, sha256 });
             };
             reader.readAsArrayBuffer(file);
+            return;
         }
     };
     const handleUploadButtonClick = () => {
@@ -194,6 +198,21 @@ const MainApp = () => {
         }
         error("Unknown problem happend. Try again later.")
         return;
+    }
+
+    const download_evaluation_report = async () => {
+        setLoading(0);
+        const access_token = window.localStorage.getItem("access_token");
+        const response = await get_st_report_download(access_token, currentSTID, STInfoDesciption.TOE_Name);
+        if(response) {
+            setLoading(false);
+            success("ST report has been downloaded.");
+            return;
+        } else {
+            setLoading(false);
+            error("Unknown error happend. Try again later.");
+            return;
+        }
     }
 
 
@@ -376,7 +395,7 @@ const MainApp = () => {
                 <div className="result_container">
                     {evalResults.map(result => (
                         <button className={"result_brief_label "+(selectedResult && (selectedResult.Work_Unit_Name===result.Work_Unit_Name)?"selected_result":"")} onClick={() => setSelectedResult(result)} key={result.Work_Unit_Name} style={{display: 'flex'}}>
-                            {result.Work_Unit_Evaluation_Result_Status === 'pass' ?
+                            {result.Work_Unit_Evaluation_Result_Status === 'Pass' ?
                              <div style={{ color: 'green', fontWeight: 'bold', marginRight: '10px' }}>O</div> :
                              <div style={{ color: 'red', fontWeight: 'bold', marginRight: '10px' }}>X</div>}{result.Work_Unit_Name? result.Work_Unit_Name : "null"}
                         </button>
@@ -414,7 +433,7 @@ const MainApp = () => {
                 {((STInfo === null) || (STInfo.is_evaluated === false)) ?
                 <button className="save_evaluation_result_btn" disabled>
                 <i className="fa-solid fa-download"></i> Download
-                </button> : <button className="save_evaluation_result_btn">
+                </button> : <button className="save_evaluation_result_btn" onClick={download_evaluation_report}>
                 <i className="fa-solid fa-download"></i> Download
                 </button>}
             </div>

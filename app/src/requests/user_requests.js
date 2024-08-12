@@ -197,3 +197,42 @@ export const delete_history_st = async (access_token, st_id) => {
   }
   return false;
 }
+
+export const get_st_report_download = async (access_token, st_id, toe_name) => {
+  try {
+    const response = await axios.get(`${ip}/st/download/${st_id}`, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      responseType: 'blob',
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+
+    const contentDisposition = response.headers['content-disposition'];
+    console.log( response)
+    let fileName = st_id + '-' + toe_name + ' Evaluation Result.docx';
+
+    if (contentDisposition && contentDisposition.indexOf('attachment') !== -1) {
+      const fileNameMatch = contentDisposition.match(/filename\*?=['"]?([^;\n]+)['"]?/);
+      if (fileNameMatch.length > 1) {
+        fileName = decodeURIComponent(fileNameMatch[1].replace(/UTF-8''/, ''));
+      }
+    }
+
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+
+    link.parentNode.removeChild(link);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
