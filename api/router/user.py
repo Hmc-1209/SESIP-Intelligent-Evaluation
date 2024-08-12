@@ -11,11 +11,32 @@ router = APIRouter(prefix="/user", tags=["User"])
 
 @router.get("/")
 async def users(_=Depends(get_current_user)) -> list[BaseUser]:
+    """
+    Retrieve a list of all users (requires authentication).
+
+    Returns:
+        list[BaseUser]: A list of user objects.
+    """
+
     return await get_users()
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_new_user(user: DetailUser) -> None:
+    """
+    Create a new user.
+
+    This endpoint creates a new user with the details provided in the request body.
+    If a user with the given username already exists, a duplicate_data exception is raised.
+
+    Args:
+        user (DetailUser): The details (username, password) of the user to be created.
+
+    Raises:
+        duplicate_data: If a user with the given username already exists.
+        bad_request: If there is an issue with the request or user creation fails.
+    """
+
     if await get_user_by_name(user.username):
         raise duplicate_data
 
@@ -25,6 +46,21 @@ async def create_new_user(user: DetailUser) -> None:
 
 @router.patch("/update_username")
 async def update_user_username(user: BaseUser, current_user=Depends(get_current_user)) -> None:
+    """
+    Update the username of the current user (requires authentication).
+
+    This endpoint updates the username of the currently authenticated user with the username provided in the request body.
+    If the new username already exists, a duplicate_data exception is raised.
+
+    Args:
+        user (BaseUser): The new username to update.
+        current_user (CompleteUser): The current authenticated user.
+
+    Raises:
+        duplicate_data: If the new username is already taken.
+        bad_request: If there is an issue with the request or username update fails.
+    """
+
     if await get_user_by_name(user.username):
         raise duplicate_data
 
@@ -34,6 +70,21 @@ async def update_user_username(user: BaseUser, current_user=Depends(get_current_
 
 @router.patch("/update_password")
 async def update_user_password(user: UpdateUser, current_user=Depends(get_current_user)) -> None:
+    """
+    Update the password of the current user (requires authentication).
+
+    This endpoint updates the password of the currently authenticated user. The request must include the old password and the new password.
+    If the old password does not match the current password, a password_incorrect exception is raised.
+
+    Args:
+        user (UpdateUser): The old and new passwords for the user.
+        current_user (CompleteUser): The current authenticated user.
+
+    Raises:
+        password_incorrect: If the old password is incorrect.
+        bad_request: If there is an issue with the request or password update fails.
+    """
+
     if not verify_password(user.old_password, current_user.password):
         raise password_incorrect
 
@@ -43,5 +94,18 @@ async def update_user_password(user: UpdateUser, current_user=Depends(get_curren
 
 @router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_current_user(current_user=Depends(get_current_user)) -> None:
+    """
+    Delete the current user (requires authentication).
+
+    This endpoint deletes the currently authenticated user.
+    If there is an issue with the deletion, a bad_request exception is raised.
+
+    Args:
+        current_user (CompleteUser): The current authenticated user.
+
+    Raises:
+        bad_request: If there is an issue with the request or user deletion fails.
+    """
+
     if not await delete_user(current_user.user_id):
         raise bad_request
