@@ -9,12 +9,12 @@ import { regist_new_user } from "../requests/login_requests";
 const SignUp = () => {
   // LogIn component will be rendered when clicking Admin section on home page
 
-  let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
+  let { setAlert, setMode, setLoading } = useContext(AppContext);
   
   const error = (error_message) => toast.error(error_message);
 
+  // Signing up the new user
   const signingUp = async () => {
-    // Sign Up 
     setLoading(0);
     const username = document.getElementById("username_input").value;
     const password = document.getElementById("password_input").value;
