@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import { ColorRing } from 'react-loader-spinner'
 import { AppContext } from "../App";
 import ReactDropdown from "react-dropdown";
-import "react-dropdown/style.css";
-import CryptoJS from "crypto-js";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import config from './config.json';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { ColorRing } from 'react-loader-spinner'
-import get_user_st, { delete_history_st, get_st_file_content, get_st_info, get_st_report_download, st_evaluate, upload_st } from "../requests/user_requests";
-// For M1 'brew install pkg-config cairo pango'm then 'npm install @react-pdf-viewer/core@3.12.0'
 
+import get_user_st, { delete_history_st, get_st_file_content, get_st_info, get_st_report_download, st_evaluate, upload_st } from "../requests/user_requests";
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import "react-dropdown/style.css";
 import "./css/main_app.css";
+
+import CryptoJS from "crypto-js";
+import config from './config.json';
 
 const MainApp = () => {
 
@@ -23,7 +24,7 @@ const MainApp = () => {
     const error = (error_message) => toast.error(error_message);
 
     // Context variables
-    let { alert, setAlert, setMode, loading, setLoading } = useContext(AppContext);
+    let { setAlert, setMode, loading, setLoading } = useContext(AppContext);
 
     // useState variables
     const [userST, setUserST] = useState(null);
@@ -32,14 +33,14 @@ const MainApp = () => {
     const [STHash, setSTHash] = useState({ md5: '', sha256: '' });
     const [STInfo, setSTInfo] = useState(null);
     const [STInfoDesciption, setSTInfoDescription] = useState(null);
+    const [isUploadingST, setIsUploadingST] = useState(false);
+    const [evalResults, setEvalResults] = useState([]);
+    const [selectedResult, setSelectedResult] = useState(null);
     const [currentSTID, setCurrentSTID] = useState(null);
+    const [currentSESIPLevel, setCurrentSESIPLevel] = useState(sesip_levels[0])
+    const [currentEvalModel, setCurrentEvalModel] = useState(model_options[0]);
     const [currentEvalResult, setCurrentEvalResult] = useState(eval_result_status[0]);
     const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0]);
-    const [selectedResult, setSelectedResult] = useState(null);
-    const [evalResults, setEvalResults] = useState([]);
-    const [isUploadingST, setIsUploadingST] = useState(false);
-    const [currentEvalModel, setCurrentEvalModel] = useState(model_options[0]);
-    const [currentSESIPLevel, setCurrentSESIPLevel] = useState(sesip_levels[0])
 
 
     // Logout initialization function
@@ -56,8 +57,9 @@ const MainApp = () => {
 
     // Get the current user's STs
     const get_st = async () => {
+        const access_token = window.localStorage.getItem("access_token");
         try {
-            const user_st = await get_user_st();
+            const user_st = await get_user_st(access_token);
             if(user_st) {
                 setUserST(user_st.data);
                 setLoading(false);
@@ -98,18 +100,18 @@ const MainApp = () => {
 
     // Clear the current used st
     const clear_current_st = () => {
-        setCurrentEvalResult('Pending');
-        setCurrentSTID(null);
         setSTFile(null);
         setSTUrl('');
         setSTHash({ md5: '', sha256: '' });
         setSTInfo(null);
-        setEvalResultPassFailNums([0, 0]);
-        setCurrentEvalModel(model_options[0]);
-        setCurrentSESIPLevel(sesip_levels[0]);
+        setSTInfoDescription(null);
         setEvalResults([]);
         setSelectedResult(null);
-        setSTInfoDescription(null);
+        setEvalResultPassFailNums([0, 0]);
+        setCurrentSTID(null);
+        setCurrentSESIPLevel(sesip_levels[0]);
+        setCurrentEvalModel(model_options[0]);
+        setCurrentEvalResult('Pending');
     }
 
     // Process evaluation
@@ -119,22 +121,22 @@ const MainApp = () => {
         const evaluate_request = async () => {
             const response = await st_evaluate(access_token, currentSTID, currentEvalModel, parseInt(currentSESIPLevel));
             if (response) {
-                setEvalResults(response.eval_details.Work_Units);
-                setSTInfoDescription({
-                    TOE_Name: response.st_details.TOE_Name,
-                    Developer_Organization: response.st_details.Developer_Organization,
-                })
-                setEvalResultPassFailNums([response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
-                setLoading(false);
-                setCurrentSESIPLevel(response.st_details.SESIP_Level);
                 setSTInfo(prevSTInfo => ({
                     ...prevSTInfo,
                     is_evaluated: true,
                     eval_model: response.eval_model
                 }));
+                setSTInfoDescription({
+                    TOE_Name: response.st_details.TOE_Name,
+                    Developer_Organization: response.st_details.Developer_Organization,
+                })
+                setEvalResultPassFailNums([response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
+                setCurrentSESIPLevel(response.st_details.SESIP_Level);
                 setCurrentEvalResult(response.eval_passed === true ?
-                     'Pass' : 'Fail');
+                    'Pass' : 'Fail');
+                setEvalResults(response.eval_details.Work_Units);
                 success("Evaluation comlete!");
+                setLoading(false);
                 return;
             } else {
                 error("Unknown error happend. Try again later.");
@@ -147,9 +149,9 @@ const MainApp = () => {
 
     // Get history st content and detail information
     const get_history_st = async (st_id) => {
-        setIsUploadingST(false);
-        clear_current_st();
         setLoading(0);
+        clear_current_st();
+        setIsUploadingST(false);
         const access_token = window.localStorage.getItem("access_token");
         const response_info = await get_st_info(access_token, st_id);
         const response_pdf = await get_st_file_content(access_token, st_id);
@@ -217,21 +219,20 @@ const MainApp = () => {
 
 
     useEffect(() => {
-        
         get_st();
     }, [])
 
     useEffect(() => {
         const upload_new_st_file = async () => {
+            const access_token = window.localStorage.getItem("access_token");
             if (STFile.name.split('/').pop().length > 50) {
                 error("Filename too long!");
-                setSTFile(null);
                 setSTUrl('');
+                setSTFile(null);
                 setCurrentSTID(null);
                 setSTHash({ md5: '', sha256: '' });
                 return;
             }
-            const access_token = window.localStorage.getItem("access_token");
             const response = await upload_st(access_token, STFile);
             if (response !== 0 && response !== 'Request failed.') {
                 success("Upload success!");

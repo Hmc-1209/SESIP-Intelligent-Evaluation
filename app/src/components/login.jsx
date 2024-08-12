@@ -1,19 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import { AppContext } from "../App";
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { AppContext } from "../App";
 
-import "./css/login.css";
 import get_access_token from "../requests/login_requests";
+
+import 'react-toastify/dist/ReactToastify.css';
+import "./css/login.css";
 
 const LogIn = () => {
   // LogIn component will be rendered when clicking Admin section on home page
 
   let { alert, setAlert, setMode, setLoading } = useContext(AppContext);
+  
   const error = (error_message) => toast.error(error_message);
   const warn = (warn_message) => toast.warn(warn_message);
   const success = (success_message) => toast.success(success_message);
  
+  // Log in function
   const loggingIn = async () => {
     // Log In and set the localStorage datas
     setLoading(0);
