@@ -14,7 +14,7 @@ const get_user_st = async (access_token) => {
     const response = await axios.get(`${ip}/st`, {
       headers: {
         accept: "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + access_token
       },
       validateStatus: function (status) {
         return (status >= 200 && status < 300) || status === 404;

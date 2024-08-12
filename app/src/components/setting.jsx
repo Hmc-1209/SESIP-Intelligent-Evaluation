@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-
-import { AppContext } from "../App";
 import { ToastContainer, toast } from 'react-toastify';
+import { AppContext } from "../App";
+
 import { update_password, update_username } from "../requests/user_requests";
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-
 import "./css/setting.css";
 
 const Setting = () => {
