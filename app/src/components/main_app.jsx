@@ -202,6 +202,7 @@ const MainApp = () => {
         return;
     }
 
+    // Download the evaluated report docx file
     const download_evaluation_report = async () => {
         setLoading(0);
         const access_token = window.localStorage.getItem("access_token");
@@ -217,11 +218,12 @@ const MainApp = () => {
         }
     }
 
-
+    // Get the user's history security targets
     useEffect(() => {
         get_st();
     }, [])
 
+    // Upload the security target to server when the file being selected
     useEffect(() => {
         const upload_new_st_file = async () => {
             const access_token = window.localStorage.getItem("access_token");
