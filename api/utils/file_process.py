@@ -48,6 +48,3 @@ def generate_eval_report(st_id: int, sesip_level: int):
                 pass
 
     report_template.save(save_path)
-
-
-generate_eval_report(11, 1)
