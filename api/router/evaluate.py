@@ -1,3 +1,5 @@
+from collections import Counter
+
 from fastapi import APIRouter, Depends, status
 
 import os
@@ -49,9 +51,17 @@ async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int
         st_details = copy_dict(eval_results, ["TOE_Name", "Developer_Organization"])
         st_details["SESIP_Level"] = sesip_level
 
-        eval_details = copy_dict(eval_results,
-                                 ["Work_Units", "Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"])
-        eval_passed = False if eval_results["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
+        eval_details = copy_dict(eval_results, ["Work_Units"])
+
+        statuses = [unit["Work_Unit_Evaluation_Result_Status"] for unit in eval_results["Work_Units"]]
+        status_counts = Counter(statuses)
+
+        pass_count = status_counts.get('Pass', 0)
+        fail_count = status_counts.get('Fail', 0)
+
+        eval_details["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"] = [pass_count, fail_count]
+
+        eval_passed = False if eval_details["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1] else True
 
     except Exception as e:
         print(f"Error: {e}")
