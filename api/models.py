@@ -2,6 +2,7 @@ import sqlalchemy
 from sqlalchemy import Column, ForeignKey
 from database import metadata
 
+# Define the User table schema
 User = sqlalchemy.Table(
     "User",
     metadata,
@@ -10,6 +11,7 @@ User = sqlalchemy.Table(
     Column("password", sqlalchemy.CHAR(64), nullable=False)
 )
 
+# Define the SecurityTarget table schema
 SecurityTarget = sqlalchemy.Table(
     "SecurityTarget",
     metadata,
