@@ -118,7 +118,7 @@ const MainApp = () => {
                 setEvalResults(response.eval_details.Work_Units);
                 setSTInfoDescription({
                     TOE_Name: response.st_details.TOE_Name,
-                    Developer_Organizetion: response.st_details.Developer_Organizetion,
+                    Developer_Organization: response.st_details.Developer_Organization,
                 })
                 setEvalResultPassFailNums([response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
                 setLoading(false);
@@ -152,14 +152,15 @@ const MainApp = () => {
         setSTUrl(URL.createObjectURL(response_pdf));
         setCurrentSTID(response_info.st_id);
         if (response_info && response_pdf) {
-            setCurrentEvalModel(response_info.eval_model);
-            setCurrentSESIPLevel( response_info.st_details.SESIP_Level)
+            setCurrentEvalModel(response_info.eval_model ? response_info.eval_model : model_options[0]);
+            setCurrentSESIPLevel(response_info.st_details ? response_info.st_details.SESIP_Level : sesip_levels[0]);
             // If the ST had already been evaluated
             if(response_info.st_details !== null) {
                 setEvalResults(response_info.eval_details.Work_Units);
+                console.log(response_info.st_details.Developer_Organization)
                 setSTInfoDescription({
                     TOE_Name: response_info.st_details.TOE_Name,
-                    Developer_Organizetion: response_info.st_details.Developer_Organizetion,
+                    Developer_Organization: response_info.st_details.Developer_Organization,
                 })
                 setEvalResultPassFailNums([response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[0], response_info.eval_details.Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status[1]]);
                 setCurrentEvalResult(response_info.eval_passed === true ? eval_result_status[1] : eval_result_status[2]);
@@ -313,7 +314,7 @@ const MainApp = () => {
                             </pre>
                             <pre className="st_detail_information">
                                 TOE name : {STInfoDesciption ? STInfoDesciption.TOE_Name : ''}<br /><br />
-                                Developer Organization : {STInfoDesciption ? STInfoDesciption.Developer_Organizetion : ''}
+                                Developer Organization : {STInfoDesciption ? STInfoDesciption.Developer_Organization : ''}
                             </pre>
                             <pre className="st_detail_title">
                                 Checksum

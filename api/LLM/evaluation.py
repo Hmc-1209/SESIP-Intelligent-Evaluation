@@ -16,7 +16,7 @@ def pdf_to_text(pdf_file):
 def evaluate(st_id: int, model: str, sesip_lv: int):
     try:
         sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
-        sesip_evaluation_report = open("../api/LLM/prompt/SESIP_Evaluation_Report.txt", 'r', encoding='utf-8').read()
+        sesip_evaluation_report = open(f"../api/LLM/prompt/SESIP_Evaluation_Report_Level_{sesip_lv}.txt", 'r', encoding='utf-8').read()   
     except Exception as e:
         print(f"Failed with error {e}")
         return False
@@ -36,13 +36,13 @@ def evaluate(st_id: int, model: str, sesip_lv: int):
     ------SESIP Methodology starts------
     ''' + sesip_methodology + f'''
     ------SESIP Methodology ends------
-    port
+    
     The following document is the SESIP level{sesip_lv} evaluation report.
     ------SESIP Evaluation Re starts------
     ''' + sesip_evaluation_report + '''
     ------SESIP Evaluation Report ends------
     
-    Te following document is the targeting Security Target.
+    The following document is the targeting Security Target.
     ------Targeting Security Target starts------
     ''' + st + '''
     ------Targeting Security Target ends------
@@ -62,8 +62,7 @@ def evaluate(st_id: int, model: str, sesip_lv: int):
                 Work_Unit_Evaluation_Result_Status: ""
             },
             ...
-        ],
-        Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status: [...]
+        ]
     }
     ------Response format ends------
     
@@ -73,6 +72,9 @@ def evaluate(st_id: int, model: str, sesip_lv: int):
     *Important notes starts*
     Work Units like ASE_OPE, ASE_PRE, AVA_VAN do not need to evaluate since there are too many missing information. Just skip these work units.
     If you provide a description of how the work unit were statisfied, also provide where did you find the information, detailed to which page, which seciton and (if possible), which line!!!!!
+    Do not reference any documents or knowledges on internet. Just evaluate the target with the information I give you.
+    If there's any lack of information (no matter it is a outer link, outer reference) as long as it cannot directly shows the sufficient infomation, the work unit should be marked as fail!!!!!
+    Outer reference's name contain related information cannot be considered provide the needed information, as it did not show the detail!!!!!
     *Important notes ends*
 
     Work_Units array:
@@ -92,14 +94,9 @@ def evaluate(st_id: int, model: str, sesip_lv: int):
 
         
         Work_Unit_Evaluation_Result_Status:
-        In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'pass' or 'fail' regarding the evaluation result of the corresponding work unit.
-        No matter the Work_Unit is pass or fail, it sould be listed in the Work_Unit array, do not just only list out the passed one.
-        
-        Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status:
-        Before creating the Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status array, count the number of 'pass' and 'fail' statuses in the Work_Units array to ensure that the sum equals the total number of work units!!!
-        The Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status should contain values in the following order: passed_work_unit_numbers, failed_work_unit_numbers.
-        Put the passed work unit amounts and failed work unit amounts in the first and second element in the Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status array.
-        The two numbers sum should be equal to the amount of overall Work_Units corresponding to the SESIP Level of evaluation.
+        In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'Pass' or 'Fail' regarding the evaluation result of the corresponding work unit.
+        No matter the Work_Unit is "Pass" or "Fail", it sould be listed in the Work_Unit array, do not just only list out the passed one.
+
     The Work_Units array should contain all the work units corresponding to the level of SESIP evaluation!!!
     The sum of elemtents from Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status should also be the same number of Work_Units array!!!
 

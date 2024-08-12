@@ -127,8 +127,9 @@ export const get_st_info = async (access_token, st_id) => {
 }
 
 export const st_evaluate = async (access_token, st_id, model, sesip_level) => {
+  console.log(model, sesip_level)
   try {
-    const response = await axios.post(`${ip}/eval/${st_id}`, {}, {
+    const response = await axios.post(`${ip}/eval/${st_id}`, null, {
       headers: {
         accept: "application/json",
         Authorization: "Bearer " + access_token
