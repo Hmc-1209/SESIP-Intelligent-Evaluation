@@ -147,7 +147,7 @@ def generate_eval_report(dir_path: str, sesip_level: int):
         sesip_level (int): The SESIP level used to select the appropriate report template.
     """
 
-    report_template, eval_details = get_files(st_id, sesip_level)
+    report_template, eval_details = get_files(dir_path, sesip_level)
 
     work_units = eval_details["Work_Units"]
     unit_mapping = level_unit_mapping[sesip_level]
