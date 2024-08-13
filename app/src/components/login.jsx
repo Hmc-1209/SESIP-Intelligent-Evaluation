@@ -46,6 +46,9 @@ const LogIn = () => {
       case 2:
         success("User successfully created!");
         break;
+      case 3:
+        success("User deleted successfully!");
+        break;
     }
 
     setAlert(0);

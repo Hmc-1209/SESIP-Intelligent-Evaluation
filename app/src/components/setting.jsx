@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { AppContext } from "../App";
 
-import { get_user_transfer_token, update_password, update_username } from "../requests/user_requests";
+import { delete_user, get_user_transfer_token, update_password, update_username } from "../requests/user_requests";
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,7 @@ import "./css/setting.css";
 
 const Setting = () => {
 
-    let { setMode, setLoading } = useContext(AppContext);
+    let { setMode, setLoading, setAlert } = useContext(AppContext);
     const [password, setPassword] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -20,6 +20,7 @@ const Setting = () => {
     const error = (error_message) => toast.error(error_message);
     const success = (success_message) => toast.success(success_message);
 
+    // Update the user's username or password
     const submit_update = async () => {
         setLoading(0);
         const access_token = window.localStorage.getItem("access_token");
@@ -74,6 +75,7 @@ const Setting = () => {
         }
     }
 
+    // Get the transfer token for security target transfer
     const get_transfer_token = async () => {
         const access_token = window.localStorage.getItem("access_token");
         const response = await get_user_transfer_token(access_token);
@@ -82,11 +84,23 @@ const Setting = () => {
         }
     }
 
+    const delete_current_user = async () => {
+        const access_token = window.localStorage.getItem("access_token");
+        const response = await delete_user(access_token);
+
+        if (response) {
+            setAlert(3);
+            setMode(0);
+        }
+    }
+
+    // Return to main app page
     const return_main_page = () => {
         setLoading(0);
         setMode(2);
     }
 
+    // Change the settings mode
     useEffect(() => {
         setTransferCode(null);
     }, [updateMode]);
@@ -98,6 +112,7 @@ const Setting = () => {
                 <button className={"updateModeBtn " + (updateMode === 0 ? "light" : "")} onClick={()=>setUpdateMode(0)}><i class="fa-solid fa-gear"></i></button>
                 <button className={"updateModeBtn " + (updateMode === 1 ? "light" : "")} onClick={()=>setUpdateMode(1)}><i class="fa-solid fa-lock"></i></button>
                 <button className={"updateModeBtn " + (updateMode === 2 ? "light" : "")} onClick={()=>setUpdateMode(2)}><i class="fa-solid fa-exchange"></i></button>
+                <button className={"updateModeBtn " + (updateMode === 3 ? "light" : "")} onClick={()=>setUpdateMode(3)}><i class="fa-solid fa-trash"></i></button>
             </div>
             {updateMode === 0 ? (
                 <div className="updateInputContainer">
@@ -111,6 +126,7 @@ const Setting = () => {
                         className="setting_input"
                         placeholder="Leave empty if no update needed."
                     />
+                    <button className="setting_submit_btn" onClick={submit_update}>Submit</button>
                 </div>
             ) : updateMode === 1 ? (
                 <div className="updateInputContainer">
@@ -154,8 +170,9 @@ const Setting = () => {
                         disabled={oldPassword === ''}
                         autoComplete=""
                     />
+                    <button className="setting_submit_btn" onClick={submit_update}>Submit</button>
                 </div>
-            ) : (
+            ) : updateMode === 2 ? (
                 <div className="updateInputContainer">
                     
                     {trnasferCode === null ? 
@@ -167,21 +184,18 @@ const Setting = () => {
                             <b className="transfer_code">{trnasferCode}</b>
                         </>
                     }
-                    <input
-                        type="password"
-                        className={'setting_input'}
-                        style={{opacity: "0", top: "-100px"}}
-                        disabled
-                    />
+                </div>
+            ) : (
+                <div className="updateInputContainer">
+                    <b className="delete_user_warning">Warning: This action cannot be trace back.</b>
+                    <b className="delete_user_warning">The user will be deleted forever!</b>
+
+                    <button className="delete_user" onClick={delete_current_user}><b>Delete User</b></button>
                 </div>
             )}
             
             
             <i className="fa-solid fa-rotate-left return_btn" onClick={return_main_page}></i>
-            {updateMode !== 2 ?
-             <button className="setting_submit_btn" onClick={submit_update}>Submit</button> :
-             <button className="setting_submit_btn" disabled>Submit</button>
-            }
             <ToastContainer theme="colored" className="alert" limit={1} autoClose={2000}/>
         </div>
     )

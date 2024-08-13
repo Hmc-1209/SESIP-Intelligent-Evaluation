@@ -363,3 +363,31 @@ export const transfer_st = async (access_token, st_id, transfer_token) => {
     return false;
   }
 }
+
+
+export const delete_user = async (access_token) => {
+  // Delete the current user
+  //  Param: 
+  //    access_token: The token for doing user actions.
+  //  Return:
+  //    BOOL: Whether the delete success or not.
+
+  try {
+    const response = await axios.delete(`${ip}/user`, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.status === 204) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+}
