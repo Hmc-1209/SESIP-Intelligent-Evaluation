@@ -16,6 +16,27 @@ router = APIRouter(prefix="/eval", tags=["Evaluation"])
 @router.post("/{st_id}", status_code=status.HTTP_201_CREATED)
 async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int,
                                    current_user=Depends(get_current_user)) -> EvaluateST:
+    """
+    Evaluate the specified Security Target (ST) and generate evaluation results.
+
+    Args:
+        st_id (int): The ID of the Security Target to be evaluated.
+        eval_model (str): The evaluation model to use for the evaluation.
+        sesip_level (int): The SESIP level for the evaluation.
+        current_user (CompleteUser): The currently authenticated user.
+
+    Returns:
+        EvaluateST: An instance of `EvaluateST` containing the evaluation results.
+
+    Raises:
+        no_such_st: If the Security Target does not exist.
+        st_not_belongs: If the Security Target does not belong to the current user.
+        eval_has_performed: If the Security Target has already been evaluated.
+        invalid_model: If the provided evaluation model is not valid.
+        invalid_level: If the SESIP level is not valid.
+        bad_request: If updating the Security Target in the database fails.
+    """
+
     # Validation
     st = await get_st_by_id(st_id)
     if not st:
