@@ -301,3 +301,65 @@ export const get_st_report_download = async (access_token, st_id, toe_name) => {
     return false;
   }
 }
+
+
+export const get_user_transfer_token = async (access_token) => {
+  // Get the current user's transfer token for later use
+  //  Param: 
+  //    access_token: The token for doing user actions.
+  //  Return:
+  //    BOOL: Whether the get request success or not.
+  //    response.data: The transfer token.
+
+  try {
+    const response = await axios.post(`${ip}/token/transfer_token`, {}, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.data) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
+
+export const transfer_st = async (access_token, st_id, transfer_token) => {
+  // Get the current user's transfer token for later use
+  //  Param: 
+  //    access_token: The token for doing user actions.
+  //    st_id: The target st that it about to be transferred.
+  //    transfer_token: The access of transfering st.
+  //  Return:
+  //    BOOL: Whether the get transfer success or not.
+  
+  const body = {token: transfer_token};
+  console.log(body)
+
+  try {
+    const response = await axios.patch(`${ip}/st/${st_id}`, body, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + access_token
+      },
+      validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status === 404;
+      },
+    });
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+}

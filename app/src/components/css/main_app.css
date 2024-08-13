@@ -322,9 +322,37 @@
     background-color: #353535;
 }
 
-.footer_btn_group {
+.footer_btn_group,
+.transfer_st_section {
     width: 100%;
     text-align: center;
+    color: #353535;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.transfer_code {
+    font-size: 25px;
+    margin: 5px;
+    width: 200px;
+}
+.transfer_code::placeholder {
+    opacity: .5;
+}
+.transfer_process {
+    color: #353535;
+    font-size: 15px;
+    padding: 7px;
+    background-color: rgba(0,0,0,0);
+    border-radius: 5px;
+    border: 1px solid #353535;
+    transition: all .2s;
+    margin-left: 10px;
+    width: 100px;
+}
+.transfer_process:hover {
+    background-color: #ddddb8;
+    transition: all .2s;
 }
 .save_evaluation_result_btn {
     width: 30%;
