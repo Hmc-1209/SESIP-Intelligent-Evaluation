@@ -32,12 +32,12 @@ def validate_unit_name(unit_name: str, mapping: dict):
     return unit_name in mapping.keys()
 
 
-def get_files(st_id: int, sesip_level: int):
+def get_files(dir_path: str, sesip_level: int):
     """
     Load the report template and evaluation details based on the security target ID and SESIP level.
 
     Args:
-        st_id (int): The security target ID used to locate the evaluation details file.
+        dir_path (str): The directory path of the evaluation details file.
         sesip_level (int): The SESIP level used to locate the report template.
 
     Returns:
@@ -46,7 +46,7 @@ def get_files(st_id: int, sesip_level: int):
     """
 
     template_path = os.path.join(base_path, f"evaluation_report_template_level_{sesip_level}.docx")
-    details_path = os.path.join(base_path, str(st_id), "eval_details.json")
+    details_path = os.path.join(dir_path, "eval_details.json")
 
     report_template = Document(template_path)
     eval_details = json.load(open(details_path, "r"))
@@ -138,12 +138,12 @@ def update_document(report_template: Document, unit_mapping: dict):
         print(f"Could not find: {', '.join(not_found)}")
 
 
-def generate_eval_report(st_id: int, sesip_level: int):
+def generate_eval_report(dir_path: str, sesip_level: int):
     """
     Generate an evaluation report by loading the template, mapping work units, and updating the document.
 
     Args:
-        st_id (int): The security target ID used to locate the evaluation details file.
+        dir_path (str): The directory path of the evaluation details file.
         sesip_level (int): The SESIP level used to select the appropriate report template.
     """
 
@@ -154,4 +154,4 @@ def generate_eval_report(st_id: int, sesip_level: int):
     map_units(work_units, unit_mapping)
 
     update_document(report_template, unit_mapping)
-    report_template.save(os.path.join(base_path, str(st_id), "eval_file.docx"))
+    report_template.save(os.path.join(dir_path, "eval_file.docx"))
