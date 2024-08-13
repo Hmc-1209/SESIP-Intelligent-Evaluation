@@ -4,7 +4,7 @@ import { ColorRing } from 'react-loader-spinner'
 import { AppContext } from "../App";
 import ReactDropdown from "react-dropdown";
 
-import get_user_st, { delete_history_st, get_st_file_content, get_st_info, get_st_report_download, st_evaluate, upload_st } from "../requests/user_requests";
+import get_user_st, { delete_history_st, get_st_file_content, get_st_info, get_st_report_download, st_evaluate, transfer_st, upload_st } from "../requests/user_requests";
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,6 +41,7 @@ const MainApp = () => {
     const [currentEvalModel, setCurrentEvalModel] = useState(model_options[0]);
     const [currentEvalResult, setCurrentEvalResult] = useState(eval_result_status[0]);
     const [evalResultPassFailNums, setEvalResultPassFailNums] = useState([0, 0]);
+    const [transferToken, setTransferToken] = useState("");
 
 
     // Logout initialization function
@@ -216,6 +217,23 @@ const MainApp = () => {
             error("Unknown error happend. Try again later.");
             return;
         }
+    }
+
+    const transfer_st_to_different_user = async () => {
+        const access_token = window.localStorage.getItem("access_token");
+        setLoading(0);
+        const response = await transfer_st(access_token, currentSTID, transferToken);
+        
+        if (response) {
+            success("Transfer success!");
+            clear_current_st();
+            get_st();
+            setLoading(false);
+            return;
+        }
+        error("Unknown error happend. Try again later.");
+        setLoading(false);
+        return;
     }
 
     // Get the user's history security targets
@@ -413,6 +431,14 @@ const MainApp = () => {
             </div>
             
             {/* Footer functional buttons section */}
+            {STFile && 
+                <div className="transfer_st_section">
+                    Transfer Security Target : 
+                    <input type="text" name="transfer_code" id="transfer_code" className="transfer_code" placeholder="aaaaaaaa-bbbb" onChange={e => setTransferToken(e.target.value)}/>
+                    <button className="transfer_process" onClick={transfer_st_to_different_user}>Process</button>
+                </div>
+            }
+            
             <div className="footer_btn_group">
                 {(loading === 1) ? 
                 <button className="save_evaluation_result_btn" disabled>
