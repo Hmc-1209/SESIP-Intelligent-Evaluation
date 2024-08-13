@@ -21,7 +21,7 @@ async def security_targets(current_user=Depends(get_current_user)) -> list[ListS
     Retrieve all security targets belonging to the currently authenticated user.
 
     Args:
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Returns:
         list[ListST]: A list of security targets belonging to the current user.
@@ -36,7 +36,7 @@ async def get_detail_security_target(st_id: int, current_user=Depends(get_curren
 
     Args:
         st_id (int): The ID of the security target to retrieve.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Returns:
         DetailST: Detailed information of the requested security target.
@@ -76,7 +76,7 @@ async def get_security_target_content(st_id: int, current_user=Depends(get_curre
 
     Args:
         st_id (int): The ID of the security target whose file is to be retrieved.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Returns:
         FileResponse: The PDF file of the requested security target.
@@ -110,7 +110,7 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
 
     Args:
         st_id (int): The ID of the security target for which the evaluation file is requested.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Returns:
         FileResponse: The evaluation file in DOCX format.
@@ -149,7 +149,7 @@ async def create_security_target(new_st: UploadFile, current_user=Depends(get_cu
 
     Args:
         new_st (UploadFile): The PDF file of the new security target to upload.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Returns:
         int: The ID of the newly created security target.
@@ -183,7 +183,7 @@ async def update_security_target(st_id: int, update_st: UpdateST, current_user=D
     Args:
         st_id (int): The ID of the security target to update.
         update_st (UpdateST): The token for updated the security target.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Raises:
         no_such_st: If the security target does not exist.
@@ -217,7 +217,7 @@ async def delete_security_target(st_id: int, current_user=Depends(get_current_us
 
     Args:
         st_id (int): The ID of the security target to delete.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Raises:
         no_such_st: If the security target does not exist.

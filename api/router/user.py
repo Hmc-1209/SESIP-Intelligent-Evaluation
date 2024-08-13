@@ -42,7 +42,7 @@ async def update_user_username(user: BaseUser, current_user=Depends(get_current_
 
     Args:
         user (BaseUser): The new username to update.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Raises:
         duplicate_data: If the new username is already taken.
@@ -66,7 +66,7 @@ async def update_user_password(user: UpdateUser, current_user=Depends(get_curren
 
     Args:
         user (UpdateUser): The old and new passwords for the user.
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Raises:
         password_incorrect: If the old password is incorrect.
@@ -89,7 +89,7 @@ async def delete_current_user(current_user=Depends(get_current_user)) -> None:
     If there is an issue with the deletion, a bad_request exception is raised.
 
     Args:
-        current_user (CompleteUser): The current authenticated user.
+        current_user (CompleteUser): The currently authenticated user.
 
     Raises:
         bad_request: If there is an issue with the request or user deletion fails.
