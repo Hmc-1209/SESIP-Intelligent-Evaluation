@@ -10,7 +10,15 @@ from exception import validation_failed, token_expired
 
 
 def generate_access_token(data: dict):
-    """Generate access_token"""
+    """
+    Generate a JWT access token with an expiration time.
+
+    Args:
+        data (dict): The user identification information to include in the token.
+
+    Returns:
+        str: The generated JWT access token.
+    """
 
     data["exp"] = datetime.utcnow() + timedelta(days=int(access_token_expire_days))
     token = jwt.encode(data, access_token_secret_key, algorithm=algorithm)
@@ -19,7 +27,19 @@ def generate_access_token(data: dict):
 
 
 async def get_current_user(token=Depends(oauth2_token_scheme)):
-    """Get the current user's info, also used for authenticate JWT"""
+    """
+    Extract and return the current user from the JWT token.
+
+    Args:
+        token (str): The JWT token extracted from the request's Authorization header.
+
+    Returns:
+        CompleteUser: The user details extracted from the token.
+
+    Raises:
+        validation_failed: If the token is invalid or the user is not found.
+        token_expired: If the token has expired.
+    """
 
     try:
         payload = jwt.decode(
