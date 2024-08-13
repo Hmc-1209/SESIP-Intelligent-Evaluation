@@ -59,8 +59,7 @@ async def create_transfer_token(current_user=Depends(get_current_user)) -> str:
     Generate a new transfer token for the currently authenticated user.
 
     Args:
-        current_user (Depends): Dependency to get the current authenticated user. Provides the user ID used to generate
-        the transfer token.
+        current_user (CompleteUser): Dependency to get the current authenticated user.
 
     Returns:
         str: The generated transfer token.
