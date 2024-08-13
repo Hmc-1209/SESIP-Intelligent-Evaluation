@@ -9,8 +9,19 @@ router = APIRouter(prefix="/token", tags=["Token"])
 
 
 @router.post("/")
-async def create_access_token(form_data: OAuth2PasswordRequestForm = Depends()) -> dict[str, str | bool]:
-    """The endpoint of generating new access_token"""
+async def create_access_token(form_data: OAuth2PasswordRequestForm = Depends()) -> dict[str, str]:
+    """
+    Generate a new access token for the user.
+
+    Args:
+        form_data (OAuth2PasswordRequestForm): The form data containing username and password for authentication.
+
+    Returns:
+        dict[str, str]: A dictionary containing the generated access token.
+
+    Raises:
+        validation_failed: If the username or password is incorrect or token generation fails.
+    """
 
     data = {
         "username": form_data.username,
@@ -27,6 +38,14 @@ async def create_access_token(form_data: OAuth2PasswordRequestForm = Depends()) 
 
 @router.post("/validate_access_token")
 async def validate_the_access_token(token: str) -> CompleteUser:
-    """The endpoint of validate the access_token's availability"""
+    """
+    Validate the provided access token and return the associated user information.
+
+    Args:
+        token (str): The access token to validate.
+
+    Returns:
+        CompleteUser: The user information associated with the valid access token.
+    """
 
     return await validate_access_token(token)
