@@ -1,10 +1,14 @@
+import os
+import shutil
 from fastapi import APIRouter, Depends, status
 
 from schemas import BaseUser, DetailUser, UpdateUser, CompleteUser
 from exception import duplicate_data, bad_request, password_incorrect
 from repository.UserCRUD import get_user_by_name, create_user, update_username, update_password, delete_user
+from repository.STCRUD import get_st_by_user_id
 from authentication.JWTtoken import get_current_user
 from authentication.hashing import verify_password
+from config import base_path
 
 router = APIRouter(prefix="/user", tags=["User"])
 
@@ -95,5 +99,15 @@ async def delete_current_user(current_user=Depends(get_current_user)) -> None:
         bad_request: If there is an issue with the request or user deletion fails.
     """
 
+    st_list = await get_st_by_user_id(current_user.user_id)
+
     if not await delete_user(current_user.user_id):
         raise bad_request
+
+    if not st_list:
+        return
+
+    for st in st_list:
+        dir_path = os.path.join(base_path, str(st.st_id))
+        if os.path.exists(dir_path):
+            shutil.rmtree(dir_path)
