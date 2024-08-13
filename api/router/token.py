@@ -55,4 +55,14 @@ async def validate_the_access_token(token: str) -> CompleteUser:
 
 @router.post("/transfer_token")
 async def create_transfer_token(current_user=Depends(get_current_user)) -> str:
+    """
+    Generate a new transfer token for the currently authenticated user.
+
+    Args:
+        current_user (Depends): Dependency to get the current authenticated user. Provides the user ID used to generate
+        the transfer token.
+
+    Returns:
+        str: The generated transfer token.
+    """
     return generate_transfer_token(current_user.user_id)
