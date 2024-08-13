@@ -4,7 +4,7 @@ from schemas import CompleteUser
 from database import db
 
 
-async def generate_access_token(data: dict) -> str | bool:
+async def generate_access_token(data: dict) -> str:
     stmt = User.select().where(User.c.username == data["username"])
     user = await db.fetch_one(stmt)
 
@@ -14,7 +14,7 @@ async def generate_access_token(data: dict) -> str | bool:
             del data["password"]
             return JWTtoken.generate_access_token(data)
 
-    return False
+    return ""
 
 
 async def validate_access_token(token: str) -> CompleteUser:
