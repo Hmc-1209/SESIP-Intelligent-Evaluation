@@ -45,8 +45,8 @@ class DetailST(ListST):
     eval_model: str | None
 
 
-class UpdateST(BaseST):
-    owner_id: int | None = None
+class UpdateST(BaseModel):
+    token: str
 
 
 class EvaluateST(BaseModel):

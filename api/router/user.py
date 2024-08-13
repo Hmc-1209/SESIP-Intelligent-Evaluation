@@ -2,23 +2,11 @@ from fastapi import APIRouter, Depends, status
 
 from schemas import BaseUser, DetailUser, UpdateUser, CompleteUser
 from exception import duplicate_data, bad_request, password_incorrect
-from repository.UserCRUD import get_users, get_user_by_name, create_user, update_username, update_password, delete_user
+from repository.UserCRUD import get_user_by_name, create_user, update_username, update_password, delete_user
 from authentication.JWTtoken import get_current_user
 from authentication.hashing import verify_password
 
 router = APIRouter(prefix="/user", tags=["User"])
-
-
-@router.get("/")
-async def users(_=Depends(get_current_user)) -> list[BaseUser]:
-    """
-    Retrieve a list of all users (requires authentication).
-
-    Returns:
-        list[BaseUser]: A list of user objects.
-    """
-
-    return await get_users()
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)

@@ -25,9 +25,8 @@ async def create_st(st_name: str, owner_id: int) -> int:
     return await create_with_result(stmt)
 
 
-async def update_st_by_id(st_id: int, new_st: UpdateST) -> bool:
-    stmt = SecurityTarget.update().where(SecurityTarget.c.st_id == st_id).values(st_name=new_st.st_name,
-                                                                                 owner_id=new_st.owner_id)
+async def update_st_by_id(st_id: int, owner_id: int) -> bool:
+    stmt = SecurityTarget.update().where(SecurityTarget.c.st_id == st_id).values(owner_id=owner_id)
     return await execute_stmt_in_tran([stmt])
 
 

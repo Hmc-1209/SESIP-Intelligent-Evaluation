@@ -16,6 +16,9 @@ invalid_model = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
 invalid_level = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                               detail="Invalid level.")
 
+invalid_token = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                              detail="Invalid token.")
+
 eval_has_performed = HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                    detail="Evaluation has been performed.")
 
@@ -37,9 +40,6 @@ password_incorrect = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                    detail="Password incorrect.")
 
 # Not Found (404) Exceptions
-no_such_user = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                             detail="User not found.")
-
 no_such_st = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                            detail="Security Target not found.")
 

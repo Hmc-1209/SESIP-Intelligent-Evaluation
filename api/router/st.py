@@ -1,15 +1,14 @@
-from fastapi import APIRouter, Depends, status, UploadFile
-from fastapi.responses import FileResponse
-
+import json
 import os
 import shutil
 
-import json
+from fastapi import APIRouter, Depends, status, UploadFile
+from fastapi.responses import FileResponse
 
 from authentication.JWTtoken import get_current_user
-from exception import bad_request, no_such_user, no_such_st, no_such_file, st_not_belongs, eval_not_performed
+from exception import *
 from repository.STCRUD import *
-from repository.UserCRUD import get_user_by_id
+from utils.transfer_token_process import validate_token, invalidate_token
 from schemas import ListST, DetailST, UpdateST
 from config import base_path
 
@@ -24,6 +23,7 @@ async def security_targets(current_user=Depends(get_current_user)) -> list[ListS
 @router.get("/{st_id}")
 async def get_detail_security_target(st_id: int, current_user=Depends(get_current_user)) -> DetailST:
     st = await get_st_by_id(st_id)
+
     if not st:
         raise no_such_st
 
@@ -105,23 +105,23 @@ async def create_security_target(new_st: UploadFile, current_user=Depends(get_cu
 
 
 @router.patch("/{st_id}")
-async def update_security_target(st_id: int, new_st: UpdateST, current_user=Depends(get_current_user)) -> None:
+async def update_security_target(st_id: int, update_st: UpdateST, current_user=Depends(get_current_user)) -> None:
     st = await get_st_by_id(st_id)
+    owner_id = validate_token(update_st.token)
+
     if not st:
         raise no_such_st
 
     if not current_user.user_id == st.owner_id:
         raise st_not_belongs
 
-    update_data = new_st.model_dump(exclude_unset=True, exclude_none=True)
+    if not owner_id:
+        raise invalid_token
 
-    if update_data.get("owner_id") and not await get_user_by_id(update_data["owner_id"]):
-        raise no_such_user
-
-    update = UpdateST.model_validate(st).model_copy(update=update_data)
-
-    if not await update_st_by_id(st_id, update):
+    if not await update_st_by_id(st_id, owner_id):
         raise bad_request
+
+    invalidate_token(update_st.token)
 
 
 @router.delete("/{st_id}", status_code=status.HTTP_204_NO_CONTENT)

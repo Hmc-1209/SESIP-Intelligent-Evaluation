@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from repository.TokenCRUD import generate_access_token, validate_access_token
+from authentication.JWTtoken import get_current_user
+from utils.transfer_token_process import generate_transfer_token
 from exception import validation_failed
 from schemas import CompleteUser
 
@@ -49,3 +51,8 @@ async def validate_the_access_token(token: str) -> CompleteUser:
     """
 
     return await validate_access_token(token)
+
+
+@router.post("/transfer_token")
+async def create_transfer_token(current_user=Depends(get_current_user)) -> str:
+    return generate_transfer_token(current_user.user_id)

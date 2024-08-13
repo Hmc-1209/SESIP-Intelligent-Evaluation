@@ -5,16 +5,6 @@ from schemas import BaseUser, DetailUser, UpdateUser
 from authentication.hashing import hash_password
 
 
-async def get_users() -> list[BaseUser]:
-    stmt = User.select()
-    return await db.fetch_all(stmt)
-
-
-async def get_user_by_id(user_id: int) -> BaseUser:
-    stmt = User.select().where(User.c.user_id == user_id)
-    return await db.fetch_one(stmt)
-
-
 async def get_user_by_name(username: str) -> BaseUser:
     stmt = User.select().where(User.c.username == username)
     return await db.fetch_one(stmt)
