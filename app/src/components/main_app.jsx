@@ -13,6 +13,7 @@ import "./css/main_app.css";
 
 import CryptoJS from "crypto-js";
 import config from './config.json';
+import rules from "../plain_text_data/SESIP-work_units.json";
 
 const MainApp = () => {
 
@@ -20,6 +21,7 @@ const MainApp = () => {
     const model_options = config.available_models;
     const sesip_levels = config.available_sesip_levels;
     const eval_result_status = ['Pending', 'Pass', 'Fail'];
+    const work_unit_ruls = rules;
     const success = (success_message) => toast.success(success_message);
     const error = (error_message) => toast.error(error_message);
 
@@ -426,6 +428,12 @@ const MainApp = () => {
                     {selectedResult ?
                     <div className="work_unit_description">
                         {selectedResult.Work_Unit_Description}
+                        <div className="work_unit_rule">
+                            <i>
+                                Work unit rule:<br />
+                                {rules[selectedResult.Work_Unit_Name] ? rules[selectedResult.Work_Unit_Name] : "No matching rule found"}
+                            </i>
+                        </div>
                     </div> : "Select result for more information."}
                 </div>
             </div>
