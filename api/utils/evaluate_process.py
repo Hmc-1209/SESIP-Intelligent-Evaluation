@@ -4,7 +4,7 @@ from collections import Counter
 
 from exception import evaluation_failed
 from schemas import EvaluateST
-from utils.file_process import generate_eval_report
+from utils.report_process import generate_eval_report
 
 
 def copy_dict(dictionary, keys) -> dict:
