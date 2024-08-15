@@ -2,8 +2,8 @@ import openai
 import os
 
 from config import base_path, api_key
-from utils.pdf_image_process import get_images_content
-from utils.pdf_text_process import get_text_content
+from LLM.pdf_image_process import get_images_content
+from LLM.pdf_text_process import get_text_content
 
 
 def evaluate(st_id: int, model: str, sesip_lv: int):
