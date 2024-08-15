@@ -2,7 +2,7 @@ Security Target (ST) Evaluation Report (SESIP 1)
 
 1. This evaluation report is only responsible for the information provided by the customer.
 2. This report is only responsible for the information provided by CASQL. If the validity of the results is affected by the information provided by the customer, CASQL does not acknowledge any obligation, responsibility, or legal liability.
-3. If the customer knows that the information has deviating conditions but still requests CASQL to perform the evaluation, CASQL does not acknowledge any obligation, responsibility, or legal liability for the impact of the deviation on the results.
+3. If the customer knows that the information has deviated conditions but still requests CASQL to perform the evaluation, CASQL does not acknowledge any obligation, responsibility, or legal liability for the impact of the deviation on the results.
 4. This report cannot be partially copied without written permission from CASQL.
 
 Evaluation Basis & Documentation
@@ -17,7 +17,7 @@ The following references contained in [CEM] describe the possible verdicts, whic
 
 CEM, Section 8.2.5
 The evaluator assigns verdicts to the requirements of the CC and not to those of the CEM. The most granular CC structure to which a verdict is assigned is the evaluator action element (explicit or implied). A verdict is assigned to an applicable CC evaluator action element as a result of performing the corresponding CEM action and its constituent work units. Finally, an evaluation result is assigned, as described in CC Part 1, Chapter 10, Evaluation results.
-The CEM recognises three mutually exclusive verdict states:
+The CEM recognises three mutually exclusive verdicts states:
 (a)	Conditions for a pass verdict are defined as an evaluator completion of the CC evaluator action element and determination that the requirements for the PP, ST or TOE under evaluation are met. The conditions for passing the element are defined as:
     (1) the constituent work units of the related CEM action, and;
     (2) all evaluation evidence required for performing these work units is coherent, that is it can be fully and completely understood by the evaluator, and
@@ -30,8 +30,8 @@ The overall verdict is pass if and only if all the constituent verdicts are also
 4.1	Evaluation Result Summary
     The submitted object of inspection is assigned the overall verdict pass, which means that all requirements for the evaluation of the individual components are met.
 4.2	Assessments
-Each single element related to the evaluator actions according to [SESIP] and [CC] are dealt with sequentially, taking into consideration the evaluator work units as specified in [CEM]. The assessment of content and presentation of evidence elements is realised in accordance with the requirements listed.
-The evaluation was carried out by informally analysing the manufacturer documents according to the relevant work units described in [CEM]. In parallel to these analyses, there are always checks for inconsistencies within a document and in its relation with other documents. In case of any outstanding explicit requirement elements, the results of such a check will only be given if inconsistencies are detected. In addition, errors found out during the evaluation of the work units are listed, too.
+Each single element related to the evaluator actions according to [SESIP] and [CC] are dealt with sequentially, taking into consideration the evaluator work units as specified in [CEM]. The assessment of content and presentation of evidence elements is realized in accordance with the requirements listed.
+The evaluation was carried out by informally analyzing the manufacturer documents according to the relevant work units described in [CEM]. In parallel to these analyses, there are always checks for inconsistencies within a document and in its relation with other documents. In case of any outstanding explicit requirement elements, the results of such a check will only be given if inconsistencies are detected. In addition, errors found out during the evaluation of the work units are listed, too.
 The results in these sections are listed in bold-faced type.
 4.2.1 ST introduction (ASE_INT.1)
 	The component ASE_INT.1 is assigned the overall verdict pass, which means that all requirements resulting from the relevant evaluator actions are met. 
@@ -41,7 +41,7 @@ Work Units for SESIP 2:
 ADV_FSP.4-1
 The evaluator shall examine the functional specification to determine that the TSF is fully represented.
 Additional information:
-The identification of the TSFI is a necessary prerequisite to all other activities in this sub-activity. The TSF must be identified (done as part of the TOE design (ADV_TDS) work units) in order to identify the TSFI. This activity can be done at a high level to ensure that no large groups of interfaces have been missed (network protocols, hardware interfaces, configuration files), or at a low level as the evaluation of the functional specification proceeds.
+The identification of the TSFI is a necessary prerequisite to all other activities in this sub-activity. The TSF must be identified (done as part of the TOE design (ADV_TDS) work units) to identify the TSFI. This activity can be done at a high level to ensure that no large groups of interfaces have been missed (network protocols, hardware interfaces, configuration files), or at a low level as the evaluation of the functional specification proceeds.
 In making an assessment for this work unit, the evaluator determines that all portions of the TSF are addressed in terms of the interfaces listed in the functional specification. All portions of the TSF should have a corresponding interface description, or if there are no corresponding interfaces for a portion of the TSF, the evaluator determines that that is acceptable.
 
 ADV_FSP.4-2
