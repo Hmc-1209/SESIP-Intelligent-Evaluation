@@ -1,6 +1,6 @@
 Security Target (ST) Evaluation Report (SESIP 1)
 
-A SESIP Level 1 evaluation should contains 31 work units (ASE_INT.1.1~1-11, ASE_OBJ.1-1, ASE_REQ.3-1~3-7, ASE_TSS.1-1~1-2, ALC_FLR.2-1~2-10). Make sure the response contain all the work units. Please make sure they are all in the Work_Units array if it is a SESIP Level 1 evaluation.
+A SESIP Level 1 evaluation should contain 31 work units (ASE_INT.1.1~1-11, ASE_OBJ.1-1, ASE_REQ.3-1~3-7, ASE_TSS.1-1~1-2, ALC_FLR.2-1~2-10). Make sure the response contain all the work units. Please make sure they are all in the Work_Units array if it is a SESIP Level 1 evaluation.
 The sum of the elements in Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status (pass and fail) for SESIP 1 should be 31.
 
 1. This evaluation report is only responsible for the information provided by the customer.
@@ -34,7 +34,7 @@ The overall verdict is pass if and only if all the constituent verdicts are also
     The submitted object of inspection is assigned the overall verdict pass, which means that all requirements for the evaluation of the individual components are met.
 4.2	Assessments
 Each single element related to the evaluator actions according to [SESIP] and [CC] are dealt with sequentially, taking into consideration the evaluator work units as specified in [CEM]. The assessment of content and presentation of evidence elements is realised in accordance with the requirements listed.
-The evaluation was carried out by informally analysing the manufacturer documents according to the relevant work units described in [CEM]. In parallel to these analyses, there are always checks for inconsistencies within a document and in its relation with other docu¬ments. In case of any outstanding explicit requirement elements, the results of such a check will only be given if inconsistencies are detected. In addition, errors found out during the evaluation of the work units are listed, too.
+The evaluation was carried out by informally analysing the manufacturer documents according to the relevant work units described in [CEM]. In parallel to these analyses, there are always checks for inconsistencies within a document and in its relation with other documents. In case of any outstanding explicit requirement elements, the results of such a check will only be given if inconsistencies are detected. In addition, errors found out during the evaluation of the work units are listed, too.
 The results in these sections are listed in bold-faced type.
 4.2.1 ST introduction (ASE_INT.1)
 	The component ASE_INT.1 is assigned the overall verdict pass, which means that all requirements resulting from the relevant evaluator actions are met. 
@@ -44,7 +44,7 @@ Work Units for SESIP 1:
 ASE_INT.1-1
 The evaluator shall check that the ST introduction contains an ST reference, a TOE reference, a TOE overview and a TOE description.
 Additional information:
-Please make sure you list out where the information is provide. For example, instead of "ST reference" you should write "ST introduction (title page)", "TOE reference" you should write "TOE reference (page 1, section 1.2, table 1.2)"...etc.
+Please make sure you list out where the information is provided. For example, instead of "ST reference" you should write "ST introduction (title page)", "TOE reference" you should write "TOE reference (page 1, section 1.2, table 1.2)"...etc.
 
 ASE_INT.1-2
 The evaluator shall examine the ST reference to determine that it uniquely identifies the ST.
@@ -62,9 +62,9 @@ Please make sure you write down the detail information with real data, for examp
 ASE_INT.1-4
 The evaluator shall examine the TOE reference to determine that it is not misleading.
 Additional information:
-If the TOE is related to one or more well-known products, it is allowed to reflect this in the TOE reference. However, this should not be used to mislead consumers and it must be made clear which part of the product has been evaluated.
+If the TOE is related to one or more well-known products, it is allowed to reflect this in the TOE reference. However, this should not be used to mislead consumers, and it must be made clear which part of the product has been evaluated.
 When a TOE needs some required non-TOE hardware/software/firmware to run properly, the TOE reference may include the name of the non-TOE hardware/software/firmware used by the TOE, however it must be made clear that the non-TOE hardware/software/firmware has not been evaluated.
-Please make sure you point out why the TOE reference is misleaing or not. For example, you should write down what the TOE is meant to do (or protect) if it is not misleading.
+Please make sure you point out why the TOE reference is misleading or not. For example, you should write down what the TOE is meant to do (or protect) if it is not misleading.
 
 ASE_INT.1-5
 The evaluator shall examine the TOE overview to determine that it describes the usage and major security features of the TOE.
@@ -73,12 +73,12 @@ The TOE should briefly (i.e. several paragraphs) describe the usage and major se
 The TOE overview may describe security features that provided by the product, and users may expect in that product type, but it must be clear those features that are evaluated and those are not evaluated.
 The TOE overview shall be consistent with information provided in other sections of the Security Target such as the TOE description, the security objectives, the security functional requirements, and the TOE summary specification.
 The evaluator determines that the overview is clear enough for consumers, and sufficient to give them a general understanding of the intended usage and major security features of the TOE.
-Please make sure you list out some of the security features, you can use ... to truncate the sentence, and remember to provied where did you find those evidence (Including which page, which section and at which line).
+Please make sure you list out some of the security features, you can use ... to truncate the sentence, and remember to provided where did you find those evidence (Including which page, which section and at which line).
 
 ASE_INT.1-6
 The evaluator shall check that the TOE overview identifies the TOE type.
-Additional informationz:
-Please list out which type the TOE is, and where did the information can be see.
+Additional information:
+Please list out which type the TOE is, and where did the information can be seen.
 
 ASE_INT.1-7
 The evaluator shall examine the TOE overview to determine that the TOE type is not misleading.
@@ -92,7 +92,7 @@ The evaluator shall examine the TOE overview to determine that it identifies any
 Additional information: 
 While some TOEs are able to run stand-alone, other TOEs (notably software TOEs) need additional hardware, software or firmware to operate. If the TOE does not require any hardware, software or firmware, this work unit is not applicable and therefore considered to be satisfied.
 The evaluator determines that the TOE overview identifies any additional hardware, software and firmware needed by the TOE to operate.
-Please write down where can the infomation be found (at which page, which section and which line)
+Please write down where can the information be found (at which page, which section and which line)
 
 ASE_INT.1-9
 The evaluator shall examine the TOE description to determine that it describes the physical scope of the TOE.
@@ -100,15 +100,15 @@ Additional information:
 The evaluator determines that the TOE description lists the hardware, firmware, software and guidance parts that constitute the TOE and describes them at a level of detail that is sufficient to give the reader a general understanding of those parts.
 As a minimum the TOE description will cover the following elements:
 (a) Each separately delivered part of the TOE, which will be identified by its unique identifier and the current format (binary, wafer, inlay, *.pdf, *.doc, *.chm etc.). 
-(b) The delivery method used by the developer to make available each part to the TOE consumer (Web site download, courier delivery, etc.)
-The evaluator also determines that there is no possible misunderstanding as to whether any hardware, firmware, software or guidance part is part of the TOE or not.
-Please list down the physical scope in the response and where you find the information. If there's any physical part that did not clearly mentioned how it is delivered, this work unit should be mark as fail.
+(b) The delivery method used by the developer to make available each part to the TOE consumer (Website download, courier delivery, etc.)
+The evaluator also determines that there is no possible misunderstanding whether any hardware, firmware, software or guidance part is part of the TOE or not.
+Please list down the physical scope in the response and where you find the information. If there's any physical part that did not clearly mention how it is delivered, this work unit should be mark as fail.
 
 ASE_INT.1-10
 The evaluator shall examine the TOE description to determine that it describes the logical scope of the TOE.
 Additional information: 
 The evaluator determines that the TOE description discusses the logical security features offered by the TOE at a level of detail that is sufficient to give the reader a general understanding of those features.
-The evaluator also determines that there is no possible misunderstanding as to whether any logical security feature is offered by the TOE or not.
+The evaluator also determines that there is no possible misunderstanding whether any logical security feature is offered by the TOE or not.
 However, the evaluator determines that the composed TOE ST clearly discusses which features of the individual components are not within the composed TOE, and therefore not a feature of the composed TOE.
 Please list down the logical scope in the response and where you find the information.
 
@@ -126,13 +126,13 @@ Please write down where the information could be found, with detailed to which l
 ASE_REQ.3-1
 The evaluator shall check that the statement of security requirements describe the SFRs.
 Additional information:
-The evaluator shall check the statement of secutiry requirements mentioned the use SFRs.
+The evaluator shall check the statement of security requirements mentioned the use SFRs.
 Please make sure write down where the information can be found, in which page, which section and which line.
 
 ASE_REQ.3-2
 The evaluator shall check that the statement of security requirements describe the SARs.
 Additional information:
-The evaluator shall check the statement of secutiry requirements mentioned the use SARs and are referenced by SESIP.
+The evaluator shall check the statement of security requirements mentioned the use SARs and are referenced by SESIP.
 Please write down which SAR it is referencing, and noted where the information could be found.
 For example: "The SARs are 'SESIP 1' referenced by SESIP methodology..."(page 3, section 1.4, line 1).
 
@@ -145,12 +145,12 @@ Please list out all the SFRs' name. For example: "The given SFRs: Verification o
 ASE_REQ.3-4
 The evaluator shall check that the SFR “Verification of Platform Identity” are included.
 Additional information:
-Please wrtie down where did the evidence could be found (in which section, page and line).
+Please write down where did the evidence could be found (in which section, page and line).
 
 ASE_REQ.3-5
 The evaluator shall check that the SFR “Secure Update of Platform” are included or under the ALC_FLR.2 it shall be argued why updates are not applicable.
 Additional information:
-Please wrtie down where did the evidence could be found (in which section, page and line). If the TOE cannot be update and has an explanation under ALC_FLR.2, then write down the reason it provide.
+Please write down where did the evidence could be found (in which section, page and line). If the TOE cannot be updated and has an explanation under ALC_FLR.2, then write down the reason it provides.
 
 ASE_REQ.3-6
 The evaluator shall check that the SARs are an exact SESIP assurance level, and no augmentation is allowed.
@@ -160,21 +160,21 @@ Please write down where the information could be found (in which page, which sec
 ASE_REQ.3-7
 The evaluator shall check that if multiple SESIP assurance levels are claimed, it is clear to readers of the ST which SFRs are covered by the SESIP assurance level.
 Additional information:
-If there are multiple SESIP asssurance levels that had been claimed, list out each of them (including where the infomation could be found, the scope of it and which SFRs are covered).
+If there are multiple SESIP assurance levels that had been claimed, list out each of them (including where the information could be found, the scope of it and which SFRs are covered).
 
 ASE_TSS.1-1
 The evaluator shall examine the TOE summary specification to determine that it describes how the TOE meets each SFR.
 Additional information:
 The evaluator determines that the TOE summary specification provides, for each SFR from the statement of security requirements, a description on how that SFR is met.
 The evaluator is reminded that the objective of each description is to provide potential consumers of the TOE with a high-level view of how the developer intends to satisfy each SFR and that the descriptions therefore should not be overly detailed.
-Often several SFRs will be implemented in one context; for instance a password authentication mechanism may implement FIA_UAU.1, FIA_SOS.1 and FIA_UID.1. Therefore usually the TSS will not consist of a long list with texts for each single SFR, but complete groups of SFRs may be covered by one text passage.
+Often several SFRs will be implemented in one context; for instance a password authentication mechanism may implement FIA_UAU.1, FIA_SOS.1 and FIA_UID.1. Therefore, usually the TSS will not consist of a long list with texts for each single SFR, but complete groups of SFRs may be covered by one text passage.
 For a composed TOE, the evaluator also determines that it is clear which component provides each SFR or how the components combine to meet each SFR.
 Please list out each SFR and how they are met by the TOE. For example:"The SFR Verification of Platform Identity were met by placing the identification code on the IoT product".
 
 ASE_TSS.1-2
 The evaluator shall examine the TOE summary specification to determine that it is consistent with the TOE overview and the TOE description.
 Additional information:
-If there is no TOE summary in the ST, but the description of how each SFRs meets by the TOE is consistent with the TOE overview and the TOE desription, it should also be considered as pass work unit.
+If there is no TOE summary in the ST, but the description of how each SFRs meets by the TOE is consistent with the TOE overview and the TOE description, it should also be considered as pass work unit.
 Please list out how it meets the requirement for this work units.
 
 ALC_FLR.2-1
@@ -182,7 +182,7 @@ The evaluator shall examine the flaw remediation procedures documentation to det
 Additional information:
 The procedures describe the actions that are taken by the developer from the time each suspected security flaw is reported to the time that it is resolved. This includes the flaw's entire time frame, from initial detection through ascertaining that the flaw is a security flaw, to resolution of the security flaw.
 If a flaw is discovered not to be security-relevant, there is no need (for the purposes of the Flaw remediation (ALC_FLR) requirements) for the flaw remediation procedures to track it further; only that there be an explanation of why the flaw is not security-relevant.
-Please list out the steps of flaw remediation procedures if possible. Also, write down where the infomation coud be found.
+Please list out the steps of flaw remediation procedures if possible. Also, write down where the information could be found.
 
 ALC_FLR.2-2
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would produce a description of each security flaw in terms of its nature and effects.
@@ -210,8 +210,8 @@ The evaluator shall examine the flaw remediation procedures documentation to det
 Additional information:
 The necessary information about each security flaw consists of its description (not necessarily at the same level of detail as that provided as part of work unit ALC_FLR.2-2), the prescribed corrective action, and any associated guidance on implementing the correction.
 TOE users may be provided with such information, correction, and documentation updates in any of several ways, such as their posting to a website, their being sent to TOE users, or arrangements made for the developer to install the correction. In cases where the means of providing this information requires action to be initiated by the TOE user, the evaluator examines any TOE guidance to ensure that it contains instructions for retrieving the information.
-The only metric for assessing the adequacy of the method used for providing the information, corrections and guidance is that there be a reasonable expectation that TOE users can obtain or receive it. For example, consider the method of dissemination where the requisite data is posted to a website for one month, and the TOE users know that this will happen and when this will happen. This may not be especially reasonable or effective (as, say, a permanent posting to the website), yet it is feasible that the TOE user could obtain the necessary information. On the other hand, if the information were posted to the website for only one hour, yet TOE users had no way ofknowing this or when it would be posted, it is infeasible that they would ever get the necessary information.
-Please list out the evidence why the requirement is statisfied, or write down what you can find with this work unit, providing and where did you find it(at which page, which section and which page).
+The only metric for assessing the adequacy of the method used for providing the information, corrections and guidance is that there be a reasonable expectation that TOE users can obtain or receive it. For example, consider the method of dissemination where the requisite data is posted to a website for one month, and the TOE users know that this will happen and when this will happen. This may not be especially reasonable or effective (as, say, a permanent posting to the website), yet it is feasible that the TOE user could obtain the necessary information. On the other hand, if the information were posted to the website for only one hour, yet TOE users had no way of knowing this or when it would be posted, it is infeasible that they would ever get the necessary information.
+Please list out the evidence why the requirement is satisfied, or write down what you can find with this work unit, providing and where did you find it(at which page, which section and which page).
 
 ALC_FLR.2-6
 The evaluator shall examine the flaw remediation procedures to determine that they describe procedures for the developer to accept reports of security flaws or requests for corrections to such flaws.
@@ -227,12 +227,12 @@ Additional information:
 The flaw remediation procedures cover not only those security flaws discovered and reported by developer personnel, but also those reported by TOE users. The procedures are sufficiently detailed so that they describe how it is ensured that each reported security flaw is corrected. The procedures contain reasonable steps that show progress leading to the eventual, inevitable resolution.
 The procedures describe the process that is taken from the point at which the suspected security flaw is determined to be a security flaw to the point at which it is resolved.
 A communication step in the flaw remediation procedure can help to support the claim that it ensures every reported flaw is corrected, as it facilitates the continuous sharing of information and coordination necessary for identifying, addressing, and fixing the flaw.
-List out the evidence if the flaw remediation procedure could help ensure the work unit. Specify where to find the envidence (whih section, which page and which line).
+List out the evidence if the flaw remediation procedure could help ensure the work unit. Specify where to find the evidence (with section, which page and which line).
 
 ALC_FLR.2-8
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would help to ensure that the TOE users are issued remediation procedures for each security flaw.
 Additional information:
-The procedures describe the process that is taken from the point at which a security flaw is resolved to the point at which the remediation procedures areprovided.
+The procedures describe the process that is taken from the point at which a security flaw is resolved to the point at which the remediation procedures are provided.
 The procedures for delivering corrective actions should be consistent with the security objectives; they need not necessarily be identical to the procedures used for delivering the TOE, as documented to meet ALC_DEL, if included in the assurance requirements. For example, if the hardware portion of a TOE were originally delivered by bonded courier, updates to hardware resulting from flaw remediation would likewise be expected to be distributed by bonded courier. Updates unrelated to flaw remediation would follow the procedures set forth in the documentation meeting the Delivery (ALC_DEL) requirements.
 Please write down how the remediation procedure is delivered, and list out where to find the evidence (in which page, which section and which line).
 
