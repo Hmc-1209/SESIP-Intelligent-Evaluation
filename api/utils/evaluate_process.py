@@ -83,35 +83,14 @@ def parse_eval_result(dir_path: str) -> EvaluateST:
         st_details, eval_details = extract_data(eval_results)
         eval_passed = not eval_details["Work_Units_Evaluation_Result_Passes_Failed_Numbers_Status"][1]
 
+        # Save Evaluation Details file
+        with open(os.path.join(dir_path, 'eval_details.json'), "w", encoding="utf-8") as f:
+            f.write(json.dumps(eval_details))
+
         return EvaluateST(st_details=st_details,
                           eval_details=eval_details,
                           eval_passed=eval_passed,
                           eval_model="")
-
-    except Exception as e:
-        print(f"Error: {e}")
-        raise evaluation_failed
-
-
-def generate_files(dir_path: str, st: EvaluateST) -> None:
-    """
-    Generate files for the evaluation results, including the evaluation details JSON and a DOCX report.
-
-    Args:
-        dir_path (str): The directory path where the files will be saved.
-        st (EvaluateST): An instance of `EvaluateST` containing the evaluation results.
-
-    Raises:
-        evaluation_failed: If an error occurs while parsing the evaluation results.
-    """
-
-    try:
-        # Save Evaluation Details file
-        with open(os.path.join(dir_path, 'eval_details.json'), "w", encoding="utf-8") as f:
-            f.write(json.dumps(st.eval_details))
-
-        # Generate Evaluation Report Docx
-        generate_eval_report(dir_path, st.st_details["SESIP_Level"])
 
     except Exception as e:
         print(f"Error: {e}")

@@ -9,6 +9,7 @@ from authentication.JWTtoken import get_current_user
 from exception import *
 from repository.STCRUD import *
 from utils.transfer_token_process import validate_token, invalidate_token
+from utils.report_process import generate_eval_report
 from schemas import ListST, DetailST, UpdateST
 from config import base_path
 
@@ -133,11 +134,12 @@ async def download_eval_file(st_id: int, current_user=Depends(get_current_user))
     if not st.is_evaluated:
         raise eval_not_performed
 
-    filepath = os.path.join(base_path, str(st.st_id), "eval_file.docx")
+    dir_path = os.path.join(base_path, str(st.st_id))
+    filepath = os.path.join(dir_path, "eval_file.docx")
     filename = f"{st.st_id}-{st.st_details['TOE_Name']} Evaluation Result.docx"
 
     if not os.path.isfile(filepath):
-        raise no_such_file
+        generate_eval_report(dir_path, st.st_details["SESIP_Level"])
 
     return FileResponse(filepath, media_type='application/octet-stream', filename=filename)
 

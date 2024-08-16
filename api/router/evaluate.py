@@ -6,7 +6,7 @@ from authentication.JWTtoken import get_current_user
 from exception import *
 from repository.STCRUD import *
 from LLM.evaluation import evaluate
-from utils.evaluate_process import parse_eval_result, generate_files
+from utils.evaluate_process import parse_eval_result
 from schemas import EvaluateST
 from config import base_path
 
@@ -62,8 +62,6 @@ async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int
 
     update_st.st_details["SESIP_Level"] = sesip_level
     update_st.eval_model = eval_model
-
-    generate_files(dir_path, update_st)
 
     # Update the data in db
     if not await update_st_after_eval(st_id, update_st):
