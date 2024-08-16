@@ -1,0 +1,16 @@
+{
+    "ASE_INT.1_&_ASE_OBJ.1": [
+        "ASE_INT.1-1", "ASE_INT.1-2", "ASE_INT.1-3", "ASE_INT.1-4", "ASE_INT.1-5", "ASE_INT.1-6", "ASE_INT.1-7",
+        "ASE_INT.1-8", "ASE_INT.1-9", "ASE_INT.1-10", "ASE_INT.1-11", "ASE_OBJ.1-1"
+    ],
+    "ASE_REQ.3": [
+        "ASE_REQ.3-1", "ASE_REQ.3-2", "ASE_REQ.3-3", "ASE_REQ.3-4", "ASE_REQ.3-5", "ASE_REQ.3-6", "ASE_REQ.3-7"
+    ],
+    "ASE_TSS.1": [
+        "ASE_TSS.1-1", "ASE_TSS.1-2"
+    ],
+    "ALC_FLR.2": [
+        "ALC_FLR.2-1", "ALC_FLR.2-2", "ALC_FLR.2-3", "ALC_FLR.2-4", "ALC_FLR.2-5", "ALC_FLR.2-6", "ALC_FLR.2-7",
+        "ALC_FLR.2-8", "ALC_FLR.2-9", "ALC_FLR.2-10"
+    ]
+}

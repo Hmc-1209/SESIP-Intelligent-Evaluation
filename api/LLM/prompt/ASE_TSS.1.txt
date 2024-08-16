@@ -1,0 +1,15 @@
+
+ASE_TSS.1-1
+The evaluator shall examine the TOE summary specification to determine that it describes how the TOE meets each SFR.
+Additional information:
+The evaluator determines that the TOE summary specification provides, for each SFR from the statement of security requirements, a description on how that SFR is met.
+The evaluator is reminded that the objective of each description is to provide potential consumers of the TOE with a high-level view of how the developer intends to satisfy each SFR and that the descriptions therefore should not be overly detailed.
+Often several SFRs will be implemented in one context; for instance, a password authentication mechanism may implement FIA_UAU.1, FIA_SOS.1 and FIA_UID.1. Therefore, usually the TSS will not consist of a long list of texts for each single SFR, but complete groups of SFRs may be covered by one text passage.
+For a composed TOE, the evaluator also determines that it is clear which component provides each SFR or how the components combine to meet each SFR.
+Please list out each SFR and how they are met by the TOE. For example, "The SFR Verification of Platform Identity is met by placing the identification code on the IoT product."
+
+ASE_TSS.1-2
+The evaluator shall examine the TOE summary specification to determine that it is consistent with the TOE overview and the TOE description.
+Additional information:
+If there is no TOE summary in the ST, but the description of how all SFRs meet by the TOE is consistent with the TOE overview and the TOE description, it should also be considered as pass work unit.
+Please list out how it meets the requirement for these work units.

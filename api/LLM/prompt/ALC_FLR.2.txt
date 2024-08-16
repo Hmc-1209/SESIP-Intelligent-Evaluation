@@ -1,0 +1,232 @@
+ALC_FLR.2-1
+The evaluator shall examine the flaw remediation procedures documentation to determine that it describes the procedures used to track all reported security flaws in each release of the TOE.
+Additional information:
+The procedures describe the actions that are taken by the developer from the time each suspected security flaw is reported to the time that it is resolved. This includes the flaw's entire time frame, from initial detection through figuring out that the flaw is a security flaw, to resolution of the security flaw.
+If a flaw is discovered not to be security-relevant, there is no need (for the Flaw remediation (ALC_FLR) requirements) for the flaw remediation procedures to track it further; only that there be an explanation of why the flaw is not security-relevant.
+Please list out the steps of flaw remediation procedures if possible. Also, write down where the information could be found.
+
+ALC_FLR.2-2
+The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would produce a description of each security flaw in terms of its nature and effects.
+Additional information:
+The procedures identify the actions that are taken by the developer to describe the nature and effects of each security flaw in sufficient detail to be able to reproduce it. The description of the nature of a security flaw addresses whether it is an error in the documentation, a flaw in the design of the TSF, a flaw in the implementation of the TSF, etc. The description of the security flaw's effects identifies the portions of the TSF that are affected and how those portions are affected. For example, a security flaw in the implementation might be found that affects the identification and authentication enforced by the TSF by permitting authentication with the password “BACKDOOR”
+Please point out how the procedure ensures the developer to produce a description of each security flaw.
+The work unit should describe that after the application of the flaw remediation procedure, the developer team is able to generate a description mentioning the nature and effect of the security flaw. 
+
+ALC_FLR.2-3
+The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would identify the status of finding a correction to each security flaw.
+Additional information:
+The flaw remediation procedures identify the different stages of security flaws. This differentiation includes at least: suspected security flaws that have been reported, suspected security flaws that have been confirmed to be security flaws, and security flaws whose solutions have been implemented. It is permissible that additional stages (e.g., flaws that have been reported but not yet investigated, flaws that are under investigation, security flaws for which a solution has been found but not yet implemented) be included.
+Please write down the evidence that the applying of flaw remediation procedures could identify the different stage of security flaw.
+
+ALC_FLR.2-4
+The evaluator shall check the flaw remediation procedures to determine that the application of these procedures would identify the corrective action for each security flaw.
+Additional information:
+Corrective action may consist of a repair to the hardware, firmware, or software portions of the TOE, a modification of TOE guidance, or both. Corrective action that constitutes modifications to TOE guidance (e.g. details of procedural measures to be taken to obviate the security flaw) includes both those measures serving as only an interim solution (until the repair is issued) as well as those serving as a permanent solution (where it is determined that the procedural measure is the best solution).
+If the source of the security flaw is a documentation error, the corrective action consists of an update of the affected TOE guidance. If the corrective action is a procedural measure, this measure will include an update made to the affected TOE guidance to reflect these corrective procedures.
+Please write down how the procedure makes sure the corrective of each security flaw if possible, list out the description of it and where to find it.
+For example, "Step 5: Continues following the flaw remediation process and make sure it did not affect other functioning parts. (section ???, line 10)".
+
+ALC_FLR.2-5
+The evaluator shall examine the flaw remediation procedures documentation to determine that it describes a means of providing the TOE users with the necessary information on each security flaw.
+Additional information:
+The necessary information about each security flaw consists of its description (not necessarily at the same level of detail as that provided as part of work unit ALC_FLR.2-2), the prescribed corrective action, and any associated guidance on implementing the correction.
+TOE users may be provided with such information, correction, and documentation updates in any of several ways, such as their posting to a website, their being sent to TOE users, or arrangements made for the developer to install the correction. In cases where the means of providing this information requires action to be initiated by the TOE user, the evaluator examines any TOE guidance to ensure that it contains instructions for retrieving the information.
+The only metric for assessing the adequacy of the method used for providing the information, corrections and guidance is that there be a reasonable expectation that TOE users can obtain or receive it. For example, consider the method of dissemination where the requisite data is posted to a website for one month, and the TOE users know that this will happen and when this will happen. This may not be especially reasonable or effective (as, say, a permanent posting to the website), yet it is feasible that the TOE user could obtain the necessary information. On the other hand, if the information was posted to the website for only one hour, yet TOE users had no way of knowing this or when it would be posted, it is infeasible that they would ever get the necessary information.
+Please list out the evidence why the requirement is satisfied, or write down what you can find with this work unit, providing and where did you find it (at which section and which line).
+
+ALC_FLR.2-6
+The evaluator shall examine the flaw remediation procedures to determine that they describe procedures for the developer to accept reports of security flaws or requests for corrections to such flaws.
+Additional information:
+The procedures ensure that TOE users have a means by which they can communicate with the TOE developer. By having a means of contact with the developer, the user can report security flaws, enquire about the status of security flaws, or request corrections to flaws. This means of contact may be part of a more general contact facility for reporting non-security related problems.
+The use of these procedures is not restricted to TOE users; however, only the TOE users are actively supplied with the details of these procedures. Others who might have access to or familiarity with the TOE can use the same procedures to submit reports to the developer, who is then expected to process them. Any means of submitting reports to the developer, other than those identified by the developer, are beyond the scope of this work unit; reports generated by other means need not be addressed.
+It is allowed that the developer team provides mail for flaw reporting, as not all the company can build a team for flaw reporting.
+Please provide detailed information and where the evidence can be found. (which section and which line)
+
+ALC_FLR.2-7
+The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would help to ensure every reported flaw is corrected.
+Additional information:
+The flaw remediation procedures cover not only those security flaws discovered and reported by developer personnel, but also those reported by TOE users. The procedures are sufficiently detailed so that they describe how it is ensured that each reported security flaw is corrected. The procedures contain reasonable steps that show progress leading to the eventual, inevitable resolution.
+The procedures describe the process that is taken from the point at which the suspected security flaw is determined to be a security flaw to the point at which it is resolved.
+A communication step in the flaw remediation procedure can help to support the claim that it ensures every reported flaw is corrected, as it facilitates the continuous sharing of information and coordination necessary for identifying, addressing, and fixing the flaw.
+List out the evidence if the flaw remediation procedure could help ensure the work unit. Specify where to find the evidence (with section and which line).
+
+ALC_FLR.2-8
+The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would help to ensure that the TOE users are issued remediation procedures for each security flaw.
+Additional information:
+The procedures describe the process that is taken from the point at which a security flaw is resolved to the point at which the remediation procedures are provided.
+The procedures for delivering corrective actions should be consistent with the security objectives; they need not necessarily be identical to the procedures used for delivering the TOE, as documented to meet ALC_DEL, if included in the assurance requirements. For example, if the hardware portion of a TOE was originally delivered by bonded courier, updates to hardware resulting from flaw remediation would likewise be expected to be distributed by bonded courier. Updates unrelated to flaw remediation would follow the procedures set forth in the documentation meeting the Delivery (ALC_DEL) requirements.
+Please write down how the remediation procedure is delivered, and list out where to find the evidence (in which section and which line).
+
+ALC_FLR.2-9
+The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would result in safeguards that the potential correction contains no adverse effects.
+Additional information:
+Through analysis, testing, or a combination of the two, the developer may reduce the likelihood that adverse effects will be introduced when a security flaw is corrected. The evaluator assesses whether the procedures provide detail in how the necessary mix of analysis and testing actions is to be determined for a given correction.
+The evaluator also determines that, for instances where the source of the security flaw is a documentation problem, the procedures include the means of safeguarding against the introduction of contradictions with other documentation.
+Please make sure that the remediation procedure brings no negative effect to the TOE, and write down the evidence and where to find them.
+
+ALC_FLR.2-10
+The evaluator shall examine the flaw remediation guidance to determine that the application of these procedures would result in a means for the TOE user to provide reports of suspected security flaws or requests for corrections to such flaws.
+Additional information:
+The guidance ensures that TOE users have a means by which they can communicate with the TOE developer. By having a means of contact with the developer, the user can report security flaws, enquire about the status of security flaws, or request corrections to flaws.
+Write down where the evidence could be found, in which section and which line.
+For example, "Step 1: Flaw report, the user can report potential security flaw to the following mail address...".
+
+
+Work_Units: [
+                {
+                    Work_Unit_Name: "ASE_INT.1-1",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-2",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-3",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-4",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-5",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-6",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-7",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-8",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-9",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-10",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_INT.1-11",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_OBJ.1-1",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_REQ.3-1",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_REQ.3-2",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_REQ.3-3",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_REQ.3-4",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                }
+                {
+                    Work_Unit_Name: "ASE_REQ.3-5",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_REQ.3-6",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_REQ.3-7",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_TSS.1-1",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ASE_TSS.1-2",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-1",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-2",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-3",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-4",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-5",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-6",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-7",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-8",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-9",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                },
+                {
+                    Work_Unit_Name: "ALC_FLR.2-10",
+                    Work_Unit_Description: "",
+                    Work_Unit_Evaluation_Result_Status: ""
+                }
+                ...
+            ]
