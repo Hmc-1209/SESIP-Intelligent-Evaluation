@@ -4,17 +4,14 @@ import json
 sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
 
 sesip_evaluation_report_1_and_2 = open(f"../api/LLM/prompt/SESIP_Evaluation_Report_Level_1_&_2.txt", 'r',
-                                 encoding='utf-8').read()
-ase_int_and_ase_obj = open(f"../api/LLM/prompt/ASE_INT.1_&_ASE_OBJ.1.txt", 'r',
-                                 encoding='utf-8').read()
-ase_req = open(f"../api/LLM/prompt/ASE_REQ.3.txt", 'r',
-                                 encoding='utf-8').read()
-ase_tss = open(f"../api/LLM/prompt/ASE_TSS.1.txt", 'r',
-                                 encoding='utf-8').read()
-alc_flr = open(f"../api/LLM/prompt/ALC_FLR.2.txt", 'r',
-                                 encoding='utf-8').read()
-work_units = open("../api/LLM/prompt/Work_Units_Lv1_and_2.json", 'r',
-                                 encoding='utf-8').read()
+                                       encoding='utf-8').read()
+
+ase_int_and_ase_obj = open(f"../api/LLM/prompt/ASE_INT.1_&_ASE_OBJ.1.txt", 'r', encoding='utf-8').read()
+ase_req = open(f"../api/LLM/prompt/ASE_REQ.3.txt", 'r', encoding='utf-8').read()
+ase_tss = open(f"../api/LLM/prompt/ASE_TSS.1.txt", 'r', encoding='utf-8').read()
+alc_flr = open(f"../api/LLM/prompt/ALC_FLR.2.txt", 'r', encoding='utf-8').read()
+work_units = json.load(open("../api/LLM/prompt/Work_Units_Lv1_and_2.json", 'r', encoding='utf-8'))
+
 
 def pdf_to_text(pdf_path: str):
     text = ""
@@ -58,7 +55,7 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
     work_units_list = [
         {unit: ""} for key in ["ASE_INT.1_&_ASE_OBJ.1", "ASE_REQ.3", "ASE_TSS.1", "ALC_FLR.2"]
         for unit in work_units[key]
-    ]   
+    ]
 
     return api_text_structure(f'''
         I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
@@ -68,11 +65,11 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
 
         The following document is the SESIP level{sesip_lv} evaluation report.
         ------SESIP Evaluation Report starts------
-        ''' + sesip_evaluation_report_1_and_2 
-            + ase_int_and_ase_obj
-            + ase_req
-            + ase_tss
-            + alc_flr + '''
+        ''' + sesip_evaluation_report_1_and_2
+                              + ase_int_and_ase_obj
+                              + ase_req
+                              + ase_tss
+                              + alc_flr + '''
         ------SESIP Evaluation Report ends------
 
         The following document is the targeting Security Target.
@@ -139,6 +136,7 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
 
     # Work units' content
     work_units_rules = [ase_int_and_ase_obj, ase_req, ase_tss, alc_flr]
+    work_units_result = []
 
     # Work units' name
     match work_unit_group:
@@ -149,7 +147,7 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
                     "Work_Unit_Description": "",
                     "Work_Unit_Evaluation_Result_Status": ""
                 } for unit in work_units["ASE_INT.1_&_ASE_OBJ.1"]
-            ] 
+            ]
         case 2:
             work_units_result = [
                 {
@@ -157,7 +155,7 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
                     "Work_Unit_Description": "",
                     "Work_Unit_Evaluation_Result_Status": ""
                 } for unit in work_units["ASE_REQ.3"]
-            ] 
+            ]
         case 3:
             work_units_result = [
                 {
@@ -165,7 +163,7 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
                     "Work_Unit_Description": "",
                     "Work_Unit_Evaluation_Result_Status": ""
                 } for unit in work_units["ASE_TSS.1"]
-            ] 
+            ]
         case 4:
             work_units_result = [
                 {
@@ -173,9 +171,8 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
                     "Work_Unit_Description": "",
                     "Work_Unit_Evaluation_Result_Status": ""
                 } for unit in work_units["ALC_FLR.2"]
-            ] 
-        
-        
+            ]
+
     return api_text_structure('''
         I will give you three files' content, I need you to help me evaluate the targeting Security Target.
         The first one will be the SESIP methodology.
@@ -236,4 +233,5 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
         
         Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it. 
         Check that every strings should be wrapped in double quotation mark.
-        ''')
+        '''
+    )
