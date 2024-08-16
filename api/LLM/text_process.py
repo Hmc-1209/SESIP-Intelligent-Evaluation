@@ -52,10 +52,10 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
 
     st = pdf_to_text(pdf_path)
 
-    work_units_list = [
-        {unit: ""} for key in ["ASE_INT.1_&_ASE_OBJ.1", "ASE_REQ.3", "ASE_TSS.1", "ALC_FLR.2"]
+    work_units_dict = {
+        unit: "" for key in ["ASE_INT.1_&_ASE_OBJ.1", "ASE_REQ.3", "ASE_TSS.1", "ALC_FLR.2"]
         for unit in work_units[key]
-    ]
+    }
 
     return api_text_structure(f'''
         I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
@@ -83,7 +83,9 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
         {{
             TOE_Name: "",
             Developer_Organization: "",
-            Work_Units_Information_Position: {work_units_list}
+            Work_Units_Information_Position: {{
+                {', '.join(f"'{key}': ''" for key in work_units_dict)}
+            }}
         }}
         ------Response format ends------            
                   
