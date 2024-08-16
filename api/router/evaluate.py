@@ -15,7 +15,7 @@ router = APIRouter(prefix="/eval", tags=["Evaluation"])
 
 @router.post("/{st_id}", status_code=status.HTTP_201_CREATED)
 async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int,
-                                   current_user=Depends(get_current_user)) -> EvaluateST:
+                                   current_user=Depends(get_current_user)):
     """
     Evaluate the specified Security Target (ST) and generate evaluation results.
 
