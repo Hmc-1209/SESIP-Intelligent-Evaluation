@@ -33,21 +33,25 @@ def api_text_structure(text: str) -> dict:
 
 # Evaluate for ST info and work unit's information position
 def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
-    # The evaluation for ST information and each work unit's information position
-    # Params:
-    #   pdf_path: string; The targeting ST file path.
-    #   sesip_lv: int; The desired SESIP evaluation level.
-    # Return:
-    #   json data with the format s follow:
-    #       {
-    #           TOE_Name: "",
-    #           Developer_Organization: "",
-    #           Work_Units_Information_Position: [
-    #               {"ASE_INT.1-1": ""},
-    #               {"ASE_INT.1-2": ""},
-    #               ...
-    #           ]
-    #       }
+    """
+    The evaluation for ST information and each work unit's information position.
+
+    Args:
+        pdf_path (string): The targeting ST file path.
+        sesip_lv (int): The desired SESIP evaluation level.
+
+    Returns:
+        json data with the format s follow:
+        {
+            "TOE_Name": "",
+            "Developer_Organization": "",
+            "Work_Units_Information_Position": [
+                {"ASE_INT.1-1": ""},
+                {"ASE_INT.1-2": ""},
+                {"...": ""}
+            ]
+        }
+    """
 
     st = pdf_to_text(pdf_path)
 
@@ -57,7 +61,7 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
     ]   
 
     return api_text_structure(f'''
-        I will give you two files' content, I need you to help me provide the information extrcted from the targeting Security Target.
+        I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
         The first one will be the SESIP evaluation report rules.
         The second one will be the targeting security target.
         I want you to understand them and help me get the desired information in the targeting Security Target.
@@ -95,13 +99,13 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
             
             Work_Units_Information_Position: 
                 This is an array with all the work_units that is about to be evaluated. Fill in all the information in each work unit where the relative information could be found (at which Section and which page, better with which line).
-                For ASE_INT.1-1, write down where the ST reference, TOE reference, TOE overview and TOE desctiption could be found (at which section and which page, better also at which line).
+                For ASE_INT.1-1, write down where the ST reference, TOE reference, TOE overview and TOE description could be found (at which section and which page, better also at which line).
                 For ASE_INT.1-2, write down where the ST reference could be found (at which section and which page, better also at which line).
                 For ASE_INT.1-3, write down where the TOE reference could be found (at which section and which page, better also at with which line).
                 ...etc.
 
-        Please make sure every objects in Work_Units_Informaton_Position is not empty.
-        If the disired information could not be found, write down "The desired information could not be found in the ST".
+        Please make sure every objects in Work_Units_Information_Position is not empty.
+        If the desired information could not be found, write down "The desired information could not be found in the ST".
         
         Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it. 
         Check that every strings should be wrapped in double quotation mark.
@@ -110,23 +114,26 @@ def get_evaluation_info(pdf_path: str, sesip_lv: int) -> dict[str, str]:
 
 # Evaluate for work units evidence
 def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, information_position: dict) -> dict[str, str]:
-    # The evaluation for specific work units group
-    # Params:
-    #   pdf_path: string; The targeting ST file path.
-    #   sesip_lv: int; The desired SESIP evaluation level.
-    #   work_unit_group: int; The work unit group (to know which group of work units it is going to evaluate).
-    #   information_position: dict; The position of each work units' critical infomation located at, for example, 
-    #                               "ST reference can be found at title page, TOE reference can be found at...".
-    #                               It is a dict what each work unit key contins a string value for the position.
-    # Return:
-    #   json data with the format s follow:
-    #       {
-    #           Evaluation_Result: [
-    #               {"Work_Unit_Name": "ALC_FLR.2-1", "Work_Unit_Description": "", "Work_Unit_Evaluation_Result_Status": ""},
-    #               {"Work_Unit_Name": "ALC_FLR.2-2", "Work_Unit_Description": "", "Work_Unit_Evaluation_Result_Status": ""}
-    #               ...
-    #           ]
-    #       }
+    """
+    The evaluation for specific work units group.
+
+    Args:
+        pdf_path (string): The targeting ST file path.
+        sesip_lv (int): The desired SESIP evaluation level.
+        work_unit_group (int): The work unit group (to know which group of work units it is going to evaluate).
+        information_position (dict): The position of each work unit critical information located at, for example,
+                                  "ST reference can be found at title page, TOE reference can be found at...".
+                                  It is a dict that each work unit key contains a string value for the position.
+    Return:
+        json data with the format s follow:
+        {
+            Evaluation_Result: [
+                {"Work_Unit_Name": "ALC_FLR.2-1", "Work_Unit_Description": "", "Work_Unit_Evaluation_Result_Status": ""},
+                {"Work_Unit_Name": "ALC_FLR.2-2", "Work_Unit_Description": "", "Work_Unit_Evaluation_Result_Status": ""},
+                {"...": ""}
+            ]
+        }
+    """
 
     st = pdf_to_text(pdf_path)
 
@@ -183,7 +190,7 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
 
         The following document is the SESIP level{sesip_lv} evaluation report.
         ------SESIP Evaluation Report starts------
-        ''' + sesip_evaluation_report_1_and_2 + work_units_rules[work_unit_group-1] + '''
+        ''' + sesip_evaluation_report_1_and_2 + work_units_rules[work_unit_group - 1] + '''
         ------SESIP Evaluation Report ends------
 
         The following document is the targeting Security Target.
@@ -206,9 +213,9 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
 
         
         *Important notes!!!*
-        If you provide a description of how the work unit were statisfied, also provide where did you find the information, detailed to which page, which seciton and (if possible), which line.
-        If there's any lack of information (no matter it is a outer link, outer reference) as long as it cannot directly shows the sufficient infomation, the work unit should be marked as fail!!!!!
-        Do not reference any documents or knowledges on internet. Just evaluate the target with the information I give you.
+        If you provide a description of how the work unit were satisfied, also provide where did you find the information, detailed to which page, which section and (if possible), which line.
+        If there's any lack of information (no matter it is a outer link, outer reference) as long as it cannot directly shows the sufficient information, the work unit should be marked as fail!!!!!
+        Do not reference any documents or knowledge on internet. Just evaluate the target with the information I give you.
         Outer reference's name contain related information cannot be considered provide the needed information, as it did not show the detail!!!!!
         *Important notes!!!*
 
@@ -220,9 +227,9 @@ def get_text_content(pdf_path: str, sesip_lv: int, work_unit_group: int, informa
                 Precise references to the Security Target (ST) document, including the page number, paragraph, and if possible, the line number where the relevant information(evidence) can be found.
                 If the work unit is partially met, describe which aspects are fulfilled and which are lacking, with corresponding references in the ST.
                 A brief quoted excerpt from the relevant section of the ST document to support the evaluation, using ... to truncated the quoted evidence of the string is more then 30 characters.    
-            Please ensure the explanation is thorough, identifying exact locations in the ST document to support the evaluation. The explanation of why the work unit pass or fail should be detailed. For example why the infomation being found could prove the work unit requirement have been met.
+            Please ensure the explanation is thorough, identifying exact locations in the ST document to support the evaluation. The explanation of why the work unit pass or fail should be detailed. For example why the information being found could prove the work unit requirement have been met.
             At the end of each work unit description, there should be a statement like 'thus, the evaluator confirms it meet all requirements for content and presentation evidence' if the evaluation result is pass, similar to failed, there should also a statement to sum up like so.
-            (ex. The TOE reference point out the TOE name (TOE_NAME), version (Rev. 2.4), identification code (IDENTIFIATION_CODE) and the type (Secure co-processor platform for embedded systems). The TOE reference had provided sufficient detail, the combination of them makes the TOE uniquely identifiable, thus the evaluator confirms that it meets all requirements for content and presentation evidence.)
+            (ex. The TOE reference point out the TOE name (TOE_NAME), version (Rev. 2.4), identification code (IDENTIFICATION_CODE) and the type (Secure co-processor platform for embedded systems). The TOE reference had provided sufficient detail, the combination of them makes the TOE uniquely identifiable, thus the evaluator confirms that it meets all requirements for content and presentation evidence.)
 
             Work_Unit_Evaluation_Result_Status:
             In each of these Work_Units objects, the Work_Unit_Evaluation_Result_Status should contain only a simple string of either 'Pass' or 'Fail' regarding the evaluation result of the corresponding work unit.
