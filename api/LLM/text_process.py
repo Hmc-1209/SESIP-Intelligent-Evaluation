@@ -1,5 +1,6 @@
-import pdfplumber
 import json
+
+import pdfplumber
 
 
 def api_text_structure(text: str) -> dict:
@@ -11,57 +12,60 @@ def api_text_structure(text: str) -> dict:
 
 class Text:
     def __init__(self):
-        self.sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
-        self.sesip_evaluation_report_1_and_2 = open("../api/LLM/prompt/SESIP_Evaluation_Report_Level_1_&_2.txt", 'r',
-                                                    encoding='utf-8').read()
+        self._sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
+        self._sesip_evaluation_report_1_and_2 = open("../api/LLM/prompt/SESIP_Evaluation_Report_Level_1_&_2.txt", 'r',
+                                                     encoding='utf-8').read()
 
-        self.int_and_obj = open(f"../api/LLM/prompt/ASE_INT.1_&_ASE_OBJ.1.txt", 'r', encoding='utf-8').read()
-        self.req = open("../api/LLM/prompt/ASE_REQ.3.txt", 'r', encoding='utf-8').read()
-        self.tss = open("../api/LLM/prompt/ASE_TSS.1.txt", 'r', encoding='utf-8').read()
-        self.flr = open("../api/LLM/prompt/ALC_FLR.2.txt", 'r', encoding='utf-8').read()
-        self.work_units = json.load(open("../api/LLM/prompt/Work_Units_Lv1_and_2.json", 'r', encoding='utf-8'))
-        self.mapping = {0: {"name": "ASE_INT.1_&_ASE_OBJ.1", "rule": self.int_and_obj},
-                        1: {"name": "ASE_REQ.3", "rule": self.req},
-                        2: {"name": "ASE_TSS.1", "rule": self.tss},
-                        3: {"name": "ALC_FLR.2", "rule": self.flr}}
+        self._int_and_obj = open(f"../api/LLM/prompt/ASE_INT.1_&_ASE_OBJ.1.txt", 'r', encoding='utf-8').read()
+        self._req = open("../api/LLM/prompt/ASE_REQ.3.txt", 'r', encoding='utf-8').read()
+        self._tss = open("../api/LLM/prompt/ASE_TSS.1.txt", 'r', encoding='utf-8').read()
+        self._flr = open("../api/LLM/prompt/ALC_FLR.2.txt", 'r', encoding='utf-8').read()
+        self._work_units = json.load(open("../api/LLM/prompt/Work_Units_Lv1_and_2.json", 'r', encoding='utf-8'))
+        self._mapping = {0: {"name": "ASE_INT.1_&_ASE_OBJ.1", "rule": self._int_and_obj},
+                         1: {"name": "ASE_REQ.3", "rule": self._req},
+                         2: {"name": "ASE_TSS.1", "rule": self._tss},
+                         3: {"name": "ALC_FLR.2", "rule": self._flr}}
 
-        self.st_path = ""
-        self.st = ""
-        self.sesip_level = 1
-        self.step = 0
+        self._st = ""
+        self._sesip_level = 1
+        self._step = 0
+        self._prompt = {}
+
+    @property
+    def prompt(self):
+        return self._prompt
 
     def update_st(self, st_path: str, sesip_level: int):
-        self.st_path = st_path
-        self.sesip_level = sesip_level
-        self.pdf_to_text()
-        self.step = 0
+        self._sesip_level = sesip_level
+        self._pdf_to_text(st_path)
+        self._step = 0
 
-    def pdf_to_text(self):
-        with pdfplumber.open(self.st_path) as pdf:
-            self.st = "\n".join([x.extract_text() for x in pdf.pages])
+    def _pdf_to_text(self, st_path: str):
+        with pdfplumber.open(st_path) as pdf:
+            self._st = "\n".join([x.extract_text() for x in pdf.pages])
 
     # Evaluate for ST info and work unit's information position
-    def get_evaluation_info(self) -> dict[str, str]:
-        work_units_dict = {unit: "" for unit_list in self.work_units.values() for unit in unit_list}
+    def get_evaluation_info(self):
+        work_units_dict = {unit: "" for unit_list in self._work_units.values() for unit in unit_list}
 
-        return api_text_structure(f'''
+        self._prompt = api_text_structure(f'''
             I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
             The first one will be the SESIP evaluation report rules.
             The second one will be the targeting security target.
             I want you to understand them and help me get the desired information in the targeting Security Target.
     
-            The following document is the SESIP level{self.sesip_level} evaluation report.
+            The following document is the SESIP level{self._sesip_level} evaluation report.
             ------SESIP Evaluation Report starts------
-            ''' + self.sesip_evaluation_report_1_and_2
-                                  + self.int_and_obj
-                                  + self.req
-                                  + self.tss
-                                  + self.flr + '''
+            ''' + self._sesip_evaluation_report_1_and_2
+                                          + self._int_and_obj
+                                          + self._req
+                                          + self._tss
+                                          + self._flr + '''
             ------SESIP Evaluation Report ends------
     
             The following document is the targeting Security Target.
             ------Targeting Security Target starts------
-            ''' + self.st + f'''
+            ''' + self._st + f'''
             ------Targeting Security Target ends------
     
             In the first file, you will get many "work units".
@@ -96,18 +100,16 @@ class Text:
         ''')
 
     # Evaluate for work units evidence
-    def get_text_content(self, information_position: dict) -> dict[str, str]:
+    def get_text_content(self, information_position: dict):
         work_units_result = [
             {
                 "Work_Unit_Name": unit,
                 "Work_Unit_Description": "",
                 "Work_Unit_Evaluation_Result_Status": ""
-            } for unit in self.work_units[self.mapping[self.step]["name"]]
+            } for unit in self._work_units[self._mapping[self._step]["name"]]
         ]
 
-        self.step += 1
-
-        return api_text_structure('''
+        self._prompt = api_text_structure('''
             I will give you three files' content, I need you to help me evaluate the targeting Security Target.
             The first one will be the SESIP methodology.
             The second one will be the SESIP evaluation report rules.
@@ -116,17 +118,17 @@ class Text:
     
             The following document is the SESIP methodology.
             ------SESIP Methodology starts------
-            ''' + self.sesip_methodology + f'''
+            ''' + self._sesip_methodology + f'''
             ------SESIP Methodology ends------
     
-            The following document is the SESIP level{self.sesip_level} evaluation report.
+            The following document is the SESIP level{self._sesip_level} evaluation report.
             ------SESIP Evaluation Report starts------
-            ''' + self.sesip_evaluation_report_1_and_2 + self.mapping[self.step]["rule"] + '''
+            ''' + self._sesip_evaluation_report_1_and_2 + self._mapping[self._step]["rule"] + '''
             ------SESIP Evaluation Report ends------
     
             The following document is the targeting Security Target.
             ------Targeting Security Target starts------
-            ''' + self.st + f'''
+            ''' + self._st + f'''
             ------Targeting Security Target ends------
     
             If you meet some texts like "From SESIP 1" or "As per ...", replace it with corresponding text. Do not just skip it.
@@ -168,3 +170,5 @@ class Text:
             Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it. 
             Check that every strings should be wrapped in double quotation mark.
         ''')
+
+        self._step += 1

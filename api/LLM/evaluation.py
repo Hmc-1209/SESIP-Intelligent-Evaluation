@@ -11,13 +11,13 @@ eval_result = {"Work_Units": []}
 information_position = {}
 
 
-def call_openai_api(model: str, prompt: dict, images: list[dict]) -> str:
+def call_openai_api(model: str, images: list[dict]) -> str:
     openai.api_key = api_key
     try:
         response = openai.chat.completions.create(
             model=model,
             messages=[
-                {"role": "user", "content": [prompt] + images}
+                {"role": "user", "content": [text.prompt] + images}
             ]
         )
         print("Evaluation complete!")
@@ -29,9 +29,9 @@ def call_openai_api(model: str, prompt: dict, images: list[dict]) -> str:
 
 
 def get_position(pdf_path: str, model: str):
-    prompt = text.get_evaluation_info()
+    text.get_evaluation_info()
     images = get_images_content(pdf_path)
-    response = json.loads(call_openai_api(model, prompt, images))
+    response = json.loads(call_openai_api(model, images))
 
     information_position.update(response["Work_Units_Information_Position"])
 
@@ -43,9 +43,9 @@ def get_position(pdf_path: str, model: str):
 def evaluate_int_and_obj(pdf_path: str, model: str):
     filtered = dict(filter(lambda x: "INT" in x[0] or "OBJ" in x[0], information_position.items()))
 
-    prompt = text.get_text_content(filtered)
+    text.get_text_content(filtered)
     images = get_images_content(pdf_path)
-    response = json.loads(call_openai_api(model, prompt, images))
+    response = json.loads(call_openai_api(model, images))
 
     eval_result["Work_Units"] += response["Evaluation_Result"]
 
@@ -53,9 +53,9 @@ def evaluate_int_and_obj(pdf_path: str, model: str):
 def evaluate_req(pdf_path: str, model: str):
     filtered = dict(filter(lambda x: "REQ" in x[0], information_position.items()))
 
-    prompt = text.get_text_content(filtered)
+    text.get_text_content(filtered)
     images = get_images_content(pdf_path)
-    response = json.loads(call_openai_api(model, prompt, images))
+    response = json.loads(call_openai_api(model, images))
 
     eval_result["Work_Units"] += response["Evaluation_Result"]
 
@@ -63,9 +63,9 @@ def evaluate_req(pdf_path: str, model: str):
 def evaluate_tss(pdf_path: str, model: str):
     filtered = dict(filter(lambda x: "TSS" in x[0], information_position.items()))
 
-    prompt = text.get_text_content(filtered)
+    text.get_text_content(filtered)
     images = get_images_content(pdf_path)
-    response = json.loads(call_openai_api(model, prompt, images))
+    response = json.loads(call_openai_api(model, images))
 
     eval_result["Work_Units"] += response["Evaluation_Result"]
 
@@ -73,9 +73,9 @@ def evaluate_tss(pdf_path: str, model: str):
 def evaluate_flr(pdf_path: str, model: str):
     filtered = dict(filter(lambda x: "FLR" in x[0], information_position.items()))
 
-    prompt = text.get_text_content(filtered)
+    text.get_text_content(filtered)
     images = get_images_content(pdf_path)
-    response = json.loads(call_openai_api(model, prompt, images))
+    response = json.loads(call_openai_api(model, images))
 
     eval_result["Work_Units"] += response["Evaluation_Result"]
 
