@@ -1,26 +1,8 @@
+import base64
+import io
+
 import fitz
 from PIL import Image
-import io
-import base64
-
-
-def extract_pdf_images(pdf_file: fitz.Document) -> list[tuple]:
-    images = []
-    for page_number in range(len(pdf_file)):
-        page = pdf_file[page_number]
-        images += page.get_images(full=True)
-
-    return images
-
-
-def resize_image(image_bytes: bytes):
-    return Image.open(io.BytesIO(image_bytes)).resize((512, 512))
-
-
-def base64_image(image: Image.Image) -> str:
-    buffered = io.BytesIO()
-    image.save(buffered, format="PNG")
-    return base64.b64encode(buffered.getvalue()).decode("utf-8")
 
 
 def api_image_structure(base64_img: str) -> dict:
@@ -33,16 +15,42 @@ def api_image_structure(base64_img: str) -> dict:
     }
 
 
-def get_images_content(pdf_path: str):
-    pdf_document = fitz.open(pdf_path)
-    images = extract_pdf_images(pdf_document)
+class Images:
+    def __init__(self):
+        self._st: fitz.Document = fitz.Document()
+        self._images = None
 
-    base64_image_list = []
-    for image in images:
-        base_image = pdf_document.extract_image(image[0])["image"]
-        image = resize_image(base_image)
-        base64_img = base64_image(image)
+    @property
+    def images(self):
+        return self._images
 
-        base64_image_list.append(api_image_structure(base64_img))
+    def update_st(self, st_path: str):
+        self._st = fitz.open(st_path)
+        self._get_base64_images()
 
-    return base64_image_list
+    def _extract_pdf_images_info(self):
+        images = []
+        for page_number in range(len(self._st)):
+            page = self._st[page_number]
+            images += page.get_images(full=True)
+
+        return images
+
+    def _extract_pdf_image(self, xref: int):
+        image_data = self._st.extract_image(xref)["image"]
+
+        with Image.open(io.BytesIO(image_data)) as img:
+            resized_image = img.resize((512, 512))
+
+            buffered = io.BytesIO()
+            resized_image.save(buffered, format="PNG")
+
+        return base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+    def _get_base64_images(self):
+        base64_image_list = []
+        for image in self._extract_pdf_images_info():
+            base64_img = self._extract_pdf_image(image[0])
+            base64_image_list.append(api_image_structure(base64_img))
+
+        self._images = base64_image_list
