@@ -1,4 +1,3 @@
-
 ASE_TSS.1-1
 The evaluator shall examine the TOE summary specification to determine that it describes how the TOE meets each SFR.
 Additional information:
@@ -15,8 +14,3 @@ The evaluator shall examine the TOE summary specification to determine that it i
 Additional information:
 If there is no TOE summary in the ST, but the description of how all SFRs meet by the TOE is consistent with the TOE overview and the TOE description, it should also be considered as pass work unit.
 Please list out how it meets the requirement for these work units.
-
-
-----------------
-For each pass result, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
-For each fail result, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."

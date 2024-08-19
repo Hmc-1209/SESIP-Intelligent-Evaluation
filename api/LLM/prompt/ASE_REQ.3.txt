@@ -5,12 +5,14 @@ The evaluator shall check the statement of security requirements mentioned the u
 Please make sure write down where the information can be found, which section.
 List out all the SFRs in the present ST.
 
+
 ASE_REQ.3-2
 The evaluator shall check that the statement of security requirements describe the SARs.
 Additional information:
 The evaluator shall check the statement of security requirements mentioned the use of SARs and are referenced by SESIP.
 Please write down which SAR it is referencing, and noted where the information could be found.
 For example, "The SARs are (INSERT SESIP LEVEL HERE) referenced by (INSERT SAR REFERENCES HERE)...".
+
 
 ASE_REQ.3-3
 The evaluator shall check that all SFRs are drawn from the list of allowed Security Functional Requirements.
@@ -19,18 +21,19 @@ The evaluator shall check the SFRs are referenced by SESIP. If there are develop
 Please list out all the SFRs' names.
 For example, "The given SFRs: Verification of Platform Identity (section 2.1), Secure Update of Application (section 2.1)...".
 
+
 ASE_REQ.3-4
 The evaluator shall check that the SFR “Verification of Platform Identity” is included.
 Additional information:
 Please write down where the evidence could be found (in which section).
 
+
 ASE_REQ.3-5
-The evaluator shall check that the SFR “Secure Update of Platform” is included or under the ALC_FLR.2 it shall be argued why updates are not applicable.
-Additional information:
-Please write down where the evidence could be found (in which section).
-If the TOE cannot be updated but has an explanation of why, it is also acceptable.
-For example if the SFR is provided but the platform is not updatable, "The SFR 'Secure Update of Platform' is provided at (INSERT 'Secure Update of Platform' SFR POSITION HERE), and it state the platform as not updatable, providing the explanation at (INSERT THE EXPLANATION OF WHY IT IS NOT UPDATABLE HERE)."
-Or, if the security target did not mention why it is not updatable, "The SFR 'Secure Update of Platform' is provided at (INSERT 'Secure Update of Platform' SFR POSITION HERE), and it state the platform as not updatable, but did not explain why it is not updatable."
+The evaluator shall check that the SFR “Secure Update of Platform” is included, or that an explanation of why updates are not applicable is provided under ALC_FLR.2!!! If it is not applicable, proceed the steps below:
+    1. Check for ALC_FLR.2: The evaluator shall verify that ALC_FLR.2 is present in the Security Target (ST).
+    2. Verify Explanation for Non-Applicability: If ALC_FLR.2 is present, the evaluator shall confirm that a clear explanation is provided under ALC_FLR.2 for why the SFR “Secure Update of Platform” is not applicable.
+If the requirement is not met in any of the steps, please add the following to the evaluation result: “The explanation for why the platform is not updatable is not located under ALC_FLR.2, as required,” and mark the evaluation as "fail."!!!
+
 
 ASE_REQ.3-6
 The evaluator shall check that the SARs are an exact SESIP assurance level, and no augmentation is allowed.
@@ -38,13 +41,11 @@ Additional information:
 Please write down where the information could be found (in which section and).
 For example, "The SESIP components in the present ST are (INSET ST SESIP COMPONENTS HERE), and the corresponding SESIP Level components are (INSERT CORRESPONDING SESIP LEVEL COMPONENTS HERE), ..."
 
+
 ASE_REQ.3-7
 The evaluator shall check that if multiple SESIP assurance levels are claimed, it is clear to readers of the ST which SFRs are covered by the SESIP assurance level.
 Additional information:
 If there are multiple SESIP assurance levels that had been claimed, list out each of them (including where the information could be found, the scope of it and which SFRs are covered).
 For example if there is no multiple assurance level claimed, "The present Security Target did not claimed multiple SESIP assurance level (INSERT SAR PAGE NUMBER, SECTION NUMBER HERE)"
-
-
-----------------
-For each pass result, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
-For each fail result, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."
+If the evaluation result is pass, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
+If the evaluation result is fail, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."
