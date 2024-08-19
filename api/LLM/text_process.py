@@ -28,7 +28,6 @@ class Text:
 
         self._st = ""
         self._sesip_level = 1
-        self._step = 0
         self._prompt = {}
 
     @property
@@ -38,7 +37,6 @@ class Text:
     def update_st(self, st_path: str, sesip_level: int):
         self._sesip_level = sesip_level
         self._pdf_to_text(st_path)
-        self._step = 0
 
     def _pdf_to_text(self, st_path: str):
         with pdfplumber.open(st_path) as pdf:
@@ -100,13 +98,13 @@ class Text:
         ''')
 
     # Evaluate for work units evidence
-    def get_text_content(self, information_position: dict):
+    def get_text_content(self, information_position: dict, step: int):
         work_units_result = [
             {
                 "Work_Unit_Name": unit,
                 "Work_Unit_Description": "",
                 "Work_Unit_Evaluation_Result_Status": ""
-            } for unit in self._work_units[self._mapping[self._step]["name"]]
+            } for unit in self._work_units[self._mapping[step]["name"]]
         ]
 
         self._prompt = api_text_structure('''
@@ -123,7 +121,7 @@ class Text:
     
             The following document is the SESIP level{self._sesip_level} evaluation report.
             ------SESIP Evaluation Report starts------
-            ''' + self._sesip_evaluation_report_1_and_2 + self._mapping[self._step]["rule"] + '''
+            ''' + self._sesip_evaluation_report_1_and_2 + self._mapping[step]["rule"] + '''
             ------SESIP Evaluation Report ends------
     
             The following document is the targeting Security Target.
@@ -170,5 +168,3 @@ class Text:
             Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it. 
             Check that every strings should be wrapped in double quotation mark.
         ''')
-
-        self._step += 1

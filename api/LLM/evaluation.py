@@ -7,94 +7,85 @@ from LLM.image_process import Images
 from LLM.text_process import Text
 from config import base_path, api_key
 
-text = Text()
-images = Images()
-eval_result = {"Work_Units": []}
-information_position = {}
+
+class Evaluation:
+    def __init__(self):
+        self._text = Text()
+        self._images = Images()
+        self._model = ""
+
+        self._step = 0
+
+        self._information_position = {}
+        self._position_filter = {0: ["INT", "OBJ"], 1: ["REQ"], 2: ["TSS"], 3: ["FLR"]}
+        self._eval_result = {"Work_Units": []}
+
+    @property
+    def eval_result(self):
+        return self._eval_result
+
+    def setup(self, st_path: str, sesip_level: int, model: str):
+        self._text.update_st(st_path, sesip_level)
+        self._images.update_st(st_path)
+        self._model = model
+        self._step = 0
+
+    def call_openai_api(self) -> str:
+        openai.api_key = api_key
+        try:
+            response = openai.chat.completions.create(
+                model=self._model,
+                messages=[
+                    {"role": "user", "content": [self._text.prompt] + self._images.images}
+                ]
+            )
+            print("Evaluation complete!")
+
+            return response.choices[0].message.content
+
+        except Exception as e:
+            print(f"Call Openai API Error: {e}")
+
+    def get_position(self):
+        self._text.get_evaluation_info()
+        response = json.loads(self.call_openai_api())
+
+        self._information_position.update(response["Work_Units_Information_Position"])
+        del response["Work_Units_Information_Position"]
+
+        self._eval_result.update(response)
+
+    def evaluate_units(self):
+        while self._step < 4:
+            try:
+                filters = self._position_filter[self._step]
+                filtered = {k: v for k, v in self._information_position.items() if any(f in k for f in filters)}
+                self._text.get_text_content(filtered, self._step)
+
+                response = json.loads(self.call_openai_api())
+                self._eval_result["Work_Units"] += response["Evaluation_Result"]
+
+                self._step += 1
+            except Exception as e:
+                print(f"Evaluate Units Error: {e}")
 
 
-def call_openai_api(model: str) -> str:
-    openai.api_key = api_key
-    try:
-        response = openai.chat.completions.create(
-            model=model,
-            messages=[
-                {"role": "user", "content": [text.prompt] + images.images}
-            ]
-        )
-        print("Evaluation complete!")
-
-        return response.choices[0].message.content
-
-    except Exception as e:
-        print(f"Failed with error {e}")
+evaluation = Evaluation()
 
 
-def get_position(model: str):
-    text.get_evaluation_info()
-    response = json.loads(call_openai_api(model))
-
-    information_position.update(response["Work_Units_Information_Position"])
-
-    del response["Work_Units_Information_Position"]
-
-    eval_result.update(response)
-
-
-def evaluate_int_and_obj(model: str):
-    filtered = dict(filter(lambda x: "INT" in x[0] or "OBJ" in x[0], information_position.items()))
-
-    text.get_text_content(filtered)
-    response = json.loads(call_openai_api(model))
-
-    eval_result["Work_Units"] += response["Evaluation_Result"]
-
-
-def evaluate_req(model: str):
-    filtered = dict(filter(lambda x: "REQ" in x[0], information_position.items()))
-
-    text.get_text_content(filtered)
-    response = json.loads(call_openai_api(model))
-
-    eval_result["Work_Units"] += response["Evaluation_Result"]
-
-
-def evaluate_tss(model: str):
-    filtered = dict(filter(lambda x: "TSS" in x[0], information_position.items()))
-
-    text.get_text_content(filtered)
-    response = json.loads(call_openai_api(model))
-
-    eval_result["Work_Units"] += response["Evaluation_Result"]
-
-
-def evaluate_flr(model: str):
-    filtered = dict(filter(lambda x: "FLR" in x[0], information_position.items()))
-
-    text.get_text_content(filtered)
-    response = json.loads(call_openai_api(model))
-
-    eval_result["Work_Units"] += response["Evaluation_Result"]
-
-
-def evaluate(st_id: int, model: str, sesip_lv: int):
+def evaluate(st_id: int, model: str, sesip_level: int):
     dir_path = os.path.join(base_path, str(st_id))
     st_path = os.path.join(dir_path, "st_file.pdf")
 
-    text.update_st(st_path, sesip_lv)
-    images.update_st(st_path)
-
-    get_position(model)
-    evaluate_int_and_obj(model)
-    evaluate_req(model)
-    evaluate_tss(model)
-    evaluate_flr(model)
+    evaluation.setup(st_path, sesip_level, model)
+    evaluation.get_position()
+    evaluation.evaluate_units()
 
     try:
         details_path = os.path.join(dir_path, "eval_result.json")
         with open(details_path, "w", encoding="utf-8") as f:
-            f.write(json.dumps(eval_result))
+            f.write(json.dumps(evaluation.eval_result))
         print("Response written to evaluation-result.json")
 
     except Exception as e:
-        print(f"Failed with error {e}")
+        print(f"Evaluate Error: {e}")
