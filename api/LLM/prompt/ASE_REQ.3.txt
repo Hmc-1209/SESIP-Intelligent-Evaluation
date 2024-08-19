@@ -3,7 +3,7 @@ The evaluator shall check that the statement of security requirements describe t
 Additional information:
 The evaluator shall check the statement of security requirements mentioned the use of SFRs.
 Please make sure write down where the information can be found, which section.
-List out all the SFRs in the present ST.
+List of all the SFRs in the present ST.
 
 
 ASE_REQ.3-2
@@ -46,6 +46,6 @@ ASE_REQ.3-7
 The evaluator shall check that if multiple SESIP assurance levels are claimed, it is clear to readers of the ST which SFRs are covered by the SESIP assurance level.
 Additional information:
 If there are multiple SESIP assurance levels that had been claimed, list out each of them (including where the information could be found, the scope of it and which SFRs are covered).
-For example if there is no multiple assurance level claimed, "The present Security Target did not claimed multiple SESIP assurance level (INSERT SAR PAGE NUMBER, SECTION NUMBER HERE)"
+For example, if there is no multiple assurance level claimed, "The present Security Target did not claim multiple SESIP assurance level (INSERT SAR PAGE NUMBER, SECTION NUMBER HERE)"
 If the evaluation result is pass, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
-If the evaluation result is fail, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."
+If the evaluation result is fail, make sure to add "As the information provided did not satisfy this work unit, the evaluator confirms it did not meet all requirements for content and presentation evidence."
