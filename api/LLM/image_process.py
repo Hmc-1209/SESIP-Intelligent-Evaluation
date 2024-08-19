@@ -16,17 +16,13 @@ def api_image_structure(base64_img: str) -> dict:
 
 
 class Images:
-    def __init__(self):
-        self._st: fitz.Document = fitz.Document()
-        self._images = None
+    def __init__(self, st_path: str):
+        self._st = fitz.open(st_path)
+        self._images = self._get_base64_images()
 
     @property
     def images(self):
         return self._images
-
-    def update_st(self, st_path: str):
-        self._st = fitz.open(st_path)
-        self._get_base64_images()
 
     def _extract_pdf_images_info(self):
         images = []
@@ -53,4 +49,4 @@ class Images:
             base64_img = self._extract_pdf_image(image[0])
             base64_image_list.append(api_image_structure(base64_img))
 
-        self._images = base64_image_list
+        return base64_image_list

@@ -11,41 +11,33 @@ def api_text_structure(text: str) -> dict:
 
 
 class Text:
-    def __init__(self):
-        self._sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
-        self._sesip_evaluation_report_1_and_2 = open("../api/LLM/prompt/SESIP_Evaluation_Report_Level_1_&_2.txt", 'r',
-                                                     encoding='utf-8').read()
+    sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
+    sesip_evaluation_report_1_and_2 = open("../api/LLM/prompt/SESIP_Evaluation_Report_Level_1_&_2.txt", 'r',
+                                           encoding='utf-8').read()
 
-        self._int_and_obj = open(f"../api/LLM/prompt/ASE_INT.1_&_ASE_OBJ.1.txt", 'r', encoding='utf-8').read()
-        self._req = open("../api/LLM/prompt/ASE_REQ.3.txt", 'r', encoding='utf-8').read()
-        self._tss = open("../api/LLM/prompt/ASE_TSS.1.txt", 'r', encoding='utf-8').read()
-        self._flr = open("../api/LLM/prompt/ALC_FLR.2.txt", 'r', encoding='utf-8').read()
-        self._work_units = json.load(open("../api/LLM/prompt/Work_Units_Lv1_and_2.json", 'r', encoding='utf-8'))
-        self._mapping = {0: {"name": "ASE_INT.1_&_ASE_OBJ.1", "rule": self._int_and_obj},
-                         1: {"name": "ASE_REQ.3", "rule": self._req},
-                         2: {"name": "ASE_TSS.1", "rule": self._tss},
-                         3: {"name": "ALC_FLR.2", "rule": self._flr}}
+    int_and_obj = open(f"../api/LLM/prompt/ASE_INT.1_&_ASE_OBJ.1.txt", 'r', encoding='utf-8').read()
+    req = open("../api/LLM/prompt/ASE_REQ.3.txt", 'r', encoding='utf-8').read()
+    tss = open("../api/LLM/prompt/ASE_TSS.1.txt", 'r', encoding='utf-8').read()
+    flr = open("../api/LLM/prompt/ALC_FLR.2.txt", 'r', encoding='utf-8').read()
+    work_units = json.load(open("../api/LLM/prompt/Work_Units_Lv1_and_2.json", 'r', encoding='utf-8'))
+    mapping = {0: {"name": "ASE_INT.1_&_ASE_OBJ.1", "rule": int_and_obj},
+               1: {"name": "ASE_REQ.3", "rule": req},
+               2: {"name": "ASE_TSS.1", "rule": tss},
+               3: {"name": "ALC_FLR.2", "rule": flr}}
 
-        self._st = ""
-        self._sesip_level = 1
+    def __init__(self, st_path: str, sesip_level: int):
+        with pdfplumber.open(st_path) as pdf:
+            self._st = "\n".join([x.extract_text() for x in pdf.pages])
+        self._sesip_level = sesip_level
         self._prompt = {}
 
     @property
     def prompt(self):
         return self._prompt
 
-    def update_st(self, st_path: str, sesip_level: int):
-        self._sesip_level = sesip_level
-        self._pdf_to_text(st_path)
-
-    def _pdf_to_text(self, st_path: str):
-        with pdfplumber.open(st_path) as pdf:
-            self._st = "\n".join([x.extract_text() for x in pdf.pages])
-
     # Evaluate for ST info and work unit's information position
     def get_evaluation_info(self):
-        work_units_dict = {unit: "" for unit_list in self._work_units.values() for unit in unit_list}
-
+        work_units_dict = {unit: "" for unit_list in self.__class__.work_units.values() for unit in unit_list}
         self._prompt = api_text_structure(f'''
             I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
             The first one will be the SESIP evaluation report rules.
@@ -54,11 +46,11 @@ class Text:
     
             The following document is the SESIP level{self._sesip_level} evaluation report.
             ------SESIP Evaluation Report starts------
-            ''' + self._sesip_evaluation_report_1_and_2
-                                          + self._int_and_obj
-                                          + self._req
-                                          + self._tss
-                                          + self._flr + '''
+            ''' + self.__class__.sesip_evaluation_report_1_and_2
+                                          + self.__class__.int_and_obj
+                                          + self.__class__.req
+                                          + self.__class__.tss
+                                          + self.__class__.flr + '''
             ------SESIP Evaluation Report ends------
     
             The following document is the targeting Security Target.
@@ -104,7 +96,7 @@ class Text:
                 "Work_Unit_Name": unit,
                 "Work_Unit_Description": "",
                 "Work_Unit_Evaluation_Result_Status": ""
-            } for unit in self._work_units[self._mapping[step]["name"]]
+            } for unit in self.__class__.work_units[self.__class__.mapping[step]["name"]]
         ]
 
         self._prompt = api_text_structure('''
@@ -116,12 +108,12 @@ class Text:
     
             The following document is the SESIP methodology.
             ------SESIP Methodology starts------
-            ''' + self._sesip_methodology + f'''
+            ''' + self.__class__.sesip_methodology + f'''
             ------SESIP Methodology ends------
     
             The following document is the SESIP level{self._sesip_level} evaluation report.
             ------SESIP Evaluation Report starts------
-            ''' + self._sesip_evaluation_report_1_and_2 + self._mapping[step]["rule"] + '''
+            ''' + self.__class__.sesip_evaluation_report_1_and_2 + self.__class__.mapping[step]["rule"] + '''
             ------SESIP Evaluation Report ends------
     
             The following document is the targeting Security Target.

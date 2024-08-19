@@ -9,26 +9,21 @@ from config import base_path, api_key
 
 
 class Evaluation:
-    def __init__(self):
-        self._text = Text()
-        self._images = Images()
-        self._model = ""
+    position_filter = {0: ["INT", "OBJ"], 1: ["REQ"], 2: ["TSS"], 3: ["FLR"]}
+
+    def __init__(self, st_path: str, sesip_level: int, model: str):
+        self._text = Text(st_path, sesip_level)
+        self._images = Images(st_path)
+        self._model = model
 
         self._step = 0
 
         self._information_position = {}
-        self._position_filter = {0: ["INT", "OBJ"], 1: ["REQ"], 2: ["TSS"], 3: ["FLR"]}
         self._eval_result = {"Work_Units": []}
 
     @property
     def eval_result(self):
         return self._eval_result
-
-    def setup(self, st_path: str, sesip_level: int, model: str):
-        self._text.update_st(st_path, sesip_level)
-        self._images.update_st(st_path)
-        self._model = model
-        self._step = 0
 
     def call_openai_api(self) -> str:
         openai.api_key = api_key
@@ -58,7 +53,7 @@ class Evaluation:
     def evaluate_units(self):
         while self._step < 4:
             try:
-                filters = self._position_filter[self._step]
+                filters = self.__class__.position_filter[self._step]
                 filtered = {k: v for k, v in self._information_position.items() if any(f in k for f in filters)}
                 self._text.get_text_content(filtered, self._step)
 
@@ -70,14 +65,11 @@ class Evaluation:
                 print(f"Evaluate Units Error: {e}")
 
 
-evaluation = Evaluation()
-
-
 def evaluate(st_id: int, model: str, sesip_level: int):
     dir_path = os.path.join(base_path, str(st_id))
     st_path = os.path.join(dir_path, "st_file.pdf")
 
-    evaluation.setup(st_path, sesip_level, model)
+    evaluation = Evaluation(st_path, sesip_level, model)
     evaluation.get_position()
     evaluation.evaluate_units()
 
