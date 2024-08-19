@@ -76,10 +76,10 @@ class Text:
                     Please evaluate and put the developer organization name here.
     
                 Work_Units_Information_Position: 
-                    This is an array with all the work_units that is about to be evaluated. Fill in all the information in each work unit where the relative information could be found (at which Section and which page, better with which line).
-                    For ASE_INT.1-1, write down where the ST reference, TOE reference, TOE overview and TOE description could be found (at which section and which page, better also at which line).
-                    For ASE_INT.1-2, write down where the ST reference could be found (at which section and which page, better also at which line).
-                    For ASE_INT.1-3, write down where the TOE reference could be found (at which section and which page, better also at with which line).
+                    This is an array with all the work_units that is about to be evaluated. Fill in all the information in each work unit where the relative information could be found (at which Section and which page).
+                    For ASE_INT.1-1, write down where the ST reference, TOE reference, TOE overview and TOE description could be found (at which section and which page).
+                    For ASE_INT.1-2, write down where the ST reference could be found (at which section and which page).
+                    For ASE_INT.1-3, write down where the TOE reference could be found (at which section and which page).
                     ...etc.
     
             Please make sure every objects in Work_Units_Information_Position is not empty.
@@ -136,7 +136,7 @@ class Text:
     
     
             *Important notes!!!*
-            If you provide a description of how the work unit were satisfied, also provide where did you find the information, detailed to which page, which section and (if possible), which line.
+            If you provide a description of how the work unit were satisfied, also provide where did you find the information, detailed to which page, which section.
             If there's any lack of information (no matter it is a outer link, outer reference) as long as it cannot directly shows the sufficient information, the work unit should be marked as fail!!!!!
             Do not reference any documents or knowledge on internet. Just evaluate the target with the information I give you.
             Outer reference's name contain related information cannot be considered provide the needed information, as it did not show the detail!!!!!

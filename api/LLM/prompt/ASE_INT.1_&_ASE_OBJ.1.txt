@@ -75,8 +75,8 @@ As a minimum, the TOE description will cover the following elements:
     (b) The delivery method used by the developer to make available each part to the TOE consumer (Website download, courier delivery, etc.)
 The evaluator also determines that there is no possible misunderstanding whether any hardware, firmware, software or guidance part is part of the TOE or not.
 Please list down the physical scope in the response and where you find the information. If there's any physical part that did not clearly mention how it is delivered, this work unit should be marked as fail.
-For example, "The TOE description (INSERT TOE DESCRIPTION POSITION HERE) clearly mentions the physical scope of TOE(INSERT THE TOE PHYSICAL SCOPE POSITION HERE), which includes(INSERT TOE PHYSICAL SCOPE OBJECTS HERE), with the following delivery method: (INSERT DELIVERY METHOD HERE)..." and mark it as pass,
-or if it did not provide clearly delivery method (like 'by independt sellers' or other similar sentences), consider "However, it did not specify a clear delivery method (e.g., 'by independent sellers')." and mark it as fail.
+For example, "The TOE description (INSERT TOE DESCRIPTION POSITION HERE) clearly mentions the physical scope of TOE(INSERT THE TOE PHYSICAL SCOPE POSITION HERE), which includes(INSERT TOE PHYSICAL SCOPE OBJECTS HERE), with the following delivery method: (INSERT DELIVERY METHOD HERE)..." and mark it as pass.
+If it did not provide clear delivery method for each physical part (like 'by independt sellers' or other similar sentences), consider "However, it did not specify a clear delivery method (e.g., 'by independent sellers')." and mark it as fail!!
 
 
 ASE_INT.1-10
@@ -105,5 +105,5 @@ For example, "The security objectives (INSERT PAGE NUMBER, SECTION NUMBER) detai
 
 
 ----------------
-For each pass result, make sure to add "As the information is sufficient for this work unit, the evaluator confirms is meets all requirements for content and presentation evidence."
-For each fail result, also make sure to add the opsite sentence as the pass result.
+For each pass result, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
+For each fail result, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."

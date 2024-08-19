@@ -4,6 +4,7 @@ Additional information:
 The procedures describe the actions that are taken by the developer from the time each suspected security flaw is reported to the time that it is resolved. This includes the flaw's entire time frame, from initial detection through figuring out that the flaw is a security flaw, to resolution of the security flaw.
 If a flaw is discovered not to be security-relevant, there is no need (for the Flaw remediation (ALC_FLR) requirements) for the flaw remediation procedures to track it further; only that there be an explanation of why the flaw is not security-relevant.
 Please list out the steps of flaw remediation procedures if possible. Also, write down where the information could be found.
+For example, "The flaw remediation procedure is documented and explained in (INSERT PAGE NUMBER, SECTION NUMBER HERE). It includes the following step: (INSERT FLAW REMEDIARION STEPS HERE)..."
 
 ALC_FLR.2-2
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would produce a description of each security flaw in terms of its nature and effects.
@@ -33,6 +34,8 @@ The necessary information about each security flaw consists of its description (
 TOE users may be provided with such information, correction, and documentation updates in any of several ways, such as their posting to a website, their being sent to TOE users, or arrangements made for the developer to install the correction. In cases where the means of providing this information requires action to be initiated by the TOE user, the evaluator examines any TOE guidance to ensure that it contains instructions for retrieving the information.
 The only metric for assessing the adequacy of the method used for providing the information, corrections and guidance is that there be a reasonable expectation that TOE users can obtain or receive it. For example, consider the method of dissemination where the requisite data is posted to a website for one month, and the TOE users know that this will happen and when this will happen. This may not be especially reasonable or effective (as, say, a permanent posting to the website), yet it is feasible that the TOE user could obtain the necessary information. On the other hand, if the information was posted to the website for only one hour, yet TOE users had no way of knowing this or when it would be posted, it is infeasible that they would ever get the necessary information.
 Please list out the evidence why the requirement is satisfied, or write down what you can find with this work unit, providing and where did you find it (at which section and which line).
+For example, "The history security flaw could be found in (INSERT HISTORY SECURITY FLAW REPORTS POSITION HERE)...", it could be an outer link.
+Or if the description could not make clear explanation of how each security is corrected (or you cannot get the report template), "The history security flaw could be found in (INSERT HISTORY SECURITY FLAW REPORTS POSITION HERE), but it did not provide clear explanation or cannot be access by LLM model."
 
 ALC_FLR.2-6
 The evaluator shall examine the flaw remediation procedures to determine that they describe procedures for the developer to accept reports of security flaws or requests for corrections to such flaws.
@@ -49,6 +52,7 @@ The flaw remediation procedures cover not only those security flaws discovered a
 The procedures describe the process that is taken from the point at which the suspected security flaw is determined to be a security flaw to the point at which it is resolved.
 A communication step in the flaw remediation procedure can help to support the claim that it ensures every reported flaw is corrected, as it facilitates the continuous sharing of information and coordination necessary for identifying, addressing, and fixing the flaw.
 List out the evidence if the flaw remediation procedure could help ensure the work unit. Specify where to find the evidence (with section and which line).
+For example, "The flaw remediation procedure (INSERT FLAW REMEDIATION PROCEDURE PAGE NUMBER, SECTION NUMBER) step (INSERT THE STEP ENSURES THE FLAW IS REPORTED HERE) ensures every reported flaw is corrected."
 
 ALC_FLR.2-8
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would help to ensure that the TOE users are issued remediation procedures for each security flaw.
@@ -56,6 +60,7 @@ Additional information:
 The procedures describe the process that is taken from the point at which a security flaw is resolved to the point at which the remediation procedures are provided.
 The procedures for delivering corrective actions should be consistent with the security objectives; they need not necessarily be identical to the procedures used for delivering the TOE, as documented to meet ALC_DEL, if included in the assurance requirements. For example, if the hardware portion of a TOE was originally delivered by bonded courier, updates to hardware resulting from flaw remediation would likewise be expected to be distributed by bonded courier. Updates unrelated to flaw remediation would follow the procedures set forth in the documentation meeting the Delivery (ALC_DEL) requirements.
 Please write down how the remediation procedure is delivered, and list out where to find the evidence (in which section and which line).
+The deliverery might also by communicating to TOE users. It is also a way to ensure the flaw remediation action is correct and did not contain negatie effect.
 
 ALC_FLR.2-9
 The evaluator shall examine the flaw remediation procedures to determine that the application of these procedures would result in safeguards that the potential correction contains no adverse effects.
@@ -63,6 +68,7 @@ Additional information:
 Through analysis, testing, or a combination of the two, the developer may reduce the likelihood that adverse effects will be introduced when a security flaw is corrected. The evaluator assesses whether the procedures provide detail in how the necessary mix of analysis and testing actions is to be determined for a given correction.
 The evaluator also determines that, for instances where the source of the security flaw is a documentation problem, the procedures include the means of safeguarding against the introduction of contradictions with other documentation.
 Please make sure that the remediation procedure brings no negative effect to the TOE, and write down the evidence and where to find them.
+Communicating to TOE users is also a way to ensure the flaw remediation action is correct and did not contain negatie effect as the developer can track the remediation process and fix the problem if there is one.
 
 ALC_FLR.2-10
 The evaluator shall examine the flaw remediation guidance to determine that the application of these procedures would result in a means for the TOE user to provide reports of suspected security flaws or requests for corrections to such flaws.
@@ -70,3 +76,8 @@ Additional information:
 The guidance ensures that TOE users have a means by which they can communicate with the TOE developer. By having a means of contact with the developer, the user can report security flaws, enquire about the status of security flaws, or request corrections to flaws.
 Write down where the evidence could be found, in which section and which line.
 For example, "Step 1: Flaw report, the user can report potential security flaw to the following mail address...".
+
+
+----------------
+For each pass result, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
+For each fail result, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."
