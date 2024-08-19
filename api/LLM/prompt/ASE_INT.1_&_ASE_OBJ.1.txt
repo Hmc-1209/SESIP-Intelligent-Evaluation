@@ -1,106 +1,90 @@
 ASE_INT.1-1
 The evaluator shall check that the ST introduction contains an ST reference, a TOE reference, a TOE overview and a TOE description.
-Additional information:
-Please make sure you list out where the information is provided. For example, instead of "ST reference" you should write "ST introduction (title page)", "TOE reference" you should write "TOE reference (section 1.2, table 1.2)"...etc.
+You should list out where you found the ST reference, TOE reference, TOE overview and TOE description.
+For example, you should write "ST introduction (title page)", and "TOE reference" you should write "TOE reference (section 1.2, table 1.2)"...etc.
 
 
 ASE_INT.1-2
-The evaluator shall examine the ST reference to determine that it uniquely identifies the ST.
-Additional information:
 The evaluator determines that the ST reference identifies the ST itself, so that it may be easily distinguished from other STs, and that it also uniquely identifies each version of the ST, e.g., by including a version number and/or a date of publication.
 In evaluations where a CM system is provided, the evaluator may validate the uniqueness of the reference by checking the configuration list. In other cases, the ST should have some referencing system that is capable of supporting unique references (e.g., use of numbers, letters or dates).
-Please make sure you write down the provided information with real data, for example, "The reference was verified to include a version number (INSERT VERSION NUMBER HERE) and/or a publication date (INSERT PUBLICATION DATE HERE), ensuring that the TOE can be distinctly identified from others."
+You should write down the provided information with real data. For example, "The reference was verified to include a version number (INSERT VERSION NUMBER HERE) and/or a publication date (INSERT PUBLICATION DATE HERE), ensuring that the TOE can be distinctly identified from others."
 
 
 ASE_INT.1-3
-The evaluator shall examine the TOE reference to determine that it uniquely identifies the TOE.
-Additional information:
 The evaluator determines that the TOE reference uniquely identifies the TOE, so that it is clear to which TOE the ST refers, and that it also identifies the version of the TOE, e.g., by including a version/release/build number, or a date of release.
-Please make sure you write down the detail information with real data, for example, "The TOE identification (INSERT TOE IDENTIFICATION HERE) provides the platform name (INSERT PLATFORM NAME HERE), platform version (INSERT PLATFORM VERSION HERE), platform identification, and platform type, all of which ensure the uniqueness of the TOE."
+You should write down the detail information with real data. For example, "The TOE identification (INSERT TOE IDENTIFICATION HERE) provides the platform name (INSERT PLATFORM NAME HERE), platform version (INSERT PLATFORM VERSION HERE), platform identification, and platform type, all of which ensure the uniqueness of the TOE."
 
 
 ASE_INT.1-4
 The evaluator shall examine the TOE reference to determine that it is not misleading.
-Additional information:
 If the TOE is related to one or more well-known products, it is allowed to reflect this in the TOE reference. However, this should not be used to mislead consumers, and it must be made clear which part of the product has been evaluated.
 When a TOE needs some required non-TOE hardware/software/firmware to run properly, the TOE reference may include the name of the non-TOE hardware/software/firmware used by the TOE, however it must be made clear that the non-TOE hardware/software/firmware has not been evaluated.
-Please make sure you point out why the TOE reference is misleading or not. For example, you should write down what the TOE is meant to do (or protect) if it is not misleading.
+You should point out why the TOE reference is misleading or not. For example, you should write down what the TOE is meant to do (or protect) if it is not misleading.
 For example, "The TOE reference (INSERT PAGE NUMBER, SECTION NUMBER) explicitly identifies the platform by name and version number. It contains no misleading information, enabling the evaluator to confirm that it fully satisfies the requirements for content and presentation."
-If it contains other reference in it, also consider adding "It clearly distinguishes between the evaluated TOE components and any associated non-TOE hardware/software/firmware, ensuring that no misleading information is presented."
+If it contains another reference in it, also consider adding "It clearly distinguishes between the evaluated TOE components and any associated non-TOE hardware/software/firmware, ensuring that no misleading information is presented."
 
 
 ASE_INT.1-5
 The evaluator shall examine the TOE overview to determine that it describes the usage and major security features of the TOE.
-Additional information: 
 The TOE should briefly (i.e., several paragraphs) describe the usage and major security features of the TOE. The TOE overview should enable potential consumers to quickly determine whether the TOE may be suitable for their security needs.
 The TOE overview may describe security features that are provided by the product, and users may expect in that product type, but it must be clear those features that are evaluated and those are not evaluated.
 The TOE overview shall be consistent with information provided in other sections of the Security Target such as the TOE description, the security objectives, the security functional requirements, and the TOE summary specification.
 The evaluator determines that the overview is clear enough for consumers, and sufficient to give them a general understanding of the intended usage and major security features of the TOE.
-Please make sure you list out some of the security features, you can use ... to truncate the sentence, and remember to provide where did you find that evidence (Including which section and at which line).
+You should list out some of the security features, you can use ... to truncate the sentence, and remember to provide where did you find that evidence (Including which section and at which line).
 For example, "The TOE overview in Section X, Page Y, Line Z clearly outlines the major security features, including [Feature 1, Feature 2, Feature 3, etc.]. These features are consistent with the security objectives and functional requirements listed in [Relevant Section(s)]..."
 
 
 ASE_INT.1-6
 The evaluator shall check that the TOE overview identifies the TOE type.
-Additional information:
-Please list out which type the TOE is, and where could the information be seen.
+You should list out which type the TOE is, and where the information could be seen.
 For example, "The TOE overview mentions the TOE type (INSERT TOE TYPE HERE) in (INSERT THE TOE TYPE POSITION HERE)."
 
 
 ASE_INT.1-7
 The evaluator shall examine the TOE overview to determine that the TOE type is not misleading.
-Additional information: 
 There are situations where the general consumer would expect certain functionality of the TOE because of its TOE type. If this functionality is absent in the TOE, the evaluator determines that the TOE overview adequately discusses this absence.
 There are also TOEs where the general consumer would expect that the TOE should be able to operate in a certain operational environment because of its TOE type. If the TOE is unable to operate in such an operational environment, the evaluator determines that the TOE overview adequately discusses this.
-Please point out what the TOE overview is saying, and compare it with the TOE type to see if it is not misleading. Remember to provide the information about where we can find them (at which section and which line).
+You should point out what the TOE overview is saying, and compare it with the TOE type to see if it is not misleading, and provide the information about where you found them (at which section and which line).
 For example, "The TOE overview part (INSERT TOE OVERVIEW POSITION HERE) is describing..., which (consist/did not consist) with the TOE type, ..."
 
 
 ASE_INT.1-8
 The evaluator shall examine the TOE overview to determine that it identifies any non-TOE hardware/software/firmware required by the TOE.
-Additional information: 
-While some TOEs are able to run stand-alone, other TOEs (notably software TOEs) need additional hardware, software or firmware to operate. If the TOE does not require any hardware, software or firmware, this work unit is not applicable and therefore considered to be satisfied.
+While some TOEs are able to run stand-alone, other TOEs (notably software TOEs) need additional hardware, software or firmware to operate.
+If the TOE does not require any hardware, software or firmware, this work unit is not applicable and therefore considered to be satisfied.
 The evaluator determines that the TOE overview identifies any additional hardware, software and firmware needed by the TOE to operate.
-Please write down where the information can be found (at which section and which line).
-For example, if there isn't any non-TOE object, "The TOE is a ... that did not need other physical objects to work, ...",
+You should write down where the information can be found (at which section and which line).
+For example, if the TOE doesn't require any non-TOE object, "The TOE is a ... that did not need other physical objects to work, ..., Therefore, the evaluator confirms that the information provided meets all requirements for content and presentation of evidence.",
 or if there contains non-TOE objects, "The ST mentions the non-TOE hardware/software/firmware at (INSERT THE NON-TOE OBJECTS POSITION) which contains (INSERT NON-TOE OBJECTS HERE), ..."
 
 
 ASE_INT.1-9
-The evaluator 應該確定提供的 section 裡面 TOE description 列出了構成 TOE 的 physical scope (hardware, firmware, software 以及 guidance part)，並且包含以下的內容：
-    (a) Each separately delivered part of the TOE, which will be identified by its unique identifier and the current format (binary, wafer, inlay, *.pdf, *.doc, *.chm etc.). 
-    (b) The delivery method used by the developer to make available each part to the TOE consumer (Website download, courier delivery, etc.)
-The evaluator 也需要確認文字敘述沒有對 hardware, firmware, software or guidance part 是不是 TOE 的一部份進行誤導.
-請用 2~3 句話描述 physical scope 並且講出你在哪裡找到資訊的，以及列出運送的方式。
+The evaluator should ensure that the provided section includes a TOE description listing the physical scope of the TOE (hardware, firmware, software, and guidance part) and contains the following content:
+    (a) Each separately delivered part of the TOE, which will be identified by its unique identifier and the current format (binary, wafer, inlay, *.pdf, *.doc, *.chm, etc.).
+    (b) The delivery method used by the developer to make each part available to the TOE consumer (Website download, courier delivery, etc.).
+The evaluator also needs to confirm that the text does not mislead regarding whether the hardware, firmware, software, or guidance part is part of the TOE.
+Please describe the physical scope in 2-3 sentences and state where you found the information, as well as list the delivery methods.
 For example, "The TOE description (INSERT TOE DESCRIPTION POSITION HERE) clearly mentions the physical scope of TOE(INSERT THE TOE PHYSICAL SCOPE POSITION HERE), which includes(INSERT TOE PHYSICAL SCOPE OBJECTS HERE), with the following delivery method: (INSERT DELIVERY METHOD HERE)..." and mark it as pass.
-如果對於每一個 physical part 無法列出對應的運送方式，或是任何的內容在對應的 section 找不到的話，請在評估結果中加上 "However, it did not specify a clear delivery method (e.g., by Website download, courier delivery, etc.)"，並將評估結果列為 fail!!!
+If the delivery method cannot be specified for each physical part or if any content cannot be found in the corresponding section, please add "However, it did not specify a clear delivery method (e.g., by Website download, courier delivery, etc.)" to the evaluation result and mark the evaluation as fail!!!
 
 
 ASE_INT.1-10
-The evaluator shall examine the TOE description to determine that it describes the logical scope of the TOE.
-Additional information: 
-The evaluator determines that the TOE description discusses the logical security features offered by the TOE at a level of detail that is enough to give the reader a general understanding of those features.
-The evaluator also determines that there is no possible misunderstanding whether the TOE or not offers any logical security feature.
-However, the evaluator determines that the composed TOE ST clearly discusses which features of the individual components are not within the composed TOE, and therefore not a feature of the composed TOE.
+The evaluator determines that the TOE description discusses the logical security features offered by the TOE that is enough to give the reader a general understanding of those features.
+The evaluator also determines that there is specified the scope to performing evaluation, without any possible misunderstanding whether the TOE offers any logical security feature or not.
+Also, if the TOE is composed, the evaluator should determine that the composed TOE ST clearly discusses which features of the individual components are not within the composed TOE, and therefore not a feature of the composed TOE.
 Please list down the logical scope in the response and where you find the information.
 For example, "The TOE description (INSERT TOE DESCRIPTION POSITION HERE) clearly mentions the logical scope of TOE(INSERT THE TOE LOGICAL SCOPE POSITION HERE), which includes(INSERT ALL TOE LOGICAL SCOPE OBJECTS HERE)."
 
 
 ASE_INT.1-11
 The evaluator shall examine the TOE reference, TOE overview and TOE description to determine that they are consistent with each other.
-Additional information:
-Please write down what is the main idea for TOE reference, TOE overview, and TOE description (it is better that these "main idea" are related to the product itself instead of just saying IoT), and why they are consistent with each other or not.
+You should write down the main idea of TOE reference, TOE overview, and TOE description (it is better that these "main idea" are related to the product itself instead of just saying IoT), and why they are consistent with each other or not.
 Also, for each part, list out where could the information be found.
 For example, "The TOE reference (INSERT PAGE NUMBER, SECTION NUMBER) is consistent with both the TOE overview and TOE description, as they all emphasize..."
 
 
 ASE_OBJ.1-1
 The evaluator shall check that the statement of security objectives defines the security objectives for the operational environment.
-Additional information:
-Please write down where the information could be found, with detailed to which line it could be found in which section.
+You should write down where the information could be found, with detailed to which line it could be found in which section.
 For example, "The security objectives (INSERT PAGE NUMBER, SECTION NUMBER) detail the security objectives for the operational environment (INSERT PAGE NUMBER, SECTION NUMBER), specifying that the operational environment... contains (INSERT OPERATIONAL ENVIRONMENT OBJECTS HERE)."
-
-
-----------------
-For each pass result, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
-For each fail result, make sure to add "As the information provided did not satisfied this work unit, the evaluator confirms it did not meets all requirements for content and presentation evidence."
+"As the information provided did not satisfy this work unit, the evaluator confirms it did not meet all requirements for content and presentation evidence."
