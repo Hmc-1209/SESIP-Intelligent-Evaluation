@@ -100,7 +100,7 @@ class Text:
         ]
 
         self._prompt = api_text_structure('''
-            I will give you three files' content, I need you to help me evaluate the targeting Security Target.
+            You are an evaluator, I will give you three files' content, you need to evaluate the targeting Security Target.
             The first one will be the SESIP methodology.
             The second one will be the SESIP evaluation report rules.
             The third one will be the target of evaluation.
