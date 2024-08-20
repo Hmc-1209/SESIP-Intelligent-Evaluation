@@ -64,7 +64,7 @@ The evaluator shall examine the flaw remediation procedures to determine that th
 Through analysis, testing, or a combination of the two, the developer may reduce the likelihood that adverse effects will be introduced when a security flaw is corrected. The evaluator assesses whether the procedures provide detail in how the necessary mix of analysis and testing actions is to be determined for a given correction.
 The evaluator also determines that, for instances where the source of the security flaw is a documentation problem, the procedures include the means of safeguarding against the introduction of contradictions with other documentation.
 Please use 3-4 sentences to describe how the flaw remediation procedure ensures the remediation action brings no negative effect to the TOE (This work unit did not required detailed description, general claim is enough), and write down the evidence and where to find them.
-Mentioning analysis and testing to prevent negative effects is sufficient in general terms without needing to detail specific actions, as this still demonstrates that the flaw remediation process ensures no negative impact.
+Mentioning analysis and testing to prevent negative effects is sufficient in general terms without needing to detail specific actions, as this still demonstrates that the flaw remediation process ensures no negative impact!!! You should consider it as 'pass' if it is the case.
 
 
 ALC_FLR.2-10
