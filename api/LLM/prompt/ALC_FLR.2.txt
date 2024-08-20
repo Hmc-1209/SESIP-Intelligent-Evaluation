@@ -28,12 +28,12 @@ For example, "Step 5: Continues following the flaw remediation process and make 
 
 
 ALC_FLR.2-5
-The evaluator shall examine the flaw remediation procedures documentation to determine that it describes a means of providing the TOE users with the necessary information on each previously reported security flaw.
-The necessary information about each previously reported security flaw consists of its description (not necessarily at the same level of detail as that provided as part of work unit ALC_FLR.2-2), the prescribed corrective action, and any associated guidance on implementing the correction.
+The evaluator shall examine the flaw remediation procedures documentation to determine that it describes a means of providing the TOE users with the necessary information on each security flaw.
+The necessary information about each security flaw consists of its description (not necessarily at the same level of detail as that provided as part of work unit ALC_FLR.2-2), the prescribed corrective action, and any associated guidance on implementing the correction.
 TOE users may be provided with such information, correction, and documentation updates in any of several ways, such as their posting to a website, their being sent to TOE users, or arrangements made for the developer to install the correction. In cases where the means of providing this information requires action to be initiated by the TOE user, the evaluator examines any TOE guidance to ensure that it contains instructions for retrieving the information.
 The only metric for assessing the adequacy of the method used for providing the information, corrections and guidance is that there be a reasonable expectation that TOE users can obtain or receive it. For example, consider the method of dissemination where the requisite data is posted to a website for one month, and the TOE users know that this will happen and when this will happen. This may not be especially reasonable or effective (as, say, a permanent posting to the website), yet it is feasible that the TOE user could obtain the necessary information. On the other hand, if the information was posted to the website for only one hour, yet TOE users had no way of knowing this or when it would be posted, it is infeasible that they would ever get the necessary information.
-If the previously reported security flaw is located in an external link or is not clearly indicated in the ST, include "The relevant information is located in an external link or cannot be found," and mark it as fail!!!Please use 2-3 sentences to describe where can you find the previously reported security flaw report, it might be an outer link or by other delivery methods to TOE users.
-Please write down the evidence, for example, "The previously reported security flaw will be delivered by (INSERT THE PREVIOUSLY REPORTED SECURITY FLAW DELIVERY WAY)"
+For example, "The evaluator confirms the flaw remediation procedures ensures it provides sufficient infomation..."
+
 
 ALC_FLR.2-6
 The evaluator shall examine the flaw remediation procedures to determine that they describe procedures for the developer to accept reports of security flaws or requests for corrections to such flaws.

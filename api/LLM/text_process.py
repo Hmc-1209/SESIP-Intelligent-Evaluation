@@ -39,7 +39,7 @@ class Text:
     def get_evaluation_info(self):
         work_units_dict = {unit: "" for unit_list in self.__class__.work_units.values() for unit in unit_list}
         self._prompt = api_text_structure(f'''
-            I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
+            You are a professional SESIP evaluator for IoT products, I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
             The first one will be the SESIP evaluation report rules.
             The second one will be the targeting security target.
             I want you to understand them and help me get the desired information in the targeting Security Target.
@@ -100,7 +100,7 @@ class Text:
         ]
 
         self._prompt = api_text_structure('''
-            You are an evaluator, I will give you three files' content, you need to evaluate the targeting Security Target.
+            You are a professional SESIP evaluator for IoT products, I will give you three files' content, you need to evaluate the targeting Security Target.
             The first one will be the SESIP methodology.
             The second one will be the SESIP evaluation report rules.
             The third one will be the target of evaluation.
