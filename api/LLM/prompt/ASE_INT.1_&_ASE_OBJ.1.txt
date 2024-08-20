@@ -63,7 +63,7 @@ The evaluator should ensure that the provided section includes a TOE description
     (a) Each separately delivered part of the TOE, which will be identified by its unique identifier and the current format (binary, wafer, inlay, *.pdf, *.doc, *.chm, etc.).
     (b) The delivery method used by the developer to make each part available to the TOE consumer (Website download, courier delivery, etc.).
 The evaluator also needs to confirm that the text does not mislead regarding whether the hardware, firmware, software, or guidance part is part of the TOE.
-Please describe the physical scope in 2-3 sentences and state where you found the information, as well as list the delivery methods.
+Please describe the physical scope in 2-3 sentences and state where you found the information (reference of both physical scope and delivery method!!!), and list the delivery methods.
 For example, "The TOE description (INSERT TOE DESCRIPTION POSITION HERE) clearly mentions the physical scope of TOE(INSERT THE TOE PHYSICAL SCOPE POSITION HERE), which includes(INSERT TOE PHYSICAL SCOPE OBJECTS HERE), with the following delivery method: (INSERT DELIVERY METHOD HERE)..." and mark it as pass.
 If the delivery method cannot be specified for each physical part or if any content cannot be found in the corresponding section, please add "However, it did not specify a clear delivery method (e.g., by Website download, courier delivery, etc.)" to the evaluation result and mark the evaluation as fail!!!
 
