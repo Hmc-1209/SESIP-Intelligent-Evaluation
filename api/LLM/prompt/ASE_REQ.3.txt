@@ -47,5 +47,3 @@ The evaluator shall check that if multiple SESIP assurance levels are claimed, i
 Additional information:
 If there are multiple SESIP assurance levels that had been claimed, list out each of them (including where the information could be found, the scope of it and which SFRs are covered).
 For example, if there is no multiple assurance level claimed, "The present Security Target did not claim multiple SESIP assurance level (INSERT SAR PAGE NUMBER, SECTION NUMBER HERE)"
-If the evaluation result is pass, make sure to add "As the information is sufficient for this work unit, the evaluator confirms it meets all requirements for content and presentation evidence."
-If the evaluation result is fail, make sure to add "As the information provided did not satisfy this work unit, the evaluator confirms it did not meet all requirements for content and presentation evidence."
