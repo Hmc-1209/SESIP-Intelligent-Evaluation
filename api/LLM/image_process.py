@@ -39,7 +39,7 @@ class Images:
             resized_image = img.resize((512, 512))
 
             buffered = io.BytesIO()
-            resized_image.save(buffered, format="PNG")
+            resized_image.save(buffered, format="JPEG")
 
         return base64.b64encode(buffered.getvalue()).decode("utf-8")
 
