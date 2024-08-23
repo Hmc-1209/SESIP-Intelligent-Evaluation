@@ -36,6 +36,9 @@ class Images:
         image_data = self._st.extract_image(xref)["image"]
 
         with Image.open(io.BytesIO(image_data)) as img:
+            if img.mode == "RGBA":
+                img = img.convert("RGB")
+
             resized_image = img.resize((512, 512))
 
             buffered = io.BytesIO()
