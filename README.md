@@ -31,6 +31,8 @@ the `ACCESS_TOKEN_SECRET_KEY` is for generating app user access token, it needs 
 
 For example, mine is at "C:/Users/minchenho/Documents/SESIP-Eval", with two Microsoft Word files in it.
 
+Start the service with the command `uvicorn main:app` at `api` directory, the service is locted at `http://localhost:8000` (UI located at `http://localhost:8000/docs`)
+
 #### React.js
 Make sure `node.js` is installed, navigate to `app` directory and type down `npm install` for installing dependencies.
 Next, type `npm start` and the service would start. The web page could be found at `http://127.0.0.1:8000/`.
