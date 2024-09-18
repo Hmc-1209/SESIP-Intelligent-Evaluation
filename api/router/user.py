@@ -3,9 +3,10 @@ import shutil
 from fastapi import APIRouter, Depends, status
 
 from schemas import BaseUser, DetailUser, UpdateUser, CompleteUser
-from exception import duplicate_data, bad_request, password_incorrect
+from exception import duplicate_data, bad_request, password_incorrect, validation_failed
 from repository.UserCRUD import get_user_by_name, create_user, update_username, update_password, delete_user
 from repository.STCRUD import get_st_by_user_id
+from repository.TokenCRUD import update_access_token
 from authentication.JWTtoken import get_current_user
 from authentication.hashing import verify_password
 from config import base_path
@@ -37,7 +38,7 @@ async def create_new_user(user: DetailUser) -> None:
 
 
 @router.patch("/update_username")
-async def update_user_username(user: BaseUser, current_user=Depends(get_current_user)) -> None:
+async def update_user_username(user: BaseUser, current_user=Depends(get_current_user)) -> str:
     """
     Update the username of the current user (requires authentication).
 
@@ -47,6 +48,9 @@ async def update_user_username(user: BaseUser, current_user=Depends(get_current_
     Args:
         user (BaseUser): The new username to update.
         current_user (CompleteUser): The currently authenticated user.
+
+    Returns:
+        str: The updated user token.
 
     Raises:
         duplicate_data: If the new username is already taken.
@@ -58,6 +62,8 @@ async def update_user_username(user: BaseUser, current_user=Depends(get_current_
 
     if not await update_username(current_user.user_id, user):
         raise bad_request
+
+    return await update_access_token({"username": user.username})
 
 
 @router.patch("/update_password")

@@ -27,6 +27,27 @@ async def generate_access_token(data: dict) -> str:
     return ""
 
 
+async def update_access_token(data: dict) -> str:
+    """
+    Generate an access token for the user based on provided credentials.
+
+    Args:
+        data (dict): A dictionary containing 'username' of the user.
+
+    Returns:
+        str: An access token if the credentials are valid; otherwise, an empty string.
+    """
+
+    stmt = User.select().where(User.c.username == data["username"])
+    user = await db.fetch_one(stmt)
+
+    if user:
+        data["id"] = user.user_id
+        return JWTtoken.generate_access_token(data)
+
+    return ""
+
+
 async def validate_access_token(token: str) -> CompleteUser:
     """
     Validate an access token and retrieve the corresponding user information.
