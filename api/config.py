@@ -17,4 +17,4 @@ access_token_expire_days = os.getenv("ACCESS_TOKEN_EXPIRE_DAYS")
 
 # Other configuration
 base_path = os.getenv("BASE_PATH")
-api_key = os.getenv("API_KEY")
+host = os.getenv("HOST")

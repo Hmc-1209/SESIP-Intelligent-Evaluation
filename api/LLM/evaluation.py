@@ -1,11 +1,12 @@
 import json
 import os
 
-import openai
+import asyncio
+from ollama import AsyncClient
 
 from LLM.image_process import Images
 from LLM.text_process import Text
-from config import base_path, api_key
+from config import base_path, host
 
 
 class Evaluation:
@@ -25,13 +26,12 @@ class Evaluation:
     def eval_result(self):
         return self._eval_result
 
-    def call_openai_api(self) -> str:
-        openai.api_key = api_key
+    async def call_ollama_api(self) -> str:
         try:
-            response = openai.chat.completions.create(
-                model=self._model,
+            response = await AsyncClient(host=host).chat(
+                model='llama3.1',
                 messages=[
-                    {"role": "user", "content": [self._text.prompt] + self._images.images}
+                    {'role': 'user', 'content': self._text.prompt, 'images': self._images.images}
                 ]
             )
             print("Evaluation complete!")
@@ -39,39 +39,40 @@ class Evaluation:
             return response.choices[0].message.content
 
         except Exception as e:
-            print(f"Call Openai API Error: {e}")
+            print(f"Call Ollama API Error: {e}")
 
-    def get_position(self):
+    async def get_position(self):
         self._text.get_evaluation_info()
-        response = json.loads(self.call_openai_api())
+        response = json.loads(await self.call_ollama_api())
 
         self._information_position.update(response["Work_Units_Information_Position"])
         del response["Work_Units_Information_Position"]
 
         self._eval_result.update(response)
 
-    def evaluate_units(self):
-        while self._step < 4:
+    async def evaluate_unit(self):
+        filters = self.__class__.position_filter[self._step]
+        filtered = {k: v for k, v in self._information_position.items() if any(f in k for f in filters)}
+        self._text.get_text_content(filtered, self._step)
+        self._step += 1
+        return json.loads(await self.call_ollama_api())
+
+    async def evaluate_units(self):
+        responses = await asyncio.gather(*[evaluate_unit() for _ in range(4)])
+        for response in responses:
             try:
-                filters = self.__class__.position_filter[self._step]
-                filtered = {k: v for k, v in self._information_position.items() if any(f in k for f in filters)}
-                self._text.get_text_content(filtered, self._step)
-
-                response = json.loads(self.call_openai_api())
                 self._eval_result["Work_Units"] += response["Evaluation_Result"]
-
-                self._step += 1
             except Exception as e:
                 print(f"Evaluate Units Error: {e}")
 
 
-def evaluate(st_id: int, model: str, sesip_level: int):
+async def evaluate(st_id: int, model: str, sesip_level: int):
     dir_path = os.path.join(base_path, str(st_id))
     st_path = os.path.join(dir_path, "st_file.pdf")
 
     evaluation = Evaluation(st_path, sesip_level, model)
-    evaluation.get_position()
-    evaluation.evaluate_units()
+    await evaluation.get_position()
+    await evaluation.evaluate_units()
 
     try:
         details_path = os.path.join(dir_path, "eval_result.json")

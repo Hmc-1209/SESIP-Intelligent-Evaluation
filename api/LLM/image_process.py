@@ -47,6 +47,6 @@ class Images:
         base64_image_list = []
         for image in self._extract_pdf_images_info():
             base64_img = self._extract_pdf_image(image[0])
-            base64_image_list.append(api_image_structure(base64_img))
+            base64_image_list.append(base64_img)
 
         return base64_image_list
