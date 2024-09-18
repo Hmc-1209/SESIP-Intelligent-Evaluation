@@ -29,7 +29,7 @@ class Evaluation:
     async def call_ollama_api(self) -> str:
         try:
             response = await AsyncClient(host=host).chat(
-                model='llama3.1',
+                model='llama3.1:405b-instruct-q2_K',
                 messages=[
                     {'role': 'user', 'content': self._text.prompt, 'images': self._images.images}
                 ]

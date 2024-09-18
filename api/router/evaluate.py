@@ -48,7 +48,7 @@ async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int
     if st.is_evaluated:
         raise eval_has_performed
 
-    if eval_model not in ["gpt-4o-mini"]:
+    if eval_model not in ["llama3.1:405b-instruct-q2_K"]:
         raise invalid_model
 
     if sesip_level not in [1, 2]:
