@@ -1,6 +1,6 @@
 {
     "available_models": [
-        "gpt-4o-mini"
+        "llama3.1:405b-instruct-q2_K"
     ],
     "available_sesip_levels":[
         "1",
