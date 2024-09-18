@@ -58,7 +58,7 @@ class Evaluation:
         return json.loads(await self.call_ollama_api())
 
     async def evaluate_units(self):
-        responses = await asyncio.gather(*[evaluate_unit() for _ in range(4)])
+        responses = await asyncio.gather(*[self.evaluate_unit() for _ in range(4)])
         for response in responses:
             try:
                 self._eval_result["Work_Units"] += response["Evaluation_Result"]
