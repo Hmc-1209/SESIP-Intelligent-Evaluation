@@ -36,7 +36,7 @@ class Evaluation:
             )
             print("Evaluation complete!")
 
-            return response.choices[0].message.content
+            return response["message"]["content"]
 
         except Exception as e:
             print(f"Call Ollama API Error: {e}")
