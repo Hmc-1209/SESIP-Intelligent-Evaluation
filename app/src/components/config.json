@@ -1,6 +1,6 @@
 {
     "available_models": [
-        "llama3.1:405b-instruct-q2_K"
+        "llama3.1:8b-instruct-q2_K"
     ],
     "available_sesip_levels":[
         "1",
