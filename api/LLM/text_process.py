@@ -3,13 +3,6 @@ import json
 import pdfplumber
 
 
-def api_text_structure(text: str) -> dict:
-    return {
-        "type": "text",
-        "text": text
-    }
-
-
 class Text:
     sesip_methodology = open("../api/LLM/prompt/SESIP_Methodology.txt", 'r', encoding='utf-8').read()
     sesip_evaluation_report_1_and_2 = open("../api/LLM/prompt/SESIP_Evaluation_Report_Level_1_&_2.txt", 'r',
@@ -38,7 +31,7 @@ class Text:
     # Evaluate for ST info and work unit's information position
     def get_evaluation_info(self):
         work_units_dict = {unit: "" for unit_list in self.__class__.work_units.values() for unit in unit_list}
-        self._prompt = api_text_structure(f'''
+        self._prompt = f'''
             You are a professional SESIP evaluator for IoT products, I will give you two files' content, I need you to help me provide the information extracted from the targeting Security Target.
             The first one will be the SESIP evaluation report rules.
             The second one will be the targeting security target.
@@ -46,11 +39,11 @@ class Text:
     
             The following document is the SESIP level{self._sesip_level} evaluation report.
             ------SESIP Evaluation Report starts------
-            ''' + self.__class__.sesip_evaluation_report_1_and_2
-                                          + self.__class__.int_and_obj
-                                          + self.__class__.req
-                                          + self.__class__.tss
-                                          + self.__class__.flr + '''
+            ''' + self.__class__.sesip_evaluation_report_1_and_2 \
+                       + self.__class__.int_and_obj \
+                       + self.__class__.req \
+                       + self.__class__.tss \
+                       + self.__class__.flr + '''
             ------SESIP Evaluation Report ends------
     
             The following document is the targeting Security Target.
@@ -87,7 +80,7 @@ class Text:
     
             Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it. 
             Check that every strings should be wrapped in double quotation mark.
-        ''')
+        '''
 
     # Evaluate for work units evidence
     def get_text_content(self, information_position: dict, step: int):
@@ -99,7 +92,7 @@ class Text:
             } for unit in self.__class__.work_units[self.__class__.mapping[step]["name"]]
         ]
 
-        self._prompt = api_text_structure('''
+        self._prompt = f'''
             You are a professional SESIP evaluator for IoT products, I will give you three files' content, you need to evaluate the targeting Security Target.
             The first one will be the SESIP methodology.
             The second one will be the SESIP evaluation report rules.
@@ -159,4 +152,4 @@ class Text:
     
             Make sure the response contains only the json data (without code block format) following the format section above, no other texts outside of it. 
             Check that every strings should be wrapped in double quotation mark.
-        ''')
+        '''
