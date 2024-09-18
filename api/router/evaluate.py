@@ -55,7 +55,7 @@ async def evaluate_security_target(st_id: int, eval_model: str, sesip_level: int
         raise invalid_level
 
     # Evaluation
-    evaluate(st_id, eval_model, sesip_level)
+    await evaluate(st_id, eval_model, sesip_level)
 
     dir_path = os.path.join(base_path, str(st_id))
     update_st = parse_eval_result(dir_path)
